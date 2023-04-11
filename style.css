@@ -9,8 +9,8 @@
     height: 100vh;
     grid:
         [header-start]             "header header header" 6.5vh
-        [header-end content-start] "left   middle right" 34.5vh
-        [content-end footer-start] "footer footer footer" 59vh
+        [header-end content-start] "left   middle right" 48.5vh
+        [content-end footer-start] "footer footer footer" 45vh
         /[left] 1fr [middle] 1fr [right] 1fr;
 }
 
@@ -58,11 +58,21 @@ footer {
     font-size: 3vh;
 }
 
-
 #main-interface.content {
+  position: absolute;
+  left: 10%;
+  right: 10%;
   background-color: orange;
-  top: 12.5%;
+  top: 6%;
+  height: 60%;
+}
+
+#format-bar.content {
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  background-color: orange;
+  bottom: 6%;
   margin: auto; 
-  width: 80%;
-  height: 75%;
+  height: 23%;
 }
