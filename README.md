@@ -1,6 +1,10 @@
 # Time Series Project
 
-## How to open website in offline mode:
+## Web App URL:
+
+https://pages.uoregon.edu/jerling2/time-series/
+
+## How to Open the Web App in Offline Mode:
 
 1. Download project folder
 2. Open web browser
