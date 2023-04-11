@@ -58,6 +58,16 @@ footer {
     font-size: 3vh;
 }
 
+#button-bar.header {
+  position: absolute;
+  top: 12.5%;
+  height: 75%;
+  right: 4%;
+  width: 10%;
+  background-color: orange;
+  margin: auto; 
+}
+
 #main-interface.content {
   position: absolute;
   left: 10%;
