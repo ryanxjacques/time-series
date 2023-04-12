@@ -97,3 +97,18 @@ footer {
   margin: auto; 
   height: 80%;
 }
+
+#login-prompt.font {
+  color: white;
+  font-size: 2vh;
+}
+
+#login-prompt {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 40%;
+  width: 20%;
+  height: 20%;
+  background-color: #262626;
+}
