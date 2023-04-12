@@ -86,3 +86,14 @@ footer {
   margin: auto; 
   height: 23%;
 }
+
+#login-button.header {
+  font-size: 2vh;
+  position: absolute;
+  right: 5%;
+  width: 90%;
+  background-color: white;
+  top: 10%;
+  margin: auto; 
+  height: 80%;
+}
