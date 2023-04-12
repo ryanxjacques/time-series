@@ -1,0 +1,8 @@
+TS_NAME: Electric Production
+DESCRIPTION: Production of Electricity in Bolivia
+DOMAINS: Date, Output
+UNITS: Watts
+KEYWORDS: Electricity, Power, Power Grid
+SCALAR: 1
+VECTOR_SIZE: TIME, MONTHS, 1
+LENGTH: 397
