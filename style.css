@@ -98,17 +98,13 @@ footer {
   height: 80%;
 }
 
-#login-prompt.font {
+#login-popup.font {
   color: white;
   font-size: 2vh;
 }
 
-#login-prompt {
-  display: none;
+#login-popup {
+  display: block;
   position: absolute;
-  top: 0;
-  left: 40%;
-  width: 20%;
-  height: 20%;
   background-color: #262626;
 }

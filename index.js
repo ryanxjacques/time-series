@@ -1,18 +1,9 @@
-
 const loginButton = document.getElementById("login-button");
-const credSubmitButton = document.getElementById("submit-button");
-const loginPrompt = document.getElementById("login-prompt");
-
+const loginPopup = new LoginForm("login-popup");
+const submit = document.getElementById("login-popup");
 const USER = "admin";
 const PASS = "admin";
 
-function display(x){
-  x.style.display = "block";
-}
-
-function hide(x){
-  x.style.display = "block";
-}
 
 function validate_admin(user, pass){
   if (user == USER && pass == PASS){
@@ -23,12 +14,9 @@ function validate_admin(user, pass){
 }
 
 loginButton.addEventListener("click", function() {
-  display(loginPrompt);
+  if (loginPopup.hidden) {
+    // only one login popup allowed at a time.
+    loginPopup.show();
+  }
 });
 
-credSubmitButton.addEventListener("click", function() {
-  var user = document.getElementById("admin-username").value;
-  var pass = document.getElementById("admin-password").value;
-  validate_admin(user, pass)
-  hide(loginPrompt);
-});

@@ -1,0 +1,10 @@
+#login-popup.font {
+  color: white;
+  font-size: 2vh;
+}
+
+#login-popup {
+  display: block;
+  position: absolute;
+  background-color: #262626;
+}
