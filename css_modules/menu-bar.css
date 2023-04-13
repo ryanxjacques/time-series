@@ -1,0 +1,39 @@
+#button-bar.header {
+  position: absolute;
+  top: 12.5%;
+  height: 75%;
+  right: 4%;
+  width: 10%;
+  background-color: orange;
+  margin: auto; 
+}
+
+#login-button.header {
+  font-size: 2vh;
+  position: absolute;
+  right: 5%;
+  width: 90%;
+  background-color: white;
+  top: 10%;
+  margin: auto; 
+  height: 80%;
+}
+
+#logo-container.header {
+  position: absolute;
+  top: 0;
+  height: 75%;
+  left: 0;
+  height: 100%;
+  width: 10%;
+  background-color: blue;
+  margin: auto; 
+}
+
+#logo-image {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

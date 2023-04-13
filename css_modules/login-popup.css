@@ -4,7 +4,11 @@
 }
 
 #login-popup {
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 25px;
+  border-color: #ffffff;
   display: block;
   position: absolute;
-  background-color: #262626;
+  background-color: #2f373b;
 }

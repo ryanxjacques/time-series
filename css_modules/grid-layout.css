@@ -58,16 +58,6 @@ footer {
     font-size: 3vh;
 }
 
-#button-bar.header {
-  position: absolute;
-  top: 12.5%;
-  height: 75%;
-  right: 4%;
-  width: 10%;
-  background-color: orange;
-  margin: auto; 
-}
-
 #main-interface.content {
   position: absolute;
   left: 10%;
@@ -85,26 +75,4 @@ footer {
   bottom: 6%;
   margin: auto; 
   height: 23%;
-}
-
-#login-button.header {
-  font-size: 2vh;
-  position: absolute;
-  right: 5%;
-  width: 90%;
-  background-color: white;
-  top: 10%;
-  margin: auto; 
-  height: 80%;
-}
-
-#login-popup.font {
-  color: white;
-  font-size: 2vh;
-}
-
-#login-popup {
-  display: block;
-  position: absolute;
-  background-color: #262626;
 }
