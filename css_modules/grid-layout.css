@@ -39,30 +39,23 @@ footer {
 
 .content {
     position: relative;
-    background-color: green;
+    background-color: #121212;
     grid-row: content-start / content-end;
     grid-column: left / right;
 }
 
 .footer {
     position: relative;
-    background-color: blue;
+    background-color: #1a1a1a;
     grid-row: footer-start / -1;
     grid-column: footer / footer;
-}
-
-.font {
-    color: black;
-    margin-top: auto;
-    text-align: center;
-    font-size: 3vh;
 }
 
 #main-interface.content {
   position: absolute;
   left: 10%;
   right: 10%;
-  background-color: orange;
+  background-color: #262626;
   top: 6%;
   height: 60%;
 }
@@ -71,7 +64,7 @@ footer {
   position: absolute;
   left: 10%;
   right: 10%;
-  background-color: orange;
+  background-color: #262626;
   bottom: 6%;
   margin: auto; 
   height: 23%;

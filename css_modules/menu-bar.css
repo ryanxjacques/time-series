@@ -23,7 +23,7 @@ __
 */
 
 /* Button Bar Container */
-#button-bar.header {
+#button-bar-container.header {
   position: absolute;
   top: 12.5%;
   height: 75%;
