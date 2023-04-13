@@ -20,8 +20,8 @@
 15% : #4d1800
 
 ## Elevation
-*###Surfaces*
+###Surfaces
 Hover: +5% lightness
 
-*###UI*
+###UI
 Hover: -5% lightness
