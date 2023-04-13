@@ -1,0 +1,86 @@
+:root {
+  --black_0: #080a0d;
+  --black_1: #0f131a;
+  --black_2: #171d26;
+
+  --primary_0:#993000;
+  --primary_1: #b33900;
+  --primary_2:#ff5100;
+  --primary_3: #ff7433;
+
+  --animation_duration: 1s;
+
+  --border_width: 2px;
+  --border_radius: 6px;
+  --border_style: solid;
+
+  --text_padding_left: 4vw;
+
+  --footer_border: 3vw;
+
+  --margin_between_interfaces: 10vh;
+}
+
+.font {
+  color: var(--primary_2);
+}
+
+button {
+  border-style: var(--border_style);
+  border-radius: var(--border_radius);
+  border-width: var(--border_width);
+  border-color: var(--primary_1);
+  background-color: var(--black_1); 
+}
+
+button.font {
+  font-size: 2vh;
+  text-align: center;
+}
+
+button:hover {
+  background-color: var(--black_2);
+  color: var(--primary_3);
+  border-color: var(--primary_2);
+  animation-name: hover-button-animation;
+  animation-duration: var(--animation_duration);
+}
+
+@keyframes hover-button-animation {
+  from {background-color: var(--black_1);
+        color: var(--primary_2);
+        border-color: var(--primary_1);}
+  to {background-color: var(--black_2);
+      color: var(--primary_3);
+      border-color: var(--primary_2);}
+} 
+
+.interface {
+  border-width: var(--border_width);
+  border-radius: var(--border_radius);
+  border-style: var(--border_style);
+  background-color: var(--black_1);
+  border-color: var(--black_2);
+}
+
+h1 {
+  position: relative;
+  padding-bottom: 3vh;
+  padding-left: var(--text_padding_left);
+}
+
+p {
+  padding-left: var(--text_padding_left);
+}
+
+.interface h1::after {
+  content: "";
+  position: absolute;
+  border-style: var(--border_style);
+  border-color: var(--black_2);
+  border-width: 0;
+  border-bottom-width: var(--border_width);
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

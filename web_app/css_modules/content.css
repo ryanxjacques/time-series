@@ -1,0 +1,19 @@
+.content-flex-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.content-flex-container  > div {
+  position: relative;
+  margin-bottom: var(--margin_between_interfaces);
+  width: 100%;
+}
+
+#interface-1 {
+  order: 1;
+}
+
+#interface-2 {
+  order: 2;
+}

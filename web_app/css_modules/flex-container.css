@@ -1,0 +1,35 @@
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--black_0);
+}
+
+.flex-container > header {
+  position: relative;
+  margin-left: 0;
+  margin-right: 0;
+  height: 6.5vh;
+  background-color: var(--black_2);
+}
+
+.flex-container > main {
+  position: relative;
+  margin-top: 10vh;
+  margin-bottom: 10vh;
+  margin-left: 10vw;
+  margin-right: 10vw;
+  height: 67vh;
+  background-color: var(--black_0);
+}
+
+.flex-container > footer {
+  position: relative;
+  margin-left: 0;
+  margin-right: 0;
+  height: 6.5vh;
+  background-color: var(--black_0);
+}
