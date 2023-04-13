@@ -32,39 +32,60 @@ footer {
 /* Grid Settings */
 .header {
     position: relative;
-    background-color: #1a1a1a;
+    background-color: #171d26;
     grid-row: header-start / header-end;
     grid-column: header / header;
 }
 
 .content {
     position: relative;
-    background-color: #121212;
+    background-color: #000000;
     grid-row: content-start / content-end;
     grid-column: left / right;
 }
 
 .footer {
     position: relative;
-    background-color: #1a1a1a;
+    background-color: #0f131a;
     grid-row: footer-start / -1;
     grid-column: footer / footer;
 }
 
+/* Make a top border that stretches exactly from left corner to right corner */
+.footer::after {
+  content: "";
+  border-style: solid;
+  border-color: #1f2633;
+  /* Width seems to behave strangely */
+  border-top-width: 0.01px;
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+}
+
 #main-interface.content {
+  border-width: 1px;
+  border-radius: 6px;
+  border-style: solid;
+  border-color: #1f2633;
   position: absolute;
   left: 10%;
   right: 10%;
-  background-color: #262626;
+  background-color: #0f131a;
   top: 6%;
   height: 60%;
 }
 
 #format-bar.content {
+  border-width: 1px;
+  border-radius: 6px;
+  border-style: solid;
+  border-color: #1f2633;
   position: absolute;
   left: 10%;
   right: 10%;
-  background-color: #262626;
+  background-color: #0f131a;
   bottom: 6%;
   margin: auto; 
   height: 23%;

@@ -1,5 +1,3 @@
-
-
 /* Button Bar Container */
 #button-bar-container.header {
   position: absolute;
@@ -41,7 +39,7 @@
   position: absolute;
   right: 5%;
   width: 90%;
-  background-color: #262626;
+  background-color: #171d26;
   top: 10%;
   margin: auto; 
   height: 80%;
@@ -53,7 +51,7 @@
 }
 
 #login-button.header:hover {
-  background-color: #333333;
+  background-color: #1f2633;
   border-color: #b33900;
   color: #e64900;
   animation-name: hover-button-animation;
@@ -61,10 +59,10 @@
 }
 @keyframes hover-button-animation {
   /* Change of +/-5% lightness */
-  from {background-color: #262626;
+  from {background-color: #171d26;
         color: #ff5100;
         border-color: #993000;}
-  to {background-color: #333333;
+  to {background-color: #1f2633;
       color: #e64900;
       border-color: #b33900;}
 }
