@@ -17,7 +17,7 @@ class LoginForm {
     
     // Form HTML
     node.innerHTML = "\
-      <form> \
+      <form method=\"post\"> \
         <p>Sign in</p> \
         <label for=\"uname\">Username:</label> \
         <input type=\"text\" value=\"admin\" id=\"admin-username\" name=\"uname\"> \

@@ -1,0 +1,5 @@
+{
+  "message": "Hello, world!",
+  "script": "alert('This is a JavaScript alert!');"
+}
+
