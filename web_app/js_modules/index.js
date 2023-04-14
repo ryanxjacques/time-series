@@ -1,6 +1,6 @@
 const loginButton = document.getElementById("login-button");
-const loginPopup = new LoginForm("login-popup");
-const submit = document.getElementById("login-popup");
+const loginPopup = document.getElementById("login-popup-container");
+const submit = document.getElementById("subit-login-button");
 const USER = "admin";
 const PASS = "admin";
 
@@ -14,9 +14,10 @@ function validate_admin(user, pass){
 }
 
 loginButton.addEventListener("click", function() {
-  if (loginPopup.hidden) {
-    // only one login popup allowed at a time.
-    loginPopup.show();
-  }
+  loginPopup.style.display = "block";
+});
+
+submit.addEventListener("click", function() {
+  loginPopup.style.display = "none";
 });
 

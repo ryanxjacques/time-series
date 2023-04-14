@@ -1,14 +1,9 @@
-#login-popup.font {
-  color: white;
-  font-size: 2vh;
-}
+/* Determines placement of login popup. */
 
-#login-popup {
-  border-style: solid;
-  border-width: 2px;
-  border-radius: 25px;
-  border-color: #ffffff;
-  display: block;
+#login-popup-container {
   position: absolute;
-  background-color: #2f373b;
+  display: none;
+  top: 3vh;
+  left: 40vw;
+  right: 40vw;
 }

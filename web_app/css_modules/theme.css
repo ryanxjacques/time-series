@@ -7,18 +7,42 @@
   --primary_1: #b33900;
   --primary_2:#ff5100;
   --primary_3: #ff7433;
+  --primary_4: #ffb999;
 
-  --animation_duration: 1s;
+  --animation_duration: 0.2s;
 
   --border_width: 2px;
   --border_radius: 6px;
   --border_style: solid;
 
+
+  --interface_title_padding_bottom: 2vh;
+  --interface_title_margin_top: 2vh;
+  
   --text_padding_left: 4vw;
 
   --footer_border: 3vw;
 
   --margin_between_interfaces: 10vh;
+
+  --popup_text_input_left: 10%;
+
+  --popup_text_input_width: 80%;
+  --popup_text_input_top_bottom_padding: 10px;
+
+  --popup_submit_input_top_bottom_padding: 10px;
+  --popup_background_color: var(--black_1);
+  --popup_border_color: var(--black_2);
+  --popup_submit_input_width: 40%;
+  --popup_submit_input_left: 30%;
+  --popup_margin_between_inputs: 10px;
+
+  /* Negative value so that I can place <span> after <input>. This is important for css selector. */
+  --popup_text_input_hint_left: -70%;
+  --popup_text_input_hint_top_bottom_padding: 10px;
+  --popup_text_input_hint_color_0: var(--primary_2);
+  --popup_text_input_hint_color_1:  var(--primary_4);
+
 }
 
 .font {
@@ -65,7 +89,8 @@ button:hover {
 
 h1 {
   position: relative;
-  padding-bottom: 3vh;
+  margin-top: var(--interface_title_margin_top);
+  padding-bottom: var(--interface_title_padding_bottom);
   padding-left: var(--text_padding_left);
 }
 
@@ -83,4 +108,72 @@ p {
   bottom: 0;
   left: 0;
   right: 0;
+}
+
+.popup-flex-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.popup-flex-container > .interface {
+  background-color: var(--popup_background_color);
+  border-color: var(--popup_border_color);
+}
+
+.popup-flex-container > .interface.font > h1 {
+  text-align: center;
+  padding-left: 0;
+}
+
+.popup-flex-container > .interface h1::after {
+  border-color: var(--popup_border_color);
+}
+
+.text-input {
+  display: block;
+  margin-bottom: var(--popup_margin_between_inputs);
+}
+
+.submit-input {
+  display: block;
+  margin-bottom: var(--popup_margin_between_inputs);
+}
+
+.submit-input > button {
+  position: relative;
+  left: var(--popup_submit_input_left);
+  width: var(--popup_submit_input_width);
+  padding-top: var(--popup_submit_input_top_bottom_padding);
+  padding-bottom: var(--popup_submit_input_top_bottom_padding);
+  box-sizing: border-box;
+}
+
+.text-input > span {
+  color: var(--popup_text_input_hint_color_0);
+  position: absolute;
+  z-index: 1;
+  cursor: text;
+  margin-left: var(--popup_text_input_hint_left);
+  padding-top: var(--popup_text_input_hint_top_bottom_padding);
+  padding-left: var(--popup_text_input_hint_top_bottom_padding);
+  
+  /* Prevent selection */
+  pointer-events: none;
+}
+
+.text-input > input {
+  position:relative;
+  left: var(--popup_text_input_left);
+  width: var(--popup_text_input_width);
+  padding-top: var(--popup_text_input_top_bottom_padding);
+  padding-bottom: var(--popup_text_input_top_bottom_padding);
+  box-sizing: border-box;
+}
+
+.text-input > input:hover + span {
+  color: var(--popup_text_input_hint_color_1);
+}
+
+.text-input > input:valid + span {
+  display: none;
 }
