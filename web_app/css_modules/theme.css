@@ -1,4 +1,5 @@
 :root {
+  /* Colors */
   --black_0: #080a0d;
   --black_1: #0f131a;
   --black_2: #171d26;
@@ -9,27 +10,41 @@
   --primary_3: #ff7433;
   --primary_4: #ffb999;
 
+  /* Font Settings */
+  --font_color: var(--primary_2);
+  --font_color_hover: var(--primary_3);
+  
+  /* Animation Settings */
   --animation_duration: 0.2s;
 
+  /* Button Settings */
+  --button_background_color: var(--black_1);
+  --button_background_color_hover: var(--black_2);
+  --button_font_size: 2vh;
+  --button_text_align: center;
+
+  /* Border Settings */
   --border_width: 2px;
   --border_radius: 6px;
   --border_style: solid;
+  --border_color: var(--black_2);
+  --border_color_hover: var(--primary_1);
 
 
+  /* Interface Settings */
   --interface_title_padding_bottom: 2vh;
   --interface_title_margin_top: 2vh;
-  
+  --margin_between_interfaces: 10vh;
   --text_padding_left: 4vw;
+  --interface_background_color: var(--black_1);
 
+  /* Footer Settings */
   --footer_border: 3vw;
 
-  --margin_between_interfaces: 10vh;
-
+  /* Popup Settings */
   --popup_text_input_left: 10%;
-
   --popup_text_input_width: 80%;
   --popup_text_input_top_bottom_padding: 10px;
-
   --popup_submit_input_top_bottom_padding: 10px;
   --popup_background_color: var(--black_1);
   --popup_border_color: var(--black_2);
@@ -46,45 +61,45 @@
 }
 
 .font {
-  color: var(--primary_2);
+  color: var(--font_color);
 }
 
 button {
   border-style: var(--border_style);
   border-radius: var(--border_radius);
   border-width: var(--border_width);
-  border-color: var(--primary_1);
-  background-color: var(--black_1); 
+  border-color: var(--border_color);
+  background-color: var(--button_background_color); 
 }
 
 button.font {
-  font-size: 2vh;
-  text-align: center;
+  font-size: var(--button_font_size);
+  text-align: var(--button_text_align);
 }
 
 button:hover {
-  background-color: var(--black_2);
-  color: var(--primary_3);
-  border-color: var(--primary_2);
+  background-color: var(--button_background_color_hover);
+  color: var(--font_color_hover);
+  border-color: var(--border_color_hover);
   animation-name: hover-button-animation;
   animation-duration: var(--animation_duration);
 }
 
 @keyframes hover-button-animation {
-  from {background-color: var(--black_1);
-        color: var(--primary_2);
-        border-color: var(--primary_1);}
-  to {background-color: var(--black_2);
-      color: var(--primary_3);
-      border-color: var(--primary_2);}
+  from {background-color: var(--button_background_color);
+        color: var(--font_color);
+        border-color: var(--border_color)}
+  to {background-color: var(--button_background_color_hover);
+      color: var(--font_color_hover);
+      border-color: var(--border_color_hover);}
 } 
 
 .interface {
   border-width: var(--border_width);
   border-radius: var(--border_radius);
   border-style: var(--border_style);
-  background-color: var(--black_1);
-  border-color: var(--black_2);
+  background-color: var(--interface_background_color);
+  border-color: var(--border_color);
 }
 
 h1 {
@@ -102,7 +117,7 @@ p {
   content: "";
   position: absolute;
   border-style: var(--border_style);
-  border-color: var(--black_2);
+  border-color: var(--border_color);
   border-width: 0;
   border-bottom-width: var(--border_width);
   bottom: 0;
