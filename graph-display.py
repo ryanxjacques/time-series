@@ -4,47 +4,44 @@ Visually representing Time Series (TS) data given by the user using matplotlib.
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-from pandas import Series
-from pandas import DataFrame
 
 # this changes the default date converter for better interactive plotting of dates:
 plt.rcParams['date.converter'] = 'concise'
 
-
-
-#TODO: Open metadata first to check scalars. This will allow several magnitudes to be stored in one magnitude graph.
-# Create as many magnitudes as needed. Can update from magnitude[] to magnitude[][] to store different magnitudes.
-with open("metadata-placeholder.csv", 'r') as g:
+with open("TestData/metadata-placeholder.csv", 'r') as g:
     # This will never change with our consistent formatting
-    metadata = pd.read_csv("metadata-placeholder.csv", header=None, names=('TS_NAME', 'DESCRIPTION', 'DOMAINS',
-                                                                   'UNITS', 'KEYWORDS', 'SCALAR'), nrows=2)
+    metadata = pd.read_csv("TestData/metadata-placeholder.csv", header=None, names=('TS_NAME', 'DESCRIPTION',
+                                                                   'UNITS', 'KEYWORDS'), nrows=2)
     ts_name = metadata['TS_NAME'].values[1]
     description = metadata['DESCRIPTION'].values[1]
-    domains = metadata['DOMAINS'].values[1].split(", ")
-    x_domain = domains[0]
-    y_domain = domains[1]
     units = metadata['UNITS'].values[1]
+    # units can be multiple <<
     keywords = metadata['KEYWORDS'].values[1]
-    scalar = int(metadata['SCALAR'].values[1])
 
 # TS Data consists only Date, Time, Magnitude.
-with open("data-placeholder.csv", 'r') as f:
+with open("TestData/data-placeholder.csv", 'r') as f:
     # this can change when introducing multiple scalars (SEE pandas.DataFrame)
-    data = pd.read_csv("data-placeholder.csv", header=1, names=('TIME', 'MAGNITUDE'))
-    data.dropna(subset=['TIME', 'MAGNITUDE'], inplace=True)
-    print(data)
-    time = data['TIME'].values
-    magnitude = data['MAGNITUDE'].values
-    length = len(data)
+    data = pd.read_csv("TestData/data-placeholder.csv", header=0)
+    columns = data.columns.values
+    #list of column names
 
+    data.dropna(subset=columns,how='all', inplace=True)
+    # drop NA rows iff all values are NaN
 
-if scalar == 1:
-    ts = Series(magnitude, index=time)
-else:
-    ts = DataFrame(magnitude, index=time)
+    time = data[columns[0]].values
+    # first column of data is always time. (common practice)
 
-plt.ylabel(f"{y_domain} ({units})")
-plt.xlabel(x_domain)
-plt.title(ts_name)
-ts.plot()
-plt.show()
+data.set_index(time, inplace=True)
+
+# Matplotlib graphing
+for column in columns:
+    plt.figure()
+    if np.issubdtype(data[column].dtype, np.number):
+    #only create a plot if it is numerical data
+        plt.plot(data.index, data[column])
+        plt.xlabel(data[columns][0][0])
+        plt.ylabel(column)
+        plt.title(f"{ts_name} - {column}")
+        plt.savefig(f"datafigures/{ts_name}-{column}.png")
+        print(f"Saved figure for {column} to file.")
+        plt.close()
