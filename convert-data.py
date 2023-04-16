@@ -25,7 +25,7 @@ read_functions = {
 }
 
 
-file_name = "placeholderfile.txt"
+file_name = "TestData/placeholderfile.txt"
 dest_file = "./TestData/data-placeholder.csv"
 file_ext = file_name.split('.')[-1]
 
