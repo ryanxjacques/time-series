@@ -28,10 +28,12 @@ with open("TestData/data-placeholder.csv", 'r') as f:
     data.dropna(subset=columns,how='all', inplace=True)
     # drop NA rows iff all values are NaN
 
-    time = data[columns[0]].values
+    time = pd.to_datetime(data[columns[0]].values)
     # first column of data is always time. (common practice)
+    # convert time to_datetime for better plotting
 
 data.set_index(time, inplace=True)
+# set index to time for plotting
 
 # Matplotlib graphing
 for column in columns:
@@ -39,7 +41,7 @@ for column in columns:
     if np.issubdtype(data[column].dtype, np.number):
     #only create a plot if it is numerical data
         plt.plot(data.index, data[column])
-        plt.xlabel(data[columns][0][0])
+        plt.xlabel(columns[0])
         plt.ylabel(column)
         plt.title(f"{ts_name} - {column}")
         plt.savefig(f"datafigures/{ts_name}-{column}.png")
