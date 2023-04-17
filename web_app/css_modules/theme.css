@@ -113,6 +113,10 @@ p {
   padding-left: var(--text_padding_left);
 }
 
+th {
+  color: var(--primary_2);
+}
+
 .interface h1::after {
   content: "";
   position: absolute;

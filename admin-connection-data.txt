@@ -1,9 +1,9 @@
 <?php
 
 $server = "ix.cs.uoregon.edu";
-$dbname = "time-series";
-$user = "ts-admin";
-$pass = "admin";
+$dbname = "time_series";
+$user = "ts_admin";
+$pass = "timeSeriesAdmin";
 $port = "3764";
 
 ?>

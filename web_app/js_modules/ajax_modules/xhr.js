@@ -38,4 +38,4 @@ const getData = (url) => {
 }
 
 // Test submit.
-getData('https://pages.uoregon.edu/jerling2/time-series/example.json');
+getData('./example.json');
