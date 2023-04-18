@@ -5,6 +5,12 @@ const https = require("https");
 const express = require('express');
 const app = express();
 
+const cors = require('cors');
+app.use(cors());
+app.use(cors({
+  origin: 'https://pages.uoregon.edu'
+}));
+
 // Requiring file system to use local files
 const fs = require("fs");
 
@@ -19,8 +25,8 @@ app.get('/', (req, res) => {
 });
 
 const options = {
-  key: fs.readFileSync("etc/pki/tls/certs/custom.key"),
-  cert: fs.readFileSync("etc/pki/tls/certs/localhost.crt"),
+  key: fs.readFileSync("server.key"),
+  cert: fs.readFileSync("server.cert"),
 };
 
 const port = process.env.PORT || 3000;

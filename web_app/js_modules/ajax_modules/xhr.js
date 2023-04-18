@@ -52,4 +52,4 @@ const sendData = (url) => {
 }
 
 // Test submit.
-getData('https://ec2-35-85-29-142.us-west-2.compute.amazonaws.com/');
+getData('https://35.85.29.142:3000/');
