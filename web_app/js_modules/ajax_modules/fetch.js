@@ -23,14 +23,15 @@ async function postData(url, data) {
   return response.json();
 }
 
-const fileInput = document.getElementById('myFile');
-fileInput.onchange = () => {
+const fileInput = document.getElementById('file-input');
+const submitFileForm = document.getElementById('submit-file-form');
+
+submitFileForm.addEventListener("submit", function() {
   const selectedFile = fileInput.files[0];
-  console.log(selectedFile);
   const formData = new FormData();
   formData.append("uploaded_file", selectedFile);
   upload(formData);
-}
+});
 
 postData("https://35.85.29.142:3000/", { message: "Test: connect to / => PASSED" }).then((data) => {
   console.log(data); // JSON data parsed by `data.json()` call
