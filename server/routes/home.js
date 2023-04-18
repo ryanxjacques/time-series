@@ -13,4 +13,11 @@ home.post('/', (req, res) => {
   res.send(JSON.stringify(msg));
 });
 
+home.put('/', (req, res) => {
+  const data = req.body;
+  // Here you can do whatever you want with the received data
+  console.log(data);
+  const msg = {message: '/ recieved put request!'};;
+});
+
 module.exports = home;
