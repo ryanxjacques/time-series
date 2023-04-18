@@ -7,7 +7,7 @@ const sendHttpRequest = (method, url, data) => {
 
     xhr.open(method, url);
 
-    xhr.responseType = 'json';
+    xhr.responseType = 'document';
 
     if (data) {
       xhr.setRequestHeader('Content-Type', 'application/json');
@@ -52,4 +52,4 @@ const sendData = (url) => {
 }
 
 // Test submit.
-getData('./example.json');
+getData('https://ec2-35-85-29-142.us-west-2.compute.amazonaws.com/');
