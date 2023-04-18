@@ -21,8 +21,8 @@ const app = express();
 const mysql = require('mysql');
 
 // Require the route modules
-const home = require('./routes/home')
-const login = require('./routes/login')
+// const home = require('./routes/home')
+// const login = require('./routes/login')
 
 /* -------------------------------------------------------------------------- */
 /*                       HTTPS Protocol for web traffic                       */
@@ -54,39 +54,15 @@ const options = {
 /* -------------------------------------------------------------------------- */
 /*                                   Routes                                   */
 /* -------------------------------------------------------------------------- */
-
-// Connect to MySQL database
-const connection = mysql.createConnection({
-  host: 'cs-422-project-1.ckfbnqxojtz2.us-west-2.rds.amazonaws.com',
-  port: '3306',
-  user: 'admin',
-  password: 'uS+Xzgy9UZK7%FVp', // this is a bad idea.
-  database: 'users'
-});
-
-connection.connect(function(err) {
-  if (err) throw err;
-  console.log('Connected to MySQL server!');
-});
-
-connection.query("SELECT username, password FROM users WHERE id=0", function (err, result, fields) {
-    console.log(result);
-    console.log(result[0].username);
-    console.log(fields);
-});
-
-// connection.end(() => {
-//   console.log('Disconnected to MySQL server.')
-// });
-
 // Register the routes with Express
-// app.use('/', home);
+app.get('/', (req, res) => {
+  res.send('Hello, World!');
+});
 
 app.post('/', (req, res) => {
-  const data = JSON.parse(req.body);
+  const data = req.body;
   // Here you can do whatever you want with the received data
-  
-  console.log(data.message);
+  console.log(data);
   res.send('Data received successfully!');
 });
 
@@ -97,6 +73,30 @@ app.post('/login', (req, res) => {
   console.log(data.message);
   res.send('Data received successfully!');
 });
+
+// // Connect to MySQL database
+// const connection = mysql.createConnection({
+//   host: 'cs-422-project-1.ckfbnqxojtz2.us-west-2.rds.amazonaws.com',
+//   port: '3306',
+//   user: 'admin',
+//   password: 'uS+Xzgy9UZK7%FVp', // this is a bad idea.
+//   database: 'users'
+// });
+
+// connection.connect(function(err) {
+//   if (err) throw err;
+//   console.log('Connected to MySQL server!');
+// });
+
+// connection.query("SELECT username, password FROM users WHERE id=0", function (err, result, fields) {
+//     console.log(result);
+//     console.log(result[0].username);
+//     console.log(fields);
+// });
+
+// connection.end(() => {
+//   console.log('Disconnected to MySQL server.')
+// });
 
 // Listen on port 3000 (default).
 const port = process.env.PORT || 3000;
