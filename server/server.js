@@ -24,6 +24,37 @@ const mysql = require('mysql');
 const home = require('./routes/home')
 const login = require('./routes/login')
 
+/* -------------------------------------------------------------------------- */
+/*                       HTTPS Protocol for web traffic                       */
+/* -------------------------------------------------------------------------- */
+// Require NodeJS to be an HTTPS server.
+const https = require("https");
+
+// Whitelist the Web App's url.
+const cors = require('cors');
+app.use(cors());
+app.use(cors({
+  origin: 'https://pages.uoregon.edu'
+}));
+
+// Requiring file system to use local files
+const fs = require("fs");
+const bodyParser = require("body-parser");
+
+// Configuring express to use body-parser as middle-ware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+// Necessary HTTPS Key and Certificate 
+const options = {
+  key: fs.readFileSync("/var/www/html/server.key"),
+  cert: fs.readFileSync("/var/www/html/server.cert"),
+};
+
+/* -------------------------------------------------------------------------- */
+/*                                   Routes                                   */
+/* -------------------------------------------------------------------------- */
+
 // Connect to MySQL database
 const connection = mysql.createConnection({
   host: 'cs-422-project-1.ckfbnqxojtz2.us-west-2.rds.amazonaws.com',
@@ -58,33 +89,6 @@ app.post('/', (req, res) => {
 app.post('/login', (req, res) => {
   login.post(req, res);
 });
-
-/* ------------------------------------------- */
-/* HTTPS Protocol for web traffic on port 3000 */
-/* ------------------------------------------- */
-// Require NodeJS to be an HTTPS server.
-const https = require("https");
-
-// Whitelist the Web App's url.
-const cors = require('cors');
-app.use(cors());
-app.use(cors({
-  origin: 'https://pages.uoregon.edu'
-}));
-
-// Requiring file system to use local files
-const fs = require("fs");
-const bodyParser = require("body-parser");
-
-// Configuring express to use body-parser as middle-ware
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-
-// Necessary HTTPS Key and Certificate 
-const options = {
-  key: fs.readFileSync("/var/www/html/server.key"),
-  cert: fs.readFileSync("/var/www/html/server.cert"),
-};
 
 // Listen on port 3000 (default).
 const port = process.env.PORT || 3000;
