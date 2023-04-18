@@ -21,8 +21,9 @@ const app = express();
 const mysql = require('mysql');
 
 // Require the route modules
-const home = require('./routes/home')
-const login = require('./routes/login')
+const home = require('./routes/home');
+const login = require('./routes/login');
+const file = require('./routes/file');
 
 /* -------------------------------------------------------------------------- */
 /*                       HTTPS Protocol for web traffic                       */
@@ -57,6 +58,7 @@ const options = {
 // Register the routes with Express
 app.use('/', home);
 app.use('/login', login);
+app.use('/file', file);
 
 // // Connect to MySQL database
 // const connection = mysql.createConnection({

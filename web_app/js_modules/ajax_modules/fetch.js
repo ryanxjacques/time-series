@@ -1,27 +1,28 @@
+// const fileInput = document.getElementById('myFile'); // get the input element for the file
+
+async function upload(formData) {
+  try {
+    const response = await fetch("https://35.85.29.142:3000/file", {
+      method: "POST",
+      body: formData,
+    });
+    const result = await response.json();
+    console.log("Success:", result);
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
 const fileInput = document.getElementById('myFile'); // get the input element for the file
+fileInput.onchange = () => {
+  const selectedFile = fileInput.files[0];
+  console.log(selectedFile);
+  const formData = new FormData();
+  formData.append("username", "abc123");
+  formData.append("file", selectedFile);
+  upload(formData);
+}
 
-fileInput.addEventListener('change', function() {
-  const file = fileInput.files[0]; // get the selected file
-  const url = 'https://35.85.29.142:3000/'; // set the URL for the PUT request
-
-  fetch(url, {
-    method: 'PUT',
-    body: file,
-    headers: {
-      'Content-Type': file.type // set the content type header to the file type
-    }
-  })
-  .then(response => {
-    if (response.ok) {
-      console.log('File uploaded successfully'); // handle the response from the server
-    } else {
-      throw new Error('Network response was not ok.');
-    }
-  })
-  .catch(error => {
-    console.error('There was a problem with the fetch operation:', error);
-  });
-});
 
 //Credit: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
 
