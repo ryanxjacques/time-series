@@ -1,7 +1,7 @@
 //Credit: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-async function upload(formData) {
+async function upload(url, formData) {
   try {
-    const response = await fetch("https://35.85.29.142:3000/file", {
+    const response = await fetch(url, {
       method: "POST",
       body: formData,
     });
@@ -30,8 +30,9 @@ submitFileForm.addEventListener("submit", function() {
   const selectedFile = fileInput.files[0];
   const formData = new FormData();
   formData.append("uploaded_file", selectedFile);
-  upload(formData);
+  upload("https://35.85.29.142:3000/file", formData);
 });
+
 
 postData("https://35.85.29.142:3000/", { message: "Test: connect to / => PASSED" }).then((data) => {
   console.log(data); // JSON data parsed by `data.json()` call
