@@ -52,5 +52,4 @@ const sendData = (url) => {
 }
 
 // Test submit.
-sendData('https://reqres.in/api/login');
-getData('https://ec2-35-85-29-142.us-west-2.compute.amazonaws.com/example.php');
+getData('./example.json');
