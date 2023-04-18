@@ -80,15 +80,9 @@ connection.query("SELECT username, password FROM users WHERE id=0", function (er
 // });
 
 // Register the routes with Express
-app.get('/', (req, res) => {
-  home.get(req, res);
-});
-app.post('/', (req, res) => {
-  home.post(req, res);
-});
-app.post('/login', (req, res) => {
-  login.post(req, res);
-});
+app.use('/', home);
+app.post('/', home.post);
+app.post('/login', login.post);
 
 // Listen on port 3000 (default).
 const port = process.env.PORT || 3000;
