@@ -9,15 +9,18 @@ const connection = mysql.createConnection({
   port: '3306',
   user: 'admin',
   password: 'uS+Xzgy9UZK7%FVp', // this is a bad idea.
-  database: 'test'
+  database: 'users'
 });
 
 connection.connect(function(err) {
   if (err) throw err;
   console.log('Connected to MySQL server!');
 });
-con.query("SELECT * FROM employees", function (err, result, fields) {
+
+connection.query("SELECT username, password FROM users WHERE id=0", function (err, result, fields) {
     console.log(result);
+    console.log(result[0]);
+    console.log(fields);
 });
 
 connection.end(() => {
