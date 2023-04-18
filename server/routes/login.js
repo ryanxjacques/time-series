@@ -1,6 +1,4 @@
-
-
-module.exports = function(req, res) {
+module.exports.post = function(req, res) {
   const data = JSON.parse(req.body);
   // Here you can do whatever you want with the received data
   

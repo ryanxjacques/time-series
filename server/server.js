@@ -49,8 +49,9 @@ connection.query("SELECT username, password FROM users WHERE id=0", function (er
 // });
 
 // Register the routes with Express
-app.get('/', home);
-app.post('/login', login);
+app.get('/', home.get);
+app.post('/', home.post);
+app.post('/login', login.post);
 
 /* ------------------------------------------- */
 /* HTTPS Protocol for web traffic on port 3000 */
