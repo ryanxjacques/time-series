@@ -1,7 +1,11 @@
-module.exports.post = function(req, res) {
-  const data = JSON.parse(req.body);
+const express = require('express');
+const login = express.Router();
+
+login.post('/login', (req, res) => {
+  const data = req.body;
   // Here you can do whatever you want with the received data
-  
-  console.log(data.message);
+  console.log(data);
   res.send('Data received successfully!');
-};
+});
+
+module.exports = login;

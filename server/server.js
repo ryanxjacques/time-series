@@ -21,8 +21,8 @@ const app = express();
 const mysql = require('mysql');
 
 // Require the route modules
-// const home = require('./routes/home')
-// const login = require('./routes/login')
+const home = require('./routes/home')
+const login = require('./routes/login')
 
 /* -------------------------------------------------------------------------- */
 /*                       HTTPS Protocol for web traffic                       */
@@ -55,24 +55,8 @@ const options = {
 /*                                   Routes                                   */
 /* -------------------------------------------------------------------------- */
 // Register the routes with Express
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-});
-
-app.post('/', (req, res) => {
-  const data = req.body;
-  // Here you can do whatever you want with the received data
-  console.log(data);
-  res.send('Data received successfully!');
-});
-
-app.post('/login', (req, res) => {
-  const data = JSON.parse(req.body);
-  // Here you can do whatever you want with the received data
-  
-  console.log(data.message);
-  res.send('Data received successfully!');
-});
+app.use('/', home);
+app.use('/login', login);
 
 // // Connect to MySQL database
 // const connection = mysql.createConnection({

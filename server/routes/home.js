@@ -2,14 +2,13 @@ const express = require('express');
 const home = express.Router();
 
 home.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.send('Hello, World!');
 });
 
 home.post('/', (req, res) => {
-  const data = JSON.parse(req.body);
+  const data = req.body;
   // Here you can do whatever you want with the received data
-  
-  console.log(data.message);
+  console.log(data);
   res.send('Data received successfully!');
 });
 
