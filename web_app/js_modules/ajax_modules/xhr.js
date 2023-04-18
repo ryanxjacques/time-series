@@ -53,3 +53,5 @@ const sendData = (url) => {
 // Test submit.
 // getData('https://35.85.29.142:3000/');
 sendData('https://35.85.29.142:3000/');
+sendData('https://35.85.29.142:3000/login');
+
