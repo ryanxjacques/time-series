@@ -3,7 +3,7 @@ const multer = require('multer');
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, 'uploads/') // specify the destination folder
+    cb(null, './uploads/') // specify the destination folder
   },
   filename: function(req, file, cb) {
     cb(null, file.originalname) // use the original file name
@@ -29,6 +29,7 @@ home.post('/', (req, res) => {
 });
 
 home.put('/', upload.single('file'), function(req, res) {
+  console.log('recieved PUT request.');
   res.send('File uploaded successfully');
 });
 
