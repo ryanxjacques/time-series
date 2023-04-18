@@ -4,7 +4,6 @@ fileInput.addEventListener('change', function() {
   const file = fileInput.files[0]; // get the selected file
   const url = 'https://35.85.29.142:3000/'; // set the URL for the PUT request
 
-  console.log('test');
   fetch(url, {
     method: 'PUT',
     body: file,
