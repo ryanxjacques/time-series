@@ -5,11 +5,11 @@ const https = require("https");
 // Connect to MySQL database
 const mysql = require('mysql');
 const connection = mysql.createConnection({
-  host: '35.85.29.142',
+  host: 'cs-422-project-1.ckfbnqxojtz2.us-west-2.rds.amazonaws.com',
   port: '3306',
   user: 'admin',
-  password: 'uS+Xzgy9UZK7%FVp',
-  database: 'test'
+  password: 'uS+Xzgy9UZK7%FVp', // this is a bad idea.
+  database: ''
 });
 
 connection.connect(function(err) {
