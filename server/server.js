@@ -26,8 +26,6 @@ app.get('/', (req, res) => {
   res.send('Hello, World!');
 });
 
-
-
 app.post('/', (req, res) => {
   const data = req.body;
   // Here you can do whatever you want with the received data
@@ -43,8 +41,8 @@ app.post('/login', (req, res) => {
 });
 
 const options = {
-  key: fs.readFileSync("server.key"),
-  cert: fs.readFileSync("server.cert"),
+  key: fs.readFileSync("/var/www/html/server.key"),
+  cert: fs.readFileSync("/var/www/html/server.cert"),
 };
 
 const port = process.env.PORT || 3000;
