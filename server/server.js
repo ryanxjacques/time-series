@@ -2,6 +2,26 @@
 // https server
 const https = require("https");
 
+// Connect to MySQL database
+const mysql = require('mysql');
+const connection = mysql.createConnection({
+  host: 'cs-422-project-1.ckfbnqxojtz2.us-west-2.rds.amazonaws.com',
+  port: '3306',
+  user: 'admin',
+  password: 'uS+Xzgy9UZK7%FVp',
+  database: 'test'
+});
+
+connection.connect(function(err) {
+  if (err) throw err;
+  console.log('Connected to MySQL server!');
+});
+
+connection.end(() => {
+  console.log('Disconnected to MySQL server.')
+});
+
+
 const express = require('express');
 const app = express();
 
@@ -34,9 +54,10 @@ app.post('/', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-  const data = req.body;
+  const data = JSON.parse(req.body);
   // Here you can do whatever you want with the received data
-  console.log(data);
+  
+  console.log(data.message);
   res.send('Data received successfully!');
 });
 
