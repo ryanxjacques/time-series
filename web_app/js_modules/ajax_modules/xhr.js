@@ -1,7 +1,7 @@
 // credit: youtube channel Academind - "Sending JavaScript Http Requests with XMLHttpRequest".
 
-const sentHttpRequest = (method, url, data) => {
-  // promise allows for async code.
+const sendHttpRequest = (method, url, data) => {
+  // promise allow for async code.
   const promise = new Promise((resolve, reject) => {
     const xhr = new XMLHttpRequest();
 
@@ -32,10 +32,25 @@ const sentHttpRequest = (method, url, data) => {
 }
 
 const getData = (url) => {
-  sentHttpRequest('GET', url).then(responseData => {
+  // the .then makes this function async.
+  sendHttpRequest('GET', url).then(responseData => {
     console.log(responseData);
   });
 }
 
+const sendData = (url) => {
+  sendHttpRequest('POST', url, {
+    "email": "eve.holt@reqres.in",
+    "password": "cityslicka"
+})
+  .then(responseData => {
+    console.log(responseData)
+  })
+  .catch(err => {
+    console.log(err);
+  });
+}
+
 // Test submit.
-getData('https://pages.uoregon.edu/jerling2/time-series/example.json');
+sendData('https://reqres.in/api/login');
+getData('https://ec2-35-85-29-142.us-west-2.compute.amazonaws.com/example.php');
