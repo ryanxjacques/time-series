@@ -1,9 +1,30 @@
-// Requiring in-built https for creating
-// https server
-const https = require("https");
+/* NodeJS Web Server! 
+   ------------------
+   Dependencies:   
+     Node Modules ... 
+       1. express
+       2. mysql
+       3. https
+       4. cors
+       5. fs
+       6. body-parser
+     Routes Modules ... 
+       1. home
+       2. login
+*/
+
+// Express Dependency
+const express = require('express');
+const app = express();
+
+// MySQL Dependency
+const mysql = require('mysql');
+
+// Require the route modules
+const home = require('./routes/home')
+const login = require('./routes/login')
 
 // Connect to MySQL database
-const mysql = require('mysql');
 const connection = mysql.createConnection({
   host: 'cs-422-project-1.ckfbnqxojtz2.us-west-2.rds.amazonaws.com',
   port: '3306',
@@ -19,61 +40,49 @@ connection.connect(function(err) {
 
 connection.query("SELECT username, password FROM users WHERE id=0", function (err, result, fields) {
     console.log(result);
-    console.log(result[0]);
+    console.log(result[0].username);
     console.log(fields);
 });
 
-connection.end(() => {
-  console.log('Disconnected to MySQL server.')
-});
+// connection.end(() => {
+//   console.log('Disconnected to MySQL server.')
+// });
 
+// Register the routes with Express
+app.get('/', home);
+app.post('/login', login);
 
-const express = require('express');
-const app = express();
+/* ------------------------------------------- */
+/* HTTPS Protocol for web traffic on port 3000 */
+/* ------------------------------------------- */
+// Require NodeJS to be an HTTPS server.
+const https = require("https");
 
+// Whitelist the Web App's url.
 const cors = require('cors');
 app.use(cors());
-
-// Allow requests comming from pages.uoregon.edu.
 app.use(cors({
   origin: 'https://pages.uoregon.edu'
 }));
 
 // Requiring file system to use local files
 const fs = require("fs");
-
 const bodyParser = require("body-parser");
-// Configuring express to use body-parser
-// as middle-ware
+
+// Configuring express to use body-parser as middle-ware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-});
-
-app.post('/', (req, res) => {
-  const data = req.body;
-  // Here you can do whatever you want with the received data
-  console.log(data);
-  res.send('Data received successfully!');
-});
-
-app.post('/login', (req, res) => {
-  const data = JSON.parse(req.body);
-  // Here you can do whatever you want with the received data
-  
-  console.log(data.message);
-  res.send('Data received successfully!');
-});
-
+// Necessary HTTPS Key and Certificate 
 const options = {
   key: fs.readFileSync("/var/www/html/server.key"),
   cert: fs.readFileSync("/var/www/html/server.cert"),
 };
 
+// Listen on port 3000 (default).
 const port = process.env.PORT || 3000;
 https.createServer(options, app)
 .listen(port, function (req, res) {
   console.log(`Server started on ${port}`);
 });
+
