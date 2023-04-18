@@ -7,6 +7,8 @@ const app = express();
 
 const cors = require('cors');
 app.use(cors());
+
+// Allow requests comming from pages.uoregon.edu.
 app.use(cors({
   origin: 'https://pages.uoregon.edu'
 }));
@@ -22,6 +24,15 @@ app.use(bodyParser.json());
 
 app.get('/', (req, res) => {
   res.send('Hello, World!');
+});
+
+
+// Credit: ChatGPT
+app.post('/api/users', (req, res) => {
+  const data = req.body;
+  // Here you can do whatever you want with the received data
+  console.log(data);
+  res.send('Data received successfully!');
 });
 
 const options = {

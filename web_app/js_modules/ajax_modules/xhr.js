@@ -7,7 +7,7 @@ const sendHttpRequest = (method, url, data) => {
 
     xhr.open(method, url);
 
-    xhr.responseType = 'document';
+    xhr.responseType = 'json';
 
     if (data) {
       xhr.setRequestHeader('Content-Type', 'application/json');
@@ -40,8 +40,7 @@ const getData = (url) => {
 
 const sendData = (url) => {
   sendHttpRequest('POST', url, {
-    "email": "eve.holt@reqres.in",
-    "password": "cityslicka"
+    "message": "Hello, world!"
 })
   .then(responseData => {
     console.log(responseData)
@@ -52,4 +51,5 @@ const sendData = (url) => {
 }
 
 // Test submit.
-getData('https://35.85.29.142:3000/');
+// getData('https://35.85.29.142:3000/');
+sendData('https://35.85.29.142:3000/api/user');
