@@ -27,10 +27,9 @@
           <h1>1. Interface Title</h1>
           <p>Interface Body</p>
           <div>
-            <form id="submit-file-form" enctype="multipart/form-data">
-              <input type="file" id="file-input" name="uploaded_file">
-              <input type="submit" id="submit-file">
-            </form>
+            <input type="file" id="file-input" name="uploaded_file">
+            <!-- Form tag messes up the submit button's default behavior -->
+            <input type="submit" id="submit-file">
           </div>
         </div>
         <div id="interface-2" class="interface font">

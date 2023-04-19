@@ -1,12 +1,16 @@
 //Credit: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-async function upload(url, formData) {
+async function upload(url, fileInput) {
+  const selectedFile = fileInput.files[0];
+  const formData = new FormData();
+  formData.append("uploaded_file", selectedFile);
   try {
     const response = await fetch(url, {
       method: "POST",
       body: formData,
     });
     const result = await response.json();
-    console.log("Success:", result);
+    // console.log("Success:", result);
+    return result;
   } catch (error) {
     console.error("Error:", error);
   }
@@ -25,13 +29,14 @@ async function postData(url, data) {
 
 const fileInput = document.getElementById('file-input');
 const submitFileForm = document.getElementById('submit-file-form');
+const submitButton = document.getElementById('submit-file');
 
-submitFileForm.addEventListener("submit", function() {
-  const selectedFile = fileInput.files[0];
-  const formData = new FormData();
-  formData.append("uploaded_file", selectedFile);
-  upload("https://35.85.29.142:3000/file", formData);
+submitButton.addEventListener("click", () => {
+  upload('https://35.85.29.142:3000/file', fileInput).then((data) => {
+    console.log(data); // JSON data parsed by `data.json()` call
+  });
 });
+
 
 
 postData("https://35.85.29.142:3000/", { message: "Test: connect to / => PASSED" }).then((data) => {

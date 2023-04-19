@@ -34,7 +34,7 @@ const https = require("https");
 // Whitelist the Web App's url.
 const cors = require('cors');
 app.use(cors({
-  origin: ['https://pages.uoregon.edu', 'http://ix.cs.uoregon.edu/'],
+  origin: 'https://pages.uoregon.edu',
 }));
 
 // Requiring file system to use local files
