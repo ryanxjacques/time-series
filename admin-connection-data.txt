@@ -1,9 +1,9 @@
 <?php
 
-$server = "ix.cs.uoregon.edu";
+$server = "cs-422-project-1.ckfbnqxojtz2.us-west-2.rds.amazonaws.com";
 $dbname = "time_series";
-$user = "ts_admin";
-$pass = "timeSeriesAdmin";
-$port = "3764";
+$user = "admin";
+$pass = "uS+Xzgy9UZK7%FVp";
+$port = "3306";
 
 ?>
