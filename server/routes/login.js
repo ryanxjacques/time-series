@@ -5,7 +5,7 @@ login.post('/', (req, res) => {
   const data = req.body;
   // Here you can do whatever you want with the received data
   console.log(data);
-  const msg = {message: '/login recieved your message!'};
+  const msg = {message: '\'/login\' recieved your message!'};
   res.send(JSON.stringify(msg));
 });
 

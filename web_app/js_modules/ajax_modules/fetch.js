@@ -1,48 +1,72 @@
-//Credit: https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
-async function upload(url, fileInput) {
+/*
+Title: Using the Fetch API
+
+Brief: This module uses the Fetch API to send requests to the server. 
+       The Fetch API uses promises under-the-hood, which allow for async code.
+
+Note:   All data sent to the server should be JSON.
+Except: File uploads sent using the FormData object.
+
+Credit: I want to thank Mozilla for providing excellent documentation on how to use
+the Fetch API. https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+*/
+
+// Get HTML document elements.
+const fileInput = document.getElementById('file-input');
+const submitFileForm = document.getElementById('submit-file-form');
+const submitButton = document.getElementById('submit-file');
+
+async function uploadFile(url, fileInput) {
+  // Extract name and file from fileInput document element.
+  const selectedName = fileInput.getAttribute("name");
   const selectedFile = fileInput.files[0];
+
+  // Add name and file to formData.
   const formData = new FormData();
-  formData.append("uploaded_file", selectedFile);
+  formData.append(selectedName, selectedFile);
   try {
+    // Send request and wait for a response.
     const response = await fetch(url, {
       method: "POST",
       body: formData,
     });
-    const result = await response.json();
-    // console.log("Success:", result);
-    return result;
+    // Return response for .then() to use.
+    return response.json();
   } catch (error) {
     console.error("Error:", error);
   }
 }
 
 async function postData(url, data) {
-  const response = await fetch(url, {
-    method: "POST", 
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  });
-  return response.json();
+  try {
+    // Send request and wait for a response.
+    const response = await fetch(url, {
+      method: "POST", 
+      headers: { //< Declare that we sending JSON data.
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    });
+    // Return response for .then() to use.
+    return response.json();
+  } catch (error) {
+    console.error("Error:", error);
+  }
 }
 
-const fileInput = document.getElementById('file-input');
-const submitFileForm = document.getElementById('submit-file-form');
-const submitButton = document.getElementById('submit-file');
-
+// Upload file when user clicks on submit button.
 submitButton.addEventListener("click", () => {
-  upload('https://35.85.29.142:3000/file', fileInput).then((data) => {
-    console.log(data); // JSON data parsed by `data.json()` call
+  uploadFile('https://35.85.29.142:3000/file', fileInput).then((data) => {
+    console.log(data.message); // JSON data parsed by `data.json()` call
   });
 });
 
-
-
+// This is a test POST request sent to server's home route.
 postData("https://35.85.29.142:3000/", { message: "Test: connect to / => PASSED" }).then((data) => {
-  console.log(data); // JSON data parsed by `data.json()` call
+  console.log(data.message); // JSON data parsed by `data.json()` call
 });
 
+// This is a test POST request sent to server's login route.
 postData("https://35.85.29.142:3000/login", { message: "Test: connect to /login => PASSED" }).then((data) => {
-  console.log(data); // JSON data parsed by `data.json()` call
+  console.log(data.message); // JSON data parsed by `data.json()` call
 });

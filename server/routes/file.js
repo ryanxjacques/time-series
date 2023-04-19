@@ -48,14 +48,14 @@ file.post('/', upload.single('uploaded_file'), function (req, res) {
        by the multer instance. 
 
   Note: The file upload action is done by the middleware function 'upload.single()'.
-        The ananonymouson function tells the server what to do after uploading the file.
+        The ananonymous function tells the server what to do after uploading the file.
   */
 
   // Create a journalctl log indicating a successfull file upload.
   console.log(req.file, req.body)
 
   // Send a message back to the client. (should always be done with JSON).
-  const msg = {message: '/file recieved your file!'};
+  const msg = {message: '\'/file\' recieved your file!'};
   res.send(JSON.stringify(msg));
 });
 
