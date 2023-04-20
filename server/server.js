@@ -59,29 +59,29 @@ app.use('/', home);
 app.use('/login', login);
 app.use('/file', file);
 
-// // Connect to MySQL database
-// const connection = mysql.createConnection({
-//   host: 'cs-422-project-1.ckfbnqxojtz2.us-west-2.rds.amazonaws.com',
-//   port: '3306',
-//   user: 'admin',
-//   password: 'uS+Xzgy9UZK7%FVp', // this is a bad idea.
-//   database: 'users'
-// });
+// Connect to MySQL database
+const connection = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_HOST,
+  password: process.env.DB_PASS,
+  port: process.env.DB_PORT,
+  database: 'users'
+});
 
-// connection.connect(function(err) {
-//   if (err) throw err;
-//   console.log('Connected to MySQL server!');
-// });
+connection.connect(function(err) {
+  if (err) throw err;
+  console.log('Connected to MySQL server!');
+});
 
-// connection.query("SELECT username, password FROM users WHERE id=0", function (err, result, fields) {
-//     console.log(result);
-//     console.log(result[0].username);
-//     console.log(fields);
-// });
+connection.query("SELECT username, password FROM users WHERE id=0", function (err, result, fields) {
+    console.log(result);
+    console.log(result[0].username);
+    console.log(fields);
+});
 
-// connection.end(() => {
-//   console.log('Disconnected to MySQL server.')
-// });
+connection.end(() => {
+  console.log('Disconnected to MySQL server.')
+});
 
 // Listen on port 3000 (default).
 const port = process.env.PORT || 3000;
