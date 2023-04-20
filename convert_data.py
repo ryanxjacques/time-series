@@ -61,6 +61,7 @@ def get_header_index(df, header_name):
     """
     Gets the index of header based on metadata
     """
+
     for i, row in df.iterrows():
         if row.tolist()[0] == header_name:
             return i
@@ -72,6 +73,12 @@ def clean_headers(df, headers) -> pd.DataFrame:
     Using metadata, attempts to remove useless columns in DF
     """
     headers = headers.split(", ")
+
+    if list(df.columns) == headers:
+        # no need to modify if headers already correct
+        return df
+
+    print(headers)
 
     header_index = get_header_index(df, headers[0])
 

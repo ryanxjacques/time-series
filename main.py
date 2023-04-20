@@ -32,7 +32,7 @@ def main():
     # Select
 
     # Contributor:
-    file_name = "TestData/Type Testing/placeholderfile.xls"
+    file_name = "TestData/Type Testing/placeholderfile.csv"
     file_ext = file_name.split('.')[-1]
     supported = True
 
@@ -83,6 +83,7 @@ def main():
             # Using accepted format data and metadata, we can graphically display the contributors data using matplotlib
             gd.graph()
 
+            print("Is this an accurate graphical representation of your data?")
             accepted = user_input_bool()
 
             if accepted:
@@ -95,7 +96,7 @@ def main():
         else:
             # if not, store data and prompt user to submit data in the future. Warn about use of algorithm comparisons.
             print("Supported file type, unsupported format. Please check to remove trailing 0s, white space, "
-                  "and other interferneces. Data should be in the following format:\n"
+                  "and other interference. Data should be in the following format:\n"
                   "Header1\tHeader2\tHeader3\t\n Data1 \t Data2 \t Data3 \t\n"
                   " Data1 \t Data2 \t Data3 \t\n  ...  \t  ...  \t  ...  ")
 
