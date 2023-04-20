@@ -11,8 +11,8 @@ List of accepted file types:
 -txt
 """
 
-import pandas as pd
 import re
+import pandas as pd
 
 
 def clean_data(file_path) -> pd.DataFrame:
@@ -66,12 +66,12 @@ def get_header_index(df, header_name):
             return i
     return None
 
+
 def clean_headers(df, headers) -> pd.DataFrame:
     """
     Using metadata, attempts to remove useless columns in DF
     """
     headers = headers.split(", ")
-
 
     header_index = get_header_index(df, headers[0])
 
@@ -81,7 +81,7 @@ def clean_headers(df, headers) -> pd.DataFrame:
     df.columns = df.iloc[header_index]
 
     # Keep only header row and rows below it
-    df = df.iloc[header_index+1:]
+    df = df.iloc[header_index + 1:]
 
     # Reset index
     df = df.reset_index(drop=True)
@@ -113,7 +113,7 @@ read_functions = {
     "xlsx": pd.read_excel,
     "json": pd.read_json,
     "txt": clean_data,
-    #"sql": pd.read_sql,
+    # "sql": pd.read_sql,
     # add other file types and corresponding functions here
 }
 
@@ -125,7 +125,6 @@ def store_data(data):
     data_file = "./TestData/data-placeholder.csv"
     train_file = "./TestData/train-placeholder.csv"
     test_file = "./TestData/test-placeholder.csv"
-
 
     # read the data into a cleaned pd.DataFrame
 
@@ -140,13 +139,3 @@ def store_data(data):
     train.to_csv(train_file, index=False)
     test.to_csv(test_file, index=False)
     # convert data to a csv and send it to respective file locations
-
-
-
-
-
-
-
-
-
-
