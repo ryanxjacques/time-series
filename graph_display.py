@@ -4,6 +4,7 @@ Visually representing Time Series (TS) data given by the user using matplotlib.
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+import seaborn as sns
 
 
 def graph():
@@ -43,10 +44,11 @@ def graph():
         plt.figure()
         if np.issubdtype(data[column].dtype, np.number):
             # only create a plot if it is numerical data
-            plt.plot(data.index, data[column])
+            plt.plot(data.index, data[column], color=sns.color_palette('Paired')[5], linewidth=.7)
             plt.xlabel(columns[0])
             plt.ylabel(column)
             plt.title(f"{ts_name} - {column}")
+            plt.grid(True)
             plt.savefig(f"datafigures/{ts_name}-{column}.png")
             print(f"Saved figure for {column} to file.")
             plt.close()

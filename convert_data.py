@@ -78,8 +78,6 @@ def clean_headers(df, headers) -> pd.DataFrame:
         # no need to modify if headers already correct
         return df
 
-    print(headers)
-
     header_index = get_header_index(df, headers[0])
 
     if header_index is None:
