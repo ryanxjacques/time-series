@@ -73,7 +73,7 @@ connection.connect(function(err) {
   console.log('Connected to MySQL server!');
 });
 
-connection.query("SELECT username, password FROM users WHERE id=0", function (err, result, fields) {
+connection.query("SELECT username, password FROM users WHERE id=1", function (err, result, fields) {
     console.log(result);
     console.log(result[0].username);
     console.log(fields);
