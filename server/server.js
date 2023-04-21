@@ -69,8 +69,6 @@ const connection = mysql.createConnection({
   database: 'users'
 });
 
-console.log(process.env.DB_HOST, process.env.DB_USER, process.env.DB_PASS, process.env.DB_PORT,);
-
 connection.connect(function(err) {
   if (err) throw err;
   console.log('Connected to MySQL server!');
