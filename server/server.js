@@ -59,6 +59,7 @@ app.use('/', home);
 app.use('/login', login);
 app.use('/file', file);
 
+// >>>>>>>>>>> THIS WILL MOVE TO A DIFFERENT MODULE LATER
 // Connect to MySQL database
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -74,14 +75,14 @@ connection.connect(function(err) {
 });
 
 connection.query("SELECT username, password FROM users WHERE id=1", function (err, result, fields) {
-    console.log(result);
-    console.log(result[0].username);
-    console.log(fields);
+  // results: <list> the results from the query.
+  console.log(`username: ${result[0].username} password ${result[0].password}`);
 });
 
 connection.end(() => {
   console.log('Disconnected to MySQL server.')
 });
+// <<<<<<<<<<< THIS WILL MOVE TO A DIFFERENT MODULE LATER
 
 // Listen on port 3000 (default).
 const port = process.env.PORT || 3000;
