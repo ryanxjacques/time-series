@@ -1,2 +1,2 @@
-TS_NAME,DESCRIPTION,DOMAINS,UNITS,KEYWORDS
-we,we,"Date, Symbol, Series, Prev Close, Open, High, Low, Last, Close, VWAP, Volume, Turnover, Trades, Deliverable Volume, %Deliverble",we,we
+TS_NAME,DESCRIPTION, UNITS, KEYWORDS
+ASIANPAINT Stock Data,Multiple Anaylitcal Data for ASIANPAINT stock,Dollars,"Stocks"
