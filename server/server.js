@@ -76,7 +76,7 @@ connection.connect(function(err) {
 
 connection.query("SELECT username, password FROM users WHERE id=1", function (err, result, fields) {
   // results: <list> the results from the query.
-  console.log(`username: ${result[0].username} password ${result[0].password}`);
+  console.log(`EX: username: ${result[0].username} password ${result[0].password}`);
 });
 
 connection.end(() => {
