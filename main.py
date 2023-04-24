@@ -29,6 +29,7 @@ def main():
 
     # DS/MLE:
 
+
     # Select
 
     # Contributor:
@@ -72,8 +73,10 @@ def main():
         print("Metadata saved to 'metadata-placeholder.csv'.")
 
         # Use metadata to clean formatting!
-        data = cv.clean_headers(data, domains_str)
-
+        try:
+            data = cv.clean_headers(data, domains_str)
+        except ValueError:
+            print("Unable to clean data. Check formatting specifications.")
         # Catch errors by checking format. Prompt user to check their data again to remove white space/leading values, etc.
         if cv.check_data_format(data):
             cv.store_data(data)

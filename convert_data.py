@@ -13,6 +13,7 @@ List of accepted file types:
 
 import re
 import pandas as pd
+import openpyxl
 
 
 def clean_data(file_path) -> pd.DataFrame:
@@ -61,7 +62,6 @@ def get_header_index(df, header_name):
     """
     Gets the index of header based on metadata
     """
-
     for i, row in df.iterrows():
         if row.tolist()[0] == header_name:
             return i
@@ -80,6 +80,7 @@ def clean_headers(df, headers) -> pd.DataFrame:
 
     header_index = get_header_index(df, headers[0])
 
+
     if header_index is None:
         raise ValueError("Could not find specified domains. Please try input again.")
     # Change column names to header_index
@@ -94,7 +95,7 @@ def clean_headers(df, headers) -> pd.DataFrame:
     return df
 
 
-def check_data_format(df) -> True:
+def check_data_format(df) -> bool:
     """
     Checks if a pd.DataFrame is in the specific format of one header row followed by data rows.
     Returns True if the DataFrame is in the expected format, otherwise returns False.
@@ -118,8 +119,22 @@ read_functions = {
     "xlsx": pd.read_excel,
     "json": pd.read_json,
     "txt": clean_data,
+    "html": pd.read_html
     # "sql": pd.read_sql,
     # add other file types and corresponding functions here
+}
+
+write_functions = {
+    "csv": pd.DataFrame.to_csv,
+    "xls" or "xl" or "xlm": pd.DataFrame.to_excel,
+    "json": pd.DataFrame.to_json,
+    "parquet": pd.DataFrame.to_parquet,
+    "sql": pd.DataFrame.to_sql,
+    "xml": pd.DataFrame.to_xml,
+    "txt": pd.DataFrame.to_latex,
+    "html": pd.DataFrame.to_html,
+
+
 }
 
 
@@ -144,3 +159,14 @@ def store_data(data):
     train.to_csv(train_file, index=False)
     test.to_csv(test_file, index=False)
     # convert data to a csv and send it to respective file locations
+
+def convert_file(file_type1, file_loc1, file_type2, file_loc2):
+    """
+    Converts any file type to a specified type
+    """
+    data = read_functions[file_type1](file_loc1)
+    data.write_functions[file_type2](file_loc2, index=False)
+
+
+
+

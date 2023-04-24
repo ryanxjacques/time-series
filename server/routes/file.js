@@ -51,7 +51,7 @@ file.post('/', upload.single('uploaded_file'), function (req, res) {
         The ananonymous function tells the server what to do after uploading the file.
   */
 
-  // Create a journalctl log indicating a successfull file upload.
+  // Create a journalctl log indicating a successful file upload.
   console.log(req.file, req.body)
 
   // Send a message back to the client. (should always be done with JSON).
@@ -61,3 +61,4 @@ file.post('/', upload.single('uploaded_file'), function (req, res) {
 
 // Export file object for server.js to use.
 module.exports = file;
+
