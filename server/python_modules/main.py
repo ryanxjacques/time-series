@@ -78,7 +78,7 @@ def main():
                'KEYWORDS': keywords_str}
 
         # Write the row to the CSV file
-        with open('TestData/metadata-placeholder.csv', mode='w', newline='') as csv_file:
+        with open('../../TestData/metadata-placeholder.csv', mode='w', newline='') as csv_file:
             writer = csv.DictWriter(csv_file, fieldnames=['TS_NAME', 'DESCRIPTION', 'DOMAINS', 'UNITS', 'KEYWORDS'])
             writer.writeheader()
             writer.writerow(row)

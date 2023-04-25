@@ -142,9 +142,9 @@ def store_data(data):
     """
     Stores data into separate test/data/train files. Returns success
     """
-    data_file = "./TestData/data-placeholder.csv"
-    train_file = "./TestData/train-placeholder.csv"
-    test_file = "./TestData/test-placeholder.csv"
+    data_file = "../../TestData/data-placeholder.csv"
+    train_file = "../../TestData/train-placeholder.csv"
+    test_file = "../../TestData/test-placeholder.csv"
 
     # read the data into a cleaned pd.DataFrame
 

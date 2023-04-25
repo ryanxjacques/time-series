@@ -11,9 +11,9 @@ def graph():
     # this changes the default date converter for better interactive plotting of dates:
     plt.rcParams['date.converter'] = 'concise'
 
-    with open("TestData/metadata-placeholder.csv", 'r') as g:
+    with open("../../TestData/metadata-placeholder.csv", 'r') as g:
         # This will never change with our consistent formatting
-        metadata = pd.read_csv("TestData/metadata-placeholder.csv", header=None, names=('TS_NAME', 'DESCRIPTION',
+        metadata = pd.read_csv("../../TestData/metadata-placeholder.csv", header=None, names=('TS_NAME', 'DESCRIPTION',
                                                                                         'UNITS', 'KEYWORDS'), nrows=2)
         ts_name = metadata['TS_NAME'].values[1]
         description = metadata['DESCRIPTION'].values[1]
@@ -22,9 +22,9 @@ def graph():
         keywords = metadata['KEYWORDS'].values[1]
 
     # TS Data consists only Date, Time, Magnitude.
-    with open("TestData/data-placeholder.csv", 'r') as f:
+    with open("../../TestData/data-placeholder.csv", 'r') as f:
         # this can change when introducing multiple scalars (SEE pandas.DataFrame)
-        data = pd.read_csv("TestData/data-placeholder.csv", header=0)
+        data = pd.read_csv("../../TestData/data-placeholder.csv", header=0)
         columns = data.columns.values
         # list of column names
 
