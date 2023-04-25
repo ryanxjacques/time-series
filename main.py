@@ -1,5 +1,7 @@
-
 import csv
+import json
+import sys
+
 import convert_data as cv
 import graph_display as gd
 
@@ -29,11 +31,22 @@ def main():
 
     # DS/MLE:
 
-
     # Select
 
     # Contributor:
-    file_name = "TestData/Type Testing/placeholderfile.csv"
+    # file_name = "TestData/TypeTesting/placeholderfile.csv"
+
+    print(sys.argv[1:])
+    class CommandLineError(Exception):
+        pass
+
+    if len(sys.argv) != 2:
+        raise CommandLineError("Only takes the file name")
+
+    file_name = (sys.argv[1])
+    # except json.JSONDecodeError:
+    #     raise ValueError("Couldn't decode string")
+
     file_ext = file_name.split('.')[-1]
     supported = True
 
@@ -77,6 +90,7 @@ def main():
             data = cv.clean_headers(data, domains_str)
         except ValueError:
             print("Unable to clean data. Check formatting specifications.")
+            supported = False
         # Catch errors by checking format. Prompt user to check their data again to remove white space/leading values, etc.
         if cv.check_data_format(data):
             cv.store_data(data)
@@ -84,28 +98,25 @@ def main():
                   f"Split into \"test\" and \"train\" files in the same directory.")
 
             # Using accepted format data and metadata, we can graphically display the contributors data using matplotlib
-            gd.graph()
+            if supported:
+                gd.graph()
+                print("Is this an accurate graphical representation of your data?")
+                accepted = user_input_bool()
 
-            print("Is this an accurate graphical representation of your data?")
-            accepted = user_input_bool()
+                if accepted:
+                    print("Thank you for contributing to our repository! Have a great day!")
+                else:
+                    print("We're sorry, we have format specifications that may have slipped through our system. "
+                          "Please check our formatting specifications and try again")
 
-            if accepted:
-                print("Thank you for contributing to our repository! Have a great day!")
             else:
-                print("We're sorry, we have format specifications that may have slipped through our system. "
-                      "Please check our formatting specifications and try again")
+                # if not, store data and prompt user to submit data in the future. Warn about use of algorithm comparisons.
+                print("Supported file type, unsupported format. Please check to remove trailing 0s, white space, "
+                      "and other interference. Data should be in the following format:\n"
+                      "Header1\tHeader2\tHeader3\t\n Data1 \t Data2 \t Data3 \t\n"
+                      " Data1 \t Data2 \t Data3 \t\n  ...  \t  ...  \t  ...  ")
 
-
-        else:
-            # if not, store data and prompt user to submit data in the future. Warn about use of algorithm comparisons.
-            print("Supported file type, unsupported format. Please check to remove trailing 0s, white space, "
-                  "and other interference. Data should be in the following format:\n"
-                  "Header1\tHeader2\tHeader3\t\n Data1 \t Data2 \t Data3 \t\n"
-                  " Data1 \t Data2 \t Data3 \t\n  ...  \t  ...  \t  ...  ")
-
-    # convert to csv and store in test/train/data placeholder
-
+                # convert to csv and store in test/train/data placeholder
 
 if __name__ == "__main__":
-
     main()
