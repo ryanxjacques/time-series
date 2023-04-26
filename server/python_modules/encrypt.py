@@ -1,21 +1,74 @@
-# Credit ChatGPT
+"""
+Author: Joseph
+Bcrypt docs: https://pypi.org/project/bcrypt/
 
+Brief:
+"""
+import sys
 import bcrypt
+import json
 
-password = b'mysecretpassword'
-pepper = b'mysecretpepper'
-salt = bcrypt.gensalt()
+# Get pepper via command-line argument.
+PEPPER = sys.argv[1].encode('utf-8')
 
-# Concatenate the password and pepper value
-password_with_pepper = password + pepper
 
-# Hash the password with salt and pepper
-hashed_password = bcrypt.hashpw(password_with_pepper, salt)
+def hash_password(password):
+    """Encrypt password with one-way hash using both salt and pepper"""
+    password = password.encode('utf-8')
+    peppered_password = password + PEPPER
 
-# Verify a password with salt and pepper
-password_to_check = b'mysecretpassword'
-password_with_pepper_to_check = password_to_check + pepper
-if bcrypt.checkpw(password_with_pepper_to_check, hashed_password):
-    print("Password is valid")
-else:
-    print("Password is invalid")
+    salt = bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(peppered_password, salt)
+    hashed_password = hashed_password.decode()
+
+    return hashed_password
+
+
+def verify_password(password, hashed_password):
+    """Check whether password pairs with hashed password"""
+    password = password.encode('utf-8')
+    hashed_password = hashed_password.encode('utf-8')
+    peppered_password = password + PEPPER
+    return bcrypt.checkpw(peppered_password, hashed_password)
+
+
+def jsonify(name, message):
+    """Transform python dict into json string"""
+    temp_dict = dict()
+    temp_dict["name"] = name
+    temp_dict[name] = message
+    json_string = json.dumps(temp_dict)
+    return json_string
+
+
+def main():
+    for line in sys.stdin:
+
+        try:
+            command = json.loads(line)
+        except json.JSONDecodeError:
+            error = jsonify("error", "Invalid JSON string")
+            print(error)
+            continue
+
+        if "arg" not in command:
+            error = jsonify("error", "Missing argument")
+            print(error)
+
+        elif command["op"] == "hash password":
+            hashed_password = hash_password(command["arg"])
+            result = jsonify("hashed_password", hashed_password)
+            print(result, flush=True)
+
+        elif command["op"] == "verify password":
+            authenticate = verify_password(command["arg"][0], command["arg"][1])
+            result = jsonify("access", authenticate)
+            print(result, flush=True)
+
+        else:
+            error = jsonify("error", "Unknown op")
+            print(error)
+
+
+if __name__ == '__main__':
+    main()
