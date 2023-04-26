@@ -10,10 +10,15 @@ import csv
 import time
 import convert_data as cv
 import graph_display as gd
+import logging
+
+logging.basicConfig(filename=config.log_path, level=logging.DEBUG)
+
 
 # upload dir: /var/www/html/uploads
 
 def watch_directory():
+    logging.info('Entered watch directory')
     """
     Watch directory specified in config file, and save to separate files
     :return:
