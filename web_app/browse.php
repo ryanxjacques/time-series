@@ -39,22 +39,21 @@ try
                  ts_length, ts_sampling_period
                  FROM ts_metadata";
       
-      $browse_query_users = "SELECT id, username, role, created_at
-                 FROM users
-                 WHERE role != 'test' and role != 'admin'";
+      $browse_query_users = "SELECT id, username
+                 FROM users";
 
       $result_ts = $ts_dbh->query($browse_query_ts);
       $result_users = $user_dbh->query($browse_query_users);
       
       if (!$result_ts) {
-          print "execution error: </br>";
+          print "ts db execution error: </br>";
           $error = $ts_dbh->errorInfo();
           print($error[2]);
           exit;
       }
 
       if (!$result_users) {
-        print "execution errrror: </br>";
+        print "user db execution error: </br>";
         $error = $user_dbh->errorInfo();
         print($error[2]);
         exit;
@@ -80,8 +79,6 @@ try
               <tr>
                 <th style="padding: 10px;">ID</th>
                 <th style="padding: 10px;">Username</th>
-                <th style="padding: 10px;">Role</th>
-                <th style="padding: 10px;">Account Created</th>
               </tr>
             </thead>
             <tbody>
@@ -91,8 +88,6 @@ try
                   echo "<td style='padding: 10px;'><a href='view-user.php?ts_id="
                         .$row['id']. "'>".$row['id']."<a/></td>";
                   echo "<td style='padding: 10px;'>".$row['username']."</td>";
-                  echo "<td style='padding: 10px;'>".$row['role']."</td>";
-                  echo "<td style='padding: 10px;'>".$row['created_at']."</td>";
                   echo "</tr>";
                 }
               ?>
