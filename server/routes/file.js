@@ -9,6 +9,7 @@ Brief: An express.Router module that uses multer middleware to handle file
 Usage: Use a POST request from the client to upload files to the server.
 */
 
+
 // The Web Application Framework.
 const express = require('express'); 
 
@@ -27,6 +28,7 @@ const storage = multer.diskStorage({
     // This is causing the weird uploaded file names.
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
     cb(null, file.fieldname + '-' + uniqueSuffix)
+    // cb(null, user.username + '-' + ts.tsname) <- get user name and add to upload name from TS Description user input
   }
 })
 

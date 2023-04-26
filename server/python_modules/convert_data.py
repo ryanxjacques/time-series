@@ -119,11 +119,10 @@ read_functions = {
     "xlsx": pd.read_excel,
     "json": pd.read_json,
     "txt": clean_data,
-    "html": pd.read_html
-    # "sql": pd.read_sql,
+    "html": pd.read_html,
+    "sql": pd.read_sql,
     # add other file types and corresponding functions here
 }
-
 write_functions = {
     "csv": pd.DataFrame.to_csv,
     "xls" or "xl" or "xlm": pd.DataFrame.to_excel,
@@ -136,6 +135,7 @@ write_functions = {
 
 
 }
+
 
 
 def store_data(data):
