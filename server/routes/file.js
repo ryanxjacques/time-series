@@ -9,6 +9,7 @@ Brief: An express.Router module that uses multer middleware to handle file
 Usage: Use a POST request from the client to upload files to the server.
 */
 
+
 // The Web Application Framework.
 const express = require('express'); 
 
@@ -27,6 +28,7 @@ const storage = multer.diskStorage({
     // This is causing the weird uploaded file names.
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
     cb(null, file.fieldname + '-' + uniqueSuffix)
+    // cb(null, user.username + '-' + ts.tsname) <- get user name and add to upload name from TS Description user input
   }
 })
 
@@ -51,7 +53,7 @@ file.post('/', upload.single('uploaded_file'), function (req, res) {
         The ananonymous function tells the server what to do after uploading the file.
   */
 
-  // Create a journalctl log indicating a successfull file upload.
+  // Create a journalctl log indicating a successful file upload.
   console.log(req.file, req.body)
 
   // Send a message back to the client. (should always be done with JSON).
@@ -61,3 +63,4 @@ file.post('/', upload.single('uploaded_file'), function (req, res) {
 
 // Export file object for server.js to use.
 module.exports = file;
+
