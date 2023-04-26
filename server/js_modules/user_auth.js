@@ -46,23 +46,17 @@ const sendPythonMessage = (json_message) => {
 };
 
 const hash_password = (password) => {
+  /* It is the user's responsibility to specify what to do when the promise is resolved */
   const decoded_message = {op: "hash password", arg: password};
   const json_message = JSON.stringify(decoded_message);
-  sendPythonMessage(json_message).then(response => {
-    console.log(response);
-  }).catch(err => {
-    console.log(err);
-  });
+  return sendPythonMessage(json_message);  //< Promise
 };
 
 const verify_password = (password, hashed_password) => {
+  /* It is the user's responsibility to specify what to do when the promise is resolved */
   const decoded_message = {op: "verify password", arg: [password, hashed_password]};
   const json_message = JSON.stringify(decoded_message);
-  sendPythonMessage(json_message).then(response => {
-    console.log(response);
-  }).catch(err => {
-    console.log(err);
-  });
+  return sendPythonMessage(json_message);  //< Promise
 };
 
 const end_script = () => {
@@ -72,7 +66,11 @@ const end_script = () => {
   });
 };
 
-// Export for server.js to use.
+/* -------------------------------------------------------------------------- */
+/*                                   Exports                                  */
+/* -------------------------------------------------------------------------- */
+
+// Specify functions ready for export.
 module.exports = {
   sendPythonMessage,
   hash_password,

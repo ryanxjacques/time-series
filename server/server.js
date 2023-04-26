@@ -64,10 +64,16 @@ app.use('/login', login);
 app.use('/file', file);
 
 // >>>>>>>>>>> THIS IS FOR TESTING PURPOSES
-// const decoded_message = {op: "hash password", arg: "somefakepassword"};
-// const json_message = JSON.stringify(decoded_message);
-// user_auth.sendPythonMessage(json_message);
-user_auth.hash_password("test");
+const test_password = "someFakePassword";
+user_auth.hash_password(test_password).then(response => {
+  console.log(`Input password: ${test_password}`)
+  console.log(`Hashed password: ${response}`);
+  user_auth.verify_password(test_password, response).then(response => {
+    console.log(`Authenticated: ${response}`);
+  })
+}).catch(err => {
+  console.log(err);
+});
 // <<<<<<<<<<< THIS IS FOR TESTING PURPOSES
 
 // >>>>>>>>>>> THIS WILL MOVE TO A DIFFERENT MODULE LATER
