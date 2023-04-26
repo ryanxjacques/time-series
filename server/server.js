@@ -26,6 +26,73 @@ const login = require('./routes/login');
 const file = require('./routes/file');
 
 /* -------------------------------------------------------------------------- */
+/*                             Python File Testing                            */
+/* -------------------------------------------------------------------------- */
+
+// Credit: https://www.npmjs.com/package/python-shell
+const {PythonShell} = require('python-shell')
+
+const pyShellOptions = {
+  mode: 'text',
+  pythonOptions: ['-u'], // get print results in real-time
+  args: [process.env.PEPPER]
+};
+
+const scriptPath = '/var/www/html/server/python_modules/encrypt.py';
+const pyshell = new PythonShell(scriptPath, pyShellOptions);
+
+const sendPythonMessage = async (json_message) => {
+  const promise = new Promise((resolve, reject) => {
+    pyshell.send(json_message);
+    pyshell.on('message', (json_response) => {
+      // received a message sent from the Python script.
+      const message = JSON.parse(json_response);
+      if (message.name == "error") {
+        reject(message.error);
+      } else if (message.name == "hashed_password") {
+        resolve(message.hashed_password)
+      } else if (message.name == "access") {
+        resolve(message.access);
+      }
+    });
+  });
+  return promise;
+};
+
+const hash_password = (password) => {
+  const decoded_message = {op: "hash password", arg: password};
+  const json_message = JSON.stringify(decoded_message);
+  sendPythonMessage(json_message).then(response => {
+    console.log(verify_password(password, response));
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
+const verify_password = (password, hashed_password) => {
+  const decoded_message = {op: "verify password", arg: [password, hashed_password]};
+  const json_message = JSON.stringify(decoded_message);
+  sendPythonMessage(json_message).then(response => {
+    console.log(response);
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
+const password = "test";
+hash_password(password);
+
+
+// const auth = verify_password(password, hashed_password);
+
+// console.log(`Passwords match: ${auth}`);
+
+pyshell.end(function(err) {
+  if (err) throw err;
+  console.log('End Script');
+});
+
+/* -------------------------------------------------------------------------- */
 /*                       HTTPS Protocol for web traffic                       */
 /* -------------------------------------------------------------------------- */
 // Require NodeJS to be an HTTPS server.
