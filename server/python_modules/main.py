@@ -2,16 +2,23 @@
 This file works as a listener and driver for all python files
 """
 
+#!/usr/bin/python3
+
 import os
 import config
 import csv
 import time
 import convert_data as cv
 import graph_display as gd
+import logging
+
+logging.basicConfig(filename=config.log_path, level=logging.DEBUG)
+
 
 # upload dir: /var/www/html/uploads
 
 def watch_directory():
+    logging.info('Entered watch directory')
     """
     Watch directory specified in config file, and save to separate files
     :return:
@@ -30,9 +37,9 @@ def watch_directory():
                 print(f"Unsupported file type {file_ext}. Cannot access full capabilities of website "
                       f"(graphical display, DS/MLE forecasting support")
 
-            # if file type is supported, graphically display it
+            # if file type is supported, read into pd.DataFrame
             if supported:
-                data = cv.read_functions[file_ext](filename)
+                data = cv.read_functions[file_ext](config.watch_path + filename)
 
             # Metadata
             print("Please enter in Metadata for the above file:")
