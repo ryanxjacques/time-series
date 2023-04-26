@@ -1,7 +1,8 @@
 <?php
 
 $server = "cs-422-project-1.ckfbnqxojtz2.us-west-2.rds.amazonaws.com";
-$dbname = "time_series";
+$tsdb = "time_series";
+$userdb = "users";
 $user = "admin";
 $pass = "uS+Xzgy9UZK7%FVp";
 $port = "3306";
