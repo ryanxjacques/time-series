@@ -26,7 +26,7 @@ const user_auth = require('./js_modules/user_auth.js');
 
 // Require the route modules
 const home = require('./routes/home');
-const login = require('./routes/login');
+const login = require('./routes/auth');
 const file = require('./routes/file');
 
 /* -------------------------------------------------------------------------- */
