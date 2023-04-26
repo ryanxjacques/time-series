@@ -16,6 +16,7 @@ def watch_directory():
     Watch directory specified in config file, and save to separate files
     :return:
     """
+    print("Entered watch directory")
     while True:
         for filename in os.listdir(config.watch_path):
             print("FOUND FILE IN DIRECTORY!!!!")
