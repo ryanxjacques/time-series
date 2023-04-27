@@ -2,21 +2,19 @@
 This file works as a listener and driver for all python files
 """
 
-#!/usr/bin/python3
+# !/usr/bin/python3
 
 import os
-import config
-import csv
 import time
+import mysql.connector
+import config
 import convert_data as cv
 import graph_display as gd
-import sys
 
+cnx = mysql.connector.connect(user=os.environ.get("DB_USER"), password=os.environ.get("DB_PASS"),
+                              host=os.environ.get("DB_HOST"),
+                              database='users')
 
-print(os.environ.get("DB_HOST"))
-print(os.environ.get("DB_USER"))
-print(os.environ.get("DB_PASS"))
-print(os.environ.get("DB_PORT"))
 
 # upload dir: /var/www/html/uploads
 def watch_directory():
@@ -44,11 +42,11 @@ def watch_directory():
 
             # Metadata
             print("Please enter in Metadata for the above file:")
-            ts_name = input("Enter the TS_NAME: ")
-            description = input("Enter the DESCRIPTION: ")
-            domains = input("Enter the DOMAINS/HEADERS (comma-separated): ")
-            units = input("Enter the UNITS (comma-separated): ")
-            keywords = input("Enter the KEYWORDS (comma-separated): ")
+            ts_name = "T"
+            description = "R"
+            domains = "S"
+            units = "u"
+            keywords = "v"
 
             # Format the units and keywords as a comma-separated string
             units_str = ', '.join(units.split(','))
@@ -59,12 +57,28 @@ def watch_directory():
             row = {'TS_NAME': ts_name, 'DESCRIPTION': description, 'DOMAINS': domains_str, 'UNITS': units_str,
                    'KEYWORDS': keywords_str}
 
-            # Write the row to the CSV file
-            # TODO: Connect to mySQL database and convert data there
-            with open('../../TestData/metadata-placeholder.csv', mode='w', newline='') as csv_file:
-                writer = csv.DictWriter(csv_file, fieldnames=['TS_NAME', 'DESCRIPTION', 'DOMAINS', 'UNITS', 'KEYWORDS'])
-                writer.writeheader()
-                writer.writerow(row)
+            # # Write the row to the CSV file
+            # # TODO: Connect to mySQL database and convert data there
+            # with open('../../TestData/metadata-placeholder.csv', mode='w', newline='') as csv_file:
+            #     writer = csv.DictWriter(csv_file, fieldnames=['TS_NAME', 'DESCRIPTION', 'DOMAINS', 'UNITS', 'KEYWORDS'])
+            #     writer.writeheader()
+            #     writer.writerow(row)
+            #
+            # #TODO: CONNECT TO CNX
+
+            # Prepare the SQL statement for inserting a row into the table
+            insert_sql = "INSERT INTO mytable (TS_NAME, DESCRIPTION, DOMAINS, UNITS, KEYWORDS) VALUES (%s, %s, %s, %s, %s)"
+
+            # Create a cursor object to execute the SQL statement
+            cursor = cnx.cursor()
+
+            # Execute the SQL statement with the values from the dictionary
+            cursor.execute(insert_sql,
+                           (row['TS_NAME'], row['DESCRIPTION'], row['DOMAINS'], row['UNITS'], row['KEYWORDS']))
+
+            # Commit the changes and close the database connection
+            cnx.commit()
+            cnx.close()
 
             print("Metadata saved to 'metadata-placeholder.csv'.")
 
@@ -101,7 +115,7 @@ def watch_directory():
 
                     # convert to csv and store in test/train/data placeholder
 
-        time.sleep(1) # wait for 1 second before checking again
+        time.sleep(1)  # wait for 1 second before checking again
 
 
 def user_input_bool() -> bool:
@@ -126,14 +140,13 @@ def main():
     """
     watch_directory()
 
+
 if __name__ == "__main__":
     main()
 
-
-
     # Main.py: needs
-        # to know if there is a file in the directory.
-            # what user uploaded the file.
+    # to know if there is a file in the directory.
+    # what user uploaded the file.
     #
     #             ts_name = input("Enter the TS_NAME: ")
     #             description = input("Enter the DESCRIPTION: ")
