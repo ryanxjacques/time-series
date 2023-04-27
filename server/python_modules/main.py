@@ -10,15 +10,16 @@ import csv
 import time
 import convert_data as cv
 import graph_display as gd
-import logging
+import sys
 
-logging.basicConfig(filename=config.log_path, level=logging.DEBUG)
 
+print(os.environ.get("DB_HOST"))
+print(os.environ.get("DB_USER"))
+print(os.environ.get("DB_PASS"))
+print(os.environ.get("DB_PORT"))
 
 # upload dir: /var/www/html/uploads
-
 def watch_directory():
-    logging.info('Entered watch directory')
     """
     Watch directory specified in config file, and save to separate files
     :return:
@@ -127,3 +128,22 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+
+    # Main.py: needs
+        # to know if there is a file in the directory.
+            # what user uploaded the file.
+    #
+    #             ts_name = input("Enter the TS_NAME: ")
+    #             description = input("Enter the DESCRIPTION: ")
+    #             domains = input("Enter the DOMAINS/HEADERS (comma-separated): ")
+    #             units = input("Enter the UNITS (comma-separated): ")
+    #             keywords = input("Enter the KEYWORDS (comma-separated): ")
+
+    # 1. Update to read data from string manipulation.
+    # 2.
+
+    # checks -> return values/errors
+    # saves/splits into train test raw data
+    # converts to files png and saves in directory

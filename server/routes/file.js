@@ -42,7 +42,7 @@ file.post('/', upload.single('uploaded_file'), function (req, res) {
 
   Params:
     1. 'uploaded_file' is the name-value for the HTML file input tag.
-    2. req: the data comming from the user.
+    2. req: the data coming from the user.
     3. res: the data sent back to the user.
 
   Result:
@@ -50,15 +50,17 @@ file.post('/', upload.single('uploaded_file'), function (req, res) {
        by the multer instance. 
 
   Note: The file upload action is done by the middleware function 'upload.single()'.
-        The ananonymous function tells the server what to do after uploading the file.
+        The anonymous function tells the server what to do after uploading the file.
   */
 
   // Create a journalctl log indicating a successful file upload.
   console.log(req.file, req.body)
 
   // Send a message back to the client. (should always be done with JSON).
-  const msg = {message: '\'/file\' recieved your file!'};
+  const msg = {message: '\'/file\' received your file!'};
+  // put driver call here
   res.send(JSON.stringify(msg));
+
 });
 
 // Export file object for server.js to use.
