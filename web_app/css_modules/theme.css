@@ -10,6 +10,8 @@
   --primary_3: #ff7433;
   --primary_4: #ffb999;
 
+  /* Error Color */
+  --error: #ff0000;
   /* Font Settings */
   --font_color: var(--primary_2);
   --font_color_hover: var(--primary_3);
@@ -128,6 +130,10 @@ ul {
 
 li {
   margin-bottom: 0.5rem;
+}
+
+a:hover {
+  color: var(--font_color_hover);
 }
 
 .interface h1::after {

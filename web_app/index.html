@@ -19,9 +19,12 @@
           <img id="logo-image" src="images/logo.png">
         </div>
         <div class="button-container">
-          <button type="button" id="login-button" class="font"><b>admin login</b></button>
+          <a href="pages/login.html">
+            <button type="button" id="login-button" class="font"><b>login</b></button>
+          </a>
         </div>
       </header>
+      <!-- I should probably consolidate the content-flex-contatiner and the flex-container -->
       <main class="content-flex-container">        
         <div id="interface-1" class="interface font">
           <h1>1. Interface Title</h1>
@@ -68,9 +71,8 @@
         </form>
       </div>
     </div>
+    <script src="js_modules/fetch.js"></script>
 	  <script src="js_modules/index.js"></script>
-    <!-- <script src="js_modules/ajax_modules/xhr.js"></script> -->
-    <script src="js_modules/ajax_modules/fetch.js"></script>
   </body>
 </html>
 

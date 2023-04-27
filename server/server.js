@@ -18,15 +18,12 @@
 const express = require('express');
 const app = express();
 
-// MySQL Dependency
-const mysql = require('mysql');
-
 // Require the javascript modules
-const user_auth = require('./js_modules/user_auth.js');
+// const db = require('./js_modules/database')
 
 // Require the route modules
 const home = require('./routes/home');
-const login = require('./routes/auth');
+const auth = require('./routes/auth');
 const file = require('./routes/file');
 
 /* -------------------------------------------------------------------------- */
@@ -60,46 +57,21 @@ const options = {
 /* -------------------------------------------------------------------------- */
 // Register the routes with Express
 app.use('/', home);
-app.use('/login', login);
+app.use('/auth', auth);
 app.use('/file', file);
 
 // >>>>>>>>>>> THIS IS FOR TESTING PURPOSES
-const test_password = "someFakePassword";
-user_auth.hash_password(test_password).then(response => {
-  console.log(`Input password: ${test_password}`)
-  console.log(`Hashed password: ${response}`);
-  user_auth.verify_password(test_password, response).then(response => {
-    console.log(`Authenticated: ${response}`);
-  })
-}).catch(err => {
-  console.log(err);
-});
+// const test_password = "someFakePassword";
+// user_auth.hash_password(test_password).then(response => {
+//   console.log(`Input password: ${test_password}`)
+//   console.log(`Hashed password: ${response}`);
+//   user_auth.verify_password(test_password, response).then(response => {
+//     console.log(`Authenticated: ${response}`);
+//   })
+// }).catch(err => {
+//   console.log(err);
+// });
 // <<<<<<<<<<< THIS IS FOR TESTING PURPOSES
-
-// >>>>>>>>>>> THIS WILL MOVE TO A DIFFERENT MODULE LATER
-// Connect to MySQL database
-const connection = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  port: process.env.DB_PORT,
-  database: 'users'
-});
-
-connection.connect(function(err) {
-  if (err) throw err;
-  console.log('Connected to MySQL server!');
-});
-
-connection.query("SELECT username, password FROM users WHERE id=1", function (err, result, fields) {
-  // results: <list> the results from the query.
-  console.log(`EX: username: ${result[0].username} password: ${result[0].password}`);
-});
-
-connection.end(() => {
-  console.log('Disconnected to MySQL server.')
-});
-// <<<<<<<<<<< THIS WILL MOVE TO A DIFFERENT MODULE LATER
 
 // Listen on port 3000 (default).
 const port = process.env.PORT || 3000;

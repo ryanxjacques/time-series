@@ -53,20 +53,3 @@ async function postData(url, data) {
     console.error("Error:", error);
   }
 }
-
-// Upload file when user clicks on submit button.
-submitButton.addEventListener("click", () => {
-  uploadFile('https://35.85.29.142:3000/file', fileInput).then((data) => {
-    console.log(data.message); // JSON data parsed by `data.json()` call
-  });
-});
-
-// This is a test POST request sent to server's home route.
-postData("https://35.85.29.142:3000/", { message: "Test: connect to / => PASSED" }).then((data) => {
-  console.log(data.message); // JSON data parsed by `data.json()` call
-});
-
-// This is a test POST request sent to server's login route.
-postData("https://35.85.29.142:3000/login", { message: "Test: connect to /login => PASSED" }).then((data) => {
-  console.log(data.message); // JSON data parsed by `data.json()` call
-});

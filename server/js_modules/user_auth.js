@@ -10,22 +10,14 @@ Python-shell docs: https://www.npmjs.com/package/python-shell
 // Import
 const { PythonShell } = require('python-shell');
 
-// This is the python file we will be communicating with.
-const scriptPath = '/var/www/html/server/python_modules/encrypt.py';
-
-// Some configurations.
-const pyShellOptions = {
-  mode: 'text',
-  pythonOptions: ['-u'], // get print results in real-time
-  args: [process.env.PEPPER]
-};
-
-// Construct a new pyshell object with defined configurations. 
-const pyshell = new PythonShell(scriptPath, pyShellOptions);
 
 /* -------------------------------------------------------------------------- */
 /*                                  Main Body                                 */
 /* -------------------------------------------------------------------------- */
+
+const connectToPython = (scriptPath, pyShellOptions) => {
+  return pyshell = new PythonShell(scriptPath, pyShellOptions);
+}
 
 const sendPythonMessage = (json_message) => {
   const promise = new Promise((resolve, reject) => {
@@ -72,6 +64,7 @@ const end_script = () => {
 
 // Specify functions ready for export.
 module.exports = {
+  connectToPython,
   sendPythonMessage,
   hash_password,
   verify_password,

@@ -1,28 +1,31 @@
-const loginButton = document.getElementById("login-button");
-const loginPopup = document.getElementById("login-popup-container");
+// const loginButton = document.getElementById("login-button");
+// const loginPopup = document.getElementById("login-popup-container");
 const submit = document.getElementById("submit-login-button");
 const searchButton = document.getElementById("search-button");
-const USER = "admin";
-const PASS = "admin";
 
+// >> This feature will be removed 
+// loginButton.addEventListener("click", function() {
+//   loginPopup.style.display = "block";
+// });
 
-function validate_admin(user, pass){
-  if (user == USER && pass == PASS){
-    alert("success");
-  } else {
-    alert("fail");
-  }
-}
-
-loginButton.addEventListener("click", function() {
-  loginPopup.style.display = "block";
-});
-
-submit.addEventListener("click", function() {
-  loginPopup.style.display = "none";
-});
+// submit.addEventListener("click", function() {
+//   loginPopup.style.display = "none";
+// });
+// << This feature will be removed 
 
 searchButton.addEventListener("click", function() {
   const searchValue = document.getElementById("search-input").value;
   window.location.href = "search-results.php?query=" + encodeURIComponent(searchValue);
+});
+
+// Upload file when user clicks on submit button.
+submitButton.addEventListener("click", () => {
+  uploadFile('https://35.85.29.142:3000/file', fileInput).then((data) => {
+    console.log(data.message); // JSON data parsed by `data.json()` call
+  });
+});
+
+// This is a test POST request sent to server's home route.
+postData("https://35.85.29.142:3000/", { message: "Test: connect to / => PASSED" }).then((data) => {
+  console.log(data.message); // JSON data parsed by `data.json()` call
 });
