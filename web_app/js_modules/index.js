@@ -17,17 +17,5 @@ postData('https://35.85.29.142:3000/', {message: "client connected to 35.85.29.1
   console.log(response.message);
 }))
 
-// Recieve Server Side Event (messages).
+// Recieve Server Side Event (messages). This lets the server know if client connects/disconnects.
 const eventSource = new EventSource('https://35.85.29.142:3000/sse');
-
-eventSource.addEventListener('message', (event) => {
-  console.log(event.data);
-});
-
-eventSource.addEventListener('open', () => {
-  console.log('Connected to server');
-});
-
-eventSource.addEventListener('error', () => {
-  console.log('Error connecting to server');
-});
