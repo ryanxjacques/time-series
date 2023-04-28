@@ -10,6 +10,7 @@ const app = express();
 const home = require('./routes/home');
 const auth = require('./routes/auth');
 const file = require('./routes/file');
+const sse = require('./routes/sse');
 
 /* -------------------------------------------------------------------------- */
 /*                       HTTPS Protocol for web traffic                       */
@@ -19,8 +20,9 @@ const https = require("https");
 
 // Whitelist the Web App's url.
 const cors = require('cors');
+
 app.use(cors({
-  origin: 'https://pages.uoregon.edu',
+  origin: 'https://pages.uoregon.edu'
 }));
 
 // Requiring file system to use local files
@@ -44,11 +46,12 @@ const options = {
 app.use('/', home);
 app.use('/auth', auth);
 app.use('/file', file);
+app.use('/sse', sse);
 
 // Listen on port 3000 (default).
-const port = process.env.PORT || 3000;
-https.createServer(options, app)
-.listen(port, function (req, res) {
+const port = process.env.APP_PORT || 3000;
+const server = https.createServer(options, app);
+
+server.listen(port, function (req, res) {
   console.log(`Server started on ${port}`);
 });
-

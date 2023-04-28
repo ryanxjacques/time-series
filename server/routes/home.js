@@ -8,8 +8,7 @@ home.get('/', (req, res) => {
 
 
 home.post('/', (req, res) => {
-  console.log(`${req.ip} connected to the server!`);
-  const msg = {message: 'Connected to server!'};
+  const msg = {message: 'You connected to server!'};
   res.send(JSON.stringify(msg));
 });
 
