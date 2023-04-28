@@ -17,7 +17,7 @@ const connectToDataBase = (databaseName) => {
   // This callback function is executed after a connection attempt.
   connection.connect(function(err) {
     if (err) {
-      console.log(err);
+      console.error(err);
     } else {
       console.log("Connected to mySQL database!");
     }
@@ -25,11 +25,6 @@ const connectToDataBase = (databaseName) => {
 
   return connection;
 };
-
-// connection.query("SELECT username, password FROM users WHERE id=1", function (err, result, fields) {
-//   // results: <list> the results from the query.
-//   console.log(`EX: username: ${result[0].username} password: ${result[0].password}`);
-// });
 
 const insertRecord = (connection, tableName, record) => {
   const promise = new Promise((resolve, reject) => {

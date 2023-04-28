@@ -42,7 +42,6 @@ auth.post('/login', (req, res) => {
       const msg = {message: 'account doesn\'t exist.'};
       res.send(JSON.stringify(msg));
     } else {
-      console.log(`Retrieved hashed password: ${response[0].password}`);
       return encryptAPI.verify_password(data.password, response[0].password);
     }
   }).then(response => {
