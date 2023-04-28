@@ -12,8 +12,3 @@ submitButton.addEventListener("click", () => {
     console.log(data.message); // JSON data parsed by `data.json()` call
   });
 });
-
-// This is a test POST request sent to server's home route.
-postData("https://35.85.29.142:3000/", { message: "Test: connect to / => PASSED" }).then((data) => {
-  console.log(data.message); // JSON data parsed by `data.json()` call
-});
