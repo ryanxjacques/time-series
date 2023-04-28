@@ -158,6 +158,10 @@ def store_data(data):
     data.to_csv(data_file, index=False)
     train.to_csv(train_file, index=False)
     test.to_csv(test_file, index=False)
+
+    # data.to_sql(data_file, connection_value, index=False)
+    # train.to_sql(train_file, index=False)
+    # test.to_sql(test_file, index=False)
     # convert data to a csv and send it to respective file locations
 
 def convert_file(file_type1, file_loc1, file_type2, file_loc2):
