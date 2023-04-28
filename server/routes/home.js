@@ -3,15 +3,13 @@ const home = express.Router();
 
 
 home.get('/', (req, res) => {
-  console.log(`${req.ip} connected to the server!`);
+  res.send('CS 422 - Project 1 - Team 4 - Time Lords');
 });
 
 
 home.post('/', (req, res) => {
-  const data = req.body;
-  // Here you can do whatever you want with the received data
-  console.log(data);
-  const msg = {message: '\'/\' recieved your message!'};
+  console.log(`${req.ip} connected to the server!`);
+  const msg = {message: 'Connected to server!'};
   res.send(JSON.stringify(msg));
 });
 

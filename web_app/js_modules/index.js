@@ -12,3 +12,7 @@ submitButton.addEventListener("click", () => {
     console.log(data.message); // JSON data parsed by `data.json()` call
   });
 });
+
+postData('https://35.85.29.142:3000/', {message: "client connected to 35.85.29.142:3000/"}).then((response => {
+  console.log(response.message);
+}))
