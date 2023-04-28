@@ -51,7 +51,11 @@ def main():
             print(error)
             continue
 
-        if "arg" not in command:
+        if "op" not in command:
+            error = jsonify("error", "Missing operation name")
+            print(error)
+
+        elif "arg" not in command:
             error = jsonify("error", "Missing argument")
             print(error)
 

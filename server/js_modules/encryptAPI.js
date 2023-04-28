@@ -13,14 +13,14 @@ const connectToEncrypt = () => {
   };
 
   // connect to encrypt.py
-  return jspyAPI.connectToPython(scriptPath, pyShellOptions);
+  return pyshellEncrypt = jspyAPI.connectToPython(scriptPath, pyShellOptions);
 }
 
 
 const encryptAPI = (jsObject) => {
   const jsonObject = JSON.stringify(jsObject);
   const promise = new Promise((resolve, reject) => {
-    jspyAPI.sendPythonMessage(jsonObject).then((response) => {
+    jspyAPI.sendPythonMessage(pyshellEncrypt, jsonObject).then((response) => {
       // Define the JSON protocal here for encryptAPI.
       if (response.name == "error") {
         reject(response.error);
