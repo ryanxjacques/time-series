@@ -8,25 +8,15 @@ Author: Joseph
 
 //-- Imports --//
 const express = require('express');
-const login = express.Router();
+const auth = express.Router();
 
-const user_auth = require('../js_modules/user_auth');
+const encryptAPI = require('../js_modules/encryptAPI');
 const db = require('../js_modules/database');
 
-// This is the python file we will be communicating with.
-const scriptPath = '/var/www/html/server/python_modules/encrypt.py';
-
-// Some configurations.
-const pyShellOptions = {
-  mode: 'text',
-  pythonOptions: ['-u'], // get print results in real-time
-  args: [process.env.PEPPER]
-};
-
 // Connect to python file. 
-user_auth.connectToPython(scriptPath, pyShellOptions)
+encryptAPI.connectToEncrypt();
 
-//
+// Connect to data base.
 const connection = db.connectToDataBase('users');
 
 
@@ -35,7 +25,7 @@ const connection = db.connectToDataBase('users');
 /*                                  Main Body                                 */
 /* -------------------------------------------------------------------------- */
 
-login.post('/', (req, res) => {
+auth.post('/', (req, res) => {
   const data = req.body;
   // Here you can do whatever you want with the received data
   console.log(data);
@@ -43,7 +33,7 @@ login.post('/', (req, res) => {
   res.send(JSON.stringify(msg));
 });
 
-login.post('/login', (req, res) => {
+auth.post('/login', (req, res) => {
   const data = req.body;
   console.log('Received data: ', data.username, data.password);
 
@@ -54,7 +44,7 @@ login.post('/login', (req, res) => {
       return
     } else {
       console.log(`Retrieved hashed password: ${response[0].password}`);
-      return user_auth.verify_password(data.password, response[0].password);
+      return encryptAPI.verify_password(data.password, response[0].password);
     }
   }).then(response => {
     if (response == false) {
@@ -71,7 +61,7 @@ login.post('/login', (req, res) => {
   });
 });
 
-login.post('/signin', (req, res) => {
+auth.post('/signup', (req, res) => {
   const data = req.body;
   console.log('Received data: ', data.username, data.password);
 
@@ -81,7 +71,7 @@ login.post('/signin', (req, res) => {
       res.send(JSON.stringify(msg));
       return
     } else {
-      return user_auth.hash_password(data.password);
+      return encryptAPI.hash_password(data.password);
     }
   }).then(response => {
     console.log(`Input password: ${data.password}`)
@@ -96,4 +86,4 @@ login.post('/signin', (req, res) => {
   });
 });
 
-module.exports = login;
+module.exports = auth;

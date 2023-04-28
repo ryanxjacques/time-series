@@ -1,25 +1,10 @@
 /* 
-   NodeJS Web Server!  (THIS MESSAGE IS OUTDATED)
-   ------------------
-   Dependencies:   
-     Node Modules ... 
-       1. express
-       2. mysql
-       3. https
-       4. cors
-       5. fs
-       6. body-parser
-     Routes Modules ... 
-       1. home
-       2. login
+   NodeJS Web Server!
 */
 
 // Express Dependency
 const express = require('express');
 const app = express();
-
-// Require the javascript modules
-// const db = require('./js_modules/database')
 
 // Require the route modules
 const home = require('./routes/home');
@@ -59,19 +44,6 @@ const options = {
 app.use('/', home);
 app.use('/auth', auth);
 app.use('/file', file);
-
-// >>>>>>>>>>> THIS IS FOR TESTING PURPOSES
-// const test_password = "someFakePassword";
-// user_auth.hash_password(test_password).then(response => {
-//   console.log(`Input password: ${test_password}`)
-//   console.log(`Hashed password: ${response}`);
-//   user_auth.verify_password(test_password, response).then(response => {
-//     console.log(`Authenticated: ${response}`);
-//   })
-// }).catch(err => {
-//   console.log(err);
-// });
-// <<<<<<<<<<< THIS IS FOR TESTING PURPOSES
 
 // Listen on port 3000 (default).
 const port = process.env.PORT || 3000;
