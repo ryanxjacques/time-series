@@ -59,15 +59,10 @@ def watch_directory():
 
             # # Write the row to the CSV file
             # # TODO: Connect to mySQL database and convert data there
-            # with open('../../TestData/metadata-placeholder.csv', mode='w', newline='') as csv_file:
-            #     writer = csv.DictWriter(csv_file, fieldnames=['TS_NAME', 'DESCRIPTION', 'DOMAINS', 'UNITS', 'KEYWORDS'])
-            #     writer.writeheader()
-            #     writer.writerow(row)
-            #
             # #TODO: CONNECT TO CNX
 
             # Prepare the SQL statement for inserting a row into the table
-            insert_sql = "INSERT INTO mytable (TS_NAME, DESCRIPTION, DOMAINS, UNITS, KEYWORDS) VALUES (%s, %s, %s, %s, %s)"
+            insert_sql = "INSERT INTO metadata (TS_NAME, DESCRIPTION, DOMAINS, UNITS, KEYWORDS) VALUES (%s, %s, %s, %s, %s)"
 
             # Create a cursor object to execute the SQL statement
             cursor = cnx.cursor()
@@ -90,7 +85,7 @@ def watch_directory():
                 supported = False
             # Catch errors by checking format. Prompt user to check their data again to remove white space/leading values, etc.
             if cv.check_data_format(data):
-                cv.store_data(data)
+                cv.store_data(data, cnx)
                 print(f"File {filename} converted to CSV and saved.\n"
                       f"Split into \"test\" and \"train\" files in the same directory.")
 

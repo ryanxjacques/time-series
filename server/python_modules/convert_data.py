@@ -13,7 +13,8 @@ List of accepted file types:
 
 import re
 import pandas as pd
-import openpyxl
+import mysql.connector
+
 
 
 def clean_data(file_path) -> pd.DataFrame:
@@ -30,12 +31,6 @@ def clean_data(file_path) -> pd.DataFrame:
     for line in lines:
         # Replace all tabs with commas
         line = line.replace('\t', ',')
-
-        # Remove any headers or footers that don't contain data
-        if line.startswith('Header'):
-            continue
-        elif line.startswith('Footer'):
-            break
 
         # Split the line into columns
         columns = line.strip().split(',')
@@ -137,10 +132,27 @@ write_functions = {
 }
 
 
-
-def store_data(data):
+def pull_data(sql_connection, use):
     """
-    Stores data into separate test/data/train files. Returns success
+    Pulls data depending on use case
+    """
+    data = pd.read_sql(sql_connection)
+
+    split_index = int(len(data) * 0.8)
+
+    if use == "train":
+        ret_data = data.iloc[:split_index, :]
+    elif use == "test":
+        ret_data = data.iloc[split_index:, :]
+
+    return ret_data
+
+
+
+
+def store_data(data, sql_connection):
+    """
+    Stores data into separate test/data/train files.
     """
     data_file = "../../TestData/data-placeholder.csv"
     train_file = "../../TestData/train-placeholder.csv"
@@ -159,7 +171,7 @@ def store_data(data):
     train.to_csv(train_file, index=False)
     test.to_csv(test_file, index=False)
 
-    # data.to_sql(data_file, connection_value, index=False)
+    data.to_sql(data_file, sql_connection, index=False)
     # train.to_sql(train_file, index=False)
     # test.to_sql(test_file, index=False)
     # convert data to a csv and send it to respective file locations
