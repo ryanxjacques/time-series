@@ -26,9 +26,8 @@ const storage = multer.diskStorage({
   },
   filename: function (req, file, cb) {
     // This is causing the weird uploaded file names.
-    console.log(file);
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
-    cb(null, file.fieldname + '-' + uniqueSuffix)
+    cb(null, file.originalname + '-' + uniqueSuffix)
     // cb(null, user.username + '-' + ts.tsname) <- get user name and add to upload name from TS Description user input
   }
 })
