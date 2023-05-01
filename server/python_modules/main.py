@@ -77,11 +77,11 @@ def watch_directory():
 
             # Commit the changes and close the database connection
             cnx.commit()
-            cnx.close()
 
             print("Metadata saved to 'metadata-placeholder.csv'.")
 
             # Use metadata to clean formatting!
+            data = None
             try:
                 data = cv.clean_headers(data, domains_str)
             except ValueError:
@@ -89,7 +89,7 @@ def watch_directory():
                 supported = False
             # Catch errors by checking format. Prompt user to check their data again to remove white space/leading values, etc.
             if cv.check_data_format(data):
-                cv.store_data(data)
+                data.to_sql(cnx, index=False)
                 print(f"File {filename} converted to CSV and saved.\n"
                       f"Split into \"test\" and \"train\" files in the same directory.")
 
@@ -113,6 +113,7 @@ def watch_directory():
                           " Data1 \t Data2 \t Data3 \t\n  ...  \t  ...  \t  ...  ")
 
                     # convert to csv and store in test/train/data placeholder
+                cnx.close()
 
         time.sleep(1)  # wait for 1 second before checking again
 
