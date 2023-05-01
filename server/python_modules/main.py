@@ -54,8 +54,8 @@ def watch_directory():
             domains_str = ', '.join(domains.split(','))
 
             # Create a dictionary representing the row to be written to the CSV file
-            row = {'TS_NAME': ts_name, 'DESCRIPTION': description, 'DOMAINS': domains_str, 'UNITS': units_str,
-                   'KEYWORDS': keywords_str}
+            row = {'ts_name': ts_name, 'ts_desc': description, 'ts_domain': domains_str, 'ts_units': units_str,
+                   'ts_keywords': keywords_str}
 
             # # Write the row to the CSV file
             # # TODO: Connect to mySQL database and convert data there
@@ -67,14 +67,14 @@ def watch_directory():
             # #TODO: CONNECT TO CNX
 
             # Prepare the SQL statement for inserting a row into the table
-            insert_sql = "INSERT INTO mytable (TS_NAME, DESCRIPTION, DOMAINS, UNITS, KEYWORDS) VALUES (%s, %s, %s, %s, %s)"
+            insert_sql = "INSERT INTO ts_metadata (ts_name, ts_desc, ts_domain, ts_units, ts_keywords) VALUES (%s, %s, %s, %s, %s)"
 
             # Create a cursor object to execute the SQL statement
             cursor = cnx.cursor()
 
             # Execute the SQL statement with the values from the dictionary
             cursor.execute(insert_sql,
-                           (row['TS_NAME'], row['DESCRIPTION'], row['DOMAINS'], row['UNITS'], row['KEYWORDS']))
+                           (row['ts_name'], row['ts_desc'], row['ts_domain'], row['ts_units'], row['ts_keywords']))
 
             # Commit the changes and close the database connection
             cnx.commit()
