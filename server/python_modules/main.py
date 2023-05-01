@@ -13,7 +13,7 @@ import graph_display as gd
 
 cnx = mysql.connector.connect(user=os.environ.get("DB_USER"), password=os.environ.get("DB_PASS"),
                               host=os.environ.get("DB_HOST"),
-                              database='time-series')
+                              database='time_series')
 
 # upload dir: /var/www/html/uploads
 def watch_directory():
