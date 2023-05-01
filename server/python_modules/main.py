@@ -32,12 +32,11 @@ def watch_directory():
             # Check if file type is supported
             if file_ext not in cv.read_functions:
                 supported = False
-                print(f"Unsupported file type {file_ext}. Cannot access full capabilities of website "
+                raise ValueError(f"Unsupported file type {file_ext}. Cannot access full capabilities of website "
                       f"(graphical display, DS/MLE forecasting support")
 
             # if file type is supported, read into pd.DataFrame
-            if supported:
-                data = cv.read_functions[file_ext](config.watch_path + filename)
+            data = cv.read_functions[file_ext](config.watch_path + filename)
 
             # Metadata
             print("Please enter in Metadata for the above file:")
@@ -81,7 +80,6 @@ def watch_directory():
             print("Metadata saved to 'metadata-placeholder.csv'.")
 
             # Use metadata to clean formatting!
-            data = None
             try:
                 data = cv.clean_headers(data, domains_str)
             except ValueError:
@@ -89,7 +87,7 @@ def watch_directory():
                 supported = False
             # Catch errors by checking format. Prompt user to check their data again to remove white space/leading values, etc.
             if cv.check_data_format(data):
-                data.to_sql(cnx, index=False)
+                data.to_sql('ts_data', cnx, index=False)
                 print(f"File {filename} converted to CSV and saved.\n"
                       f"Split into \"test\" and \"train\" files in the same directory.")
 
