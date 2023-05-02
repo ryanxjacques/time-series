@@ -139,6 +139,7 @@ def process_file(filename, path_to_file):
     if not cv.check_data_format(data):
         return log("Failed format")
 
+    print(data)
     first_col = row['ts_domain'].split(", ")[0]
     # convert first column to datetime
     data[first_col] = pd.to_datetime(data[first_col], errors='coerce')
@@ -156,6 +157,7 @@ def process_file(filename, path_to_file):
     # set the new column names using the rename() method
     sql_data = data.rename(columns=dict(zip(data.columns, new_column_names)))
     print(f"New sql data: {sql_data}")
+    print(sql_data.dtypes)
 
     sql_data.to_sql(name='ts_data',con=cnx,index=False, if_exists='append')
     log(f"{filename} was converted to SQL")
