@@ -83,14 +83,15 @@ def generate_csv_schema(metadata):
     return row
 
 
-def sql_insert_metadata(ts_metadata):
+def sql_insert_metadata(ts_metadata) -> int:
     query = ("INSERT INTO ts_metadata " 
             "(ts_name, ts_desc, ts_domain, ts_units, ts_keywords) " 
             "VALUES (%(ts_name)s, %(ts_desc)s, %(ts_domain)s, "
             "%(ts_units)s, %(ts_keywords)s)")
     cursor.execute(query, ts_metadata)
-    cnx.commit()  # Commit changes
-    return None
+
+    id = cursor.lastrowid
+    return id
 
 
 # upload dir: /var/www/html/uploads
@@ -125,8 +126,8 @@ def process_file(filename, path_to_file):
     # Create a dictionary representing the row to be written to the file
     row = generate_csv_schema(metadata)
 
-    # Insert row into sql database
-    sql_insert_metadata(row)
+    # Insert row into sql database and return id session
+    session_id = sql_insert_metadata(row)
 
     # Use metadata to clean formatting!
     try:
@@ -158,6 +159,8 @@ def process_file(filename, path_to_file):
     sql_data = data.rename(columns=dict(zip(data.columns, new_column_names)))
     print(sql_data)
     print(sql_data.dtypes)
+
+    sql_data.insert(0, 'ts_id', session_id)
 
     sql_data.to_sql(name='ts_data',con=cnx,index=False, if_exists='append')
     log(f"{filename} was converted to SQL")
