@@ -29,6 +29,7 @@ def watch_directory():
             # process the file
             pattern = "(?:\.)([a-z]*)"
             file_ext = re.search(pattern, filename)
+            print(file_ext)
             supported = True
 
             # Check if file type is supported
