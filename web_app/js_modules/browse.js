@@ -20,7 +20,7 @@ function switchTab(tabName) {
 }
 
 function fetchUsers() {
-  fetch('/users')
+  fetch('https://35.85.29.142:3000/browse/users')
   .then((response) => response.json())
   .then((users_res) => {
     displayUsers(users_res);
@@ -28,7 +28,7 @@ function fetchUsers() {
 }
 
 function fetchTimeSeries() {
-  fetch('/timeseries')
+  fetch('https://35.85.29.142:3000/browse/timeseries')
   .then((response) => response.json())
   .then((timeseries_res) => {
     displayTsMetadata(timeseries_res);
