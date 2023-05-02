@@ -14,11 +14,6 @@ timeseries.get('/timeseries', async (req, res) => {
     res.json(timeseries_res);
 })
 
-const express = require('express');
-const users = express.Router();
-
-const db = require('../js_modules/database');
-
 users.get('/users', async (req, res) => {
     const connection = db.connectToDataBase('users');
     const users_res = await db.getRecordElement(connection, 'users', ['id', 'username'], true);
