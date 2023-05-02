@@ -27,7 +27,7 @@ const sendPythonMessage = (pyshell, json_message) => {
         const message = JSON.parse(json_response);
         resolve(message);
       } catch {
-        reject(message);
+        reject(json_response);
       }
     });
   });

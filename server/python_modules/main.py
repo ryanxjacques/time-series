@@ -1,7 +1,6 @@
 """
 This file works as a listener and driver for all python files
 """
-
 # !/usr/bin/python3
 
 import os
@@ -14,9 +13,30 @@ import config
 import convert_data as cv
 import graph_display as gd
 
-cnx = mysql.connector.connect(user=os.environ.get("DB_USER"), password=os.environ.get("DB_PASS"),
-                              host=os.environ.get("DB_HOST"),
-                              database='time_series')
+# Connect to mySQL database
+cnx = mysql.connector.connect(
+    user=os.environ.get("DB_USER"),
+    password=os.environ.get("DB_PASS"),
+    host=os.environ.get("DB_HOST"),
+    database='time_series')
+
+# For debugging.
+LOG_STATEMENTS = ["Watch directory ran!"]
+
+
+def log(message):
+    """ add message to the debug log """
+    LOG_STATEMENTS.append(message)
+
+
+def jsonify(name, message):
+    """Transform python dict into json string"""
+    temp_dict = dict()
+    temp_dict["name"] = name
+    temp_dict[name] = message
+    json_string = json.dumps(temp_dict)
+    return json_string
+
 
 # upload dir: /var/www/html/uploads
 def watch_directory():
@@ -24,27 +44,33 @@ def watch_directory():
     Watch directory specified in config file, and save to separate files
     :return:
     """
-    print("Entered watch directory")
+    log("Entered watch directory")
 
+    # Iterate through each file in the watch directory.
     for filename in os.listdir(config.watch_path):
-        print(f"FOUND FILE IN DIRECTORY: {filename}")
-        # process the file
-        pattern = "(?:\.)([a-z]*)"
-        file_ext = re.search(pattern, filename)
-        print(file_ext)
-        supported = True
+        log(f"FOUND FILE IN DIRECTORY: {filename}")
 
-        # Check if file type is supported
+        # Capture the file extension with Regular Expressions.
+        pattern = r"(?:\.)([a-z]*)"
+        regex_matches = re.search(pattern, filename)
+        file_ext = regex_matches.group(1)
+        log(file_ext)
+
+        # Check if file type is unsupported.
+        supported = True
         if file_ext not in cv.read_functions:
             supported = False
-            raise ValueError(f"Unsupported file type {file_ext}. Cannot access full capabilities of website "
-                  f"(graphical display, DS/MLE forecasting support")
+            log(f"Unsupported file type {file_ext}")
+            return
 
         # if file type is supported, read into pd.DataFrame
-        data = cv.read_functions[file_ext](config.watch_path + filename)
+        data = cv.read_functions[file_ext](f"{config.watch_path}/{filename}")
+
+        # Debug Statement
+        log(f'data: \n {data} \n')
 
         # Metadata
-        print("Please enter in Metadata for the above file:")
+        # print("Please enter in Metadata for the above file:")
         ts_name = "T"
         description = "R"
         domains = "S"
@@ -60,17 +86,19 @@ def watch_directory():
         row = {'ts_name': ts_name, 'ts_desc': description, 'ts_domain': domains_str, 'ts_units': units_str,
                'ts_keywords': keywords_str}
 
-        # # Write the row to the CSV file
-        # # TODO: Connect to mySQL database and convert data there
+        # Write the row to the CSV file
+        # TODO: Connect to mySQL database and convert data there
         # with open('../../TestData/metadata-placeholder.csv', mode='w', newline='') as csv_file:
         #     writer = csv.DictWriter(csv_file, fieldnames=['TS_NAME', 'DESCRIPTION', 'DOMAINS', 'UNITS', 'KEYWORDS'])
         #     writer.writeheader()
         #     writer.writerow(row)
         #
-        # #TODO: CONNECT TO CNX
-
-        # Prepare the SQL statement for inserting a row into the table
-        insert_sql = "INSERT INTO ts_metadata (ts_name, ts_desc, ts_domain, ts_units, ts_keywords) VALUES (%s, %s, %s, %s, %s)"
+        # TODO: CONNECT TO CNX
+        #
+        # # Prepare the SQL statement for inserting a row into the table
+        insert_sql = "INSERT INTO ts_metadata " \
+                     "(ts_name, ts_desc, ts_domain, ts_units, ts_keywords) " \
+                     "VALUES (%s, %s, %s, %s, %s)"
 
         # Create a cursor object to execute the SQL statement
         cursor = cnx.cursor()
@@ -82,41 +110,47 @@ def watch_directory():
         # Commit the changes and close the database connection
         cnx.commit()
 
-        print("Metadata saved to 'metadata-placeholder.csv'.")
+        log("Metadata saved to 'metadata-placeholder.csv'.")
 
         # Use metadata to clean formatting!
         try:
             data = cv.clean_headers(data, domains_str)
         except ValueError:
-            print("Unable to clean data. Check formatting specifications.")
+            log("Unable to clean data. Check formatting specifications.")
             supported = False
+
+        """ >>> THIS THROWS A "FAILED SHAPE" ERROR  """
         # Catch errors by checking format. Prompt user to check their data again to remove white space/leading values, etc.
-        if cv.check_data_format(data):
-            data.to_sql('ts_data', cnx, index=False)
-            print(f"File {filename} converted to CSV and saved.\n"
-                  f"Split into \"test\" and \"train\" files in the same directory.")
+        # if cv.check_data_format(data):
+        #     pass
+        #     data.to_sql('ts_data', cnx, index=False)
+        #     log(f"File {filename} converted to CSV and saved.\n"
+        #           f"Split into \"test\" and \"train\" files in the same directory.")
 
-            # Using accepted format data and metadata, we can graphically display the contributors data using matplotlib
-            if supported:
-                gd.graph()
-                print("Is this an accurate graphical representation of your data?")
-                accepted = user_input_bool()
-
-                if accepted:
-                    print("Thank you for contributing to our repository! Have a great day!")
-                else:
-                    print("We're sorry, we have format specifications that may have slipped through our system. "
-                          "Please check our formatting specifications and try again")
-
-            else:
-                # if not, store data and prompt user to submit data in the future. Warn about use of algorithm comparisons.
-                print("Supported file type, unsupported format. Please check to remove trailing 0s, white space, "
-                      "and other interference. Data should be in the following format:\n"
-                      "Header1\tHeader2\tHeader3\t\n Data1 \t Data2 \t Data3 \t\n"
-                      " Data1 \t Data2 \t Data3 \t\n  ...  \t  ...  \t  ...  ")
-
+        #     # Using accepted format data and metadata, we can graphically display the contributors data using matplotlib
+        #     if supported:
+        #         gd.graph()
+        #         log("Is this an accurate graphical representation of your data?")
+        #         accepted = user_input_bool()
+        #
+        #         if accepted:
+        #             log("Thank you for contributing to our repository! Have a great day!")
+        #         else:
+        #             log("We're sorry, we have format specifications that may have slipped through our system. "
+        #                   "Please check our formatting specifications and try again")
+        #
+        #     else:
+        #         # if not, store data and prompt user to submit data in the future. Warn about use of algorithm comparisons.
+        #         log("Supported file type, unsupported format. Please check to remove trailing 0s, white space, "
+        #               "and other interference. Data should be in the following format:\n"
+        #               "Header1\tHeader2\tHeader3\t\n Data1 \t Data2 \t Data3 \t\n"
+        #               " Data1 \t Data2 \t Data3 \t\n  ...  \t  ...  \t  ...  ")
+        #
                 # convert to csv and store in test/train/data placeholder
-            cnx.close()
+
+    # Close mySQL connection when watch_directory finishes.
+    cnx.close()
+    return  # None
 
 
 def user_input_bool() -> bool:
@@ -132,7 +166,7 @@ def user_input_bool() -> bool:
             accepted = False
             return accepted
         else:
-            print("Invalid input. Please enter 'Y' or 'N'.")
+            log("Invalid input. Please enter 'Y' or 'N'.")
 
 
 def main():
@@ -140,24 +174,26 @@ def main():
     Main driver for python module
     """
     for line in sys.stdin:
-        """
-        This program will read from stdin for its entire lifespan. From stdin,
-        it is expecting a JSON string. If the JSON string is valid, this program
-        will do some operation. Otherwise, if the JSON string is invalid, the 
-        program will terminate.
-        """
-        print(line)
-        # Check if JSON string is valid.
+
         try:
-            # Try to decode the JSON string.
             command = json.loads(line)
         except json.JSONDecodeError:
-            # JSON data is invalid -> end the program.
-            return print("Error: Invalid JSON string")
+            error = jsonify("error", "Invalid JSON string")
+            print(error, flush=True)
+            continue
 
-        # Process valid JSON string. (our listeners)
-        if command["update"]:
+        if "update" not in command:
+            error = jsonify("error", "invalid request")
+            print(error, flush=True)
+
+        elif command["update"]:
             watch_directory()
+            result = jsonify("success", LOG_STATEMENTS)
+            print(result, flush=True)
+
+        else:
+            error = jsonify("error", "Unknown command")
+            print(error, flush=True)
 
 
 if __name__ == "__main__":
