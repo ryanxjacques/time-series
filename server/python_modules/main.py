@@ -3,14 +3,14 @@ This file works as a listener and driver for all python files
 """
 # !/usr/bin/python3
 
+import json
 # Import Libraries
 import os
-import json
 import sys
-import regex as re
+
 import mysql.connector
 import pandas as pd
-from dateutil.parser import parse
+import regex as re
 
 # Import Local Files
 import config
@@ -84,14 +84,25 @@ def generate_csv_schema(metadata):
 
 
 def sql_insert_metadata(ts_metadata) -> int:
-    query = ("INSERT INTO ts_metadata " 
-            "(ts_name, ts_desc, ts_domain, ts_units, ts_keywords) " 
-            "VALUES (%(ts_name)s, %(ts_desc)s, %(ts_domain)s, "
-            "%(ts_units)s, %(ts_keywords)s)")
+    query = ("INSERT INTO ts_metadata "
+             "(ts_name, ts_desc, ts_domain, ts_units, ts_keywords) "
+             "VALUES (%(ts_name)s, %(ts_desc)s, %(ts_domain)s, "
+             "%(ts_units)s, %(ts_keywords)s)")
     cursor.execute(query, ts_metadata)
     cnx.commit()
     id = cursor.lastrowid
     return id
+
+
+def sql_insert_data(df: pd.DataFrame, columns):
+    query = f"INSERT INTO {'ts_data'} ({', '.join(columns)}) VALUES ({', '.join(['%s'] * len(columns))})"
+
+    # Iterate through the rows of the pandas DataFrame and insert the data into the MySQL database
+    for index, row in df.iterrows():
+        data = tuple(row[column] for column in columns)
+        cursor.execute(query, data)
+
+    cnx.commit()
 
 
 # upload dir: /var/www/html/uploads
@@ -135,7 +146,6 @@ def process_file(filename, path_to_file):
     except ValueError:
         return log(f"{filename} Unable to clean headers.")
 
-
     # Catch errors by checking format.
     if not cv.check_data_format(data):
         return log("Failed format")
@@ -164,7 +174,7 @@ def process_file(filename, path_to_file):
 
     print(sql_data)
 
-    sql_data.to_sql(name='ts_data',con=cnx,index=False, if_exists='append')
+    sql_insert_data(sql_data, sql_data.columns.values)
     log(f"{filename} was converted to SQL")
     cnx.close()
 
