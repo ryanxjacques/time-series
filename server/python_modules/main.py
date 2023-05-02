@@ -5,6 +5,8 @@ This file works as a listener and driver for all python files
 # !/usr/bin/python3
 
 import os
+import json
+import sys
 import time
 import regex as re
 import mysql.connector
@@ -23,100 +25,98 @@ def watch_directory():
     :return:
     """
     print("Entered watch directory")
-    while True:
-        for filename in os.listdir(config.watch_path):
-            print(f"FOUND FILE IN DIRECTORY: {filename}")
-            # process the file
-            pattern = "(?:\.)([a-z]*)"
-            file_ext = re.search(pattern, filename)
-            print(file_ext) 
-            supported = True
 
-            # Check if file type is supported
-            if file_ext not in cv.read_functions:
-                supported = False
-                raise ValueError(f"Unsupported file type {file_ext}. Cannot access full capabilities of website "
-                      f"(graphical display, DS/MLE forecasting support")
+    for filename in os.listdir(config.watch_path):
+        print(f"FOUND FILE IN DIRECTORY: {filename}")
+        # process the file
+        pattern = "(?:\.)([a-z]*)"
+        file_ext = re.search(pattern, filename)
+        print(file_ext)
+        supported = True
 
-            # if file type is supported, read into pd.DataFrame
-            data = cv.read_functions[file_ext](config.watch_path + filename)
+        # Check if file type is supported
+        if file_ext not in cv.read_functions:
+            supported = False
+            raise ValueError(f"Unsupported file type {file_ext}. Cannot access full capabilities of website "
+                  f"(graphical display, DS/MLE forecasting support")
 
-            # Metadata
-            print("Please enter in Metadata for the above file:")
-            ts_name = "T"
-            description = "R"
-            domains = "S"
-            units = "u"
-            keywords = "v"
+        # if file type is supported, read into pd.DataFrame
+        data = cv.read_functions[file_ext](config.watch_path + filename)
 
-            # Format the units and keywords as a comma-separated string
-            units_str = ', '.join(units.split(','))
-            keywords_str = ', '.join(keywords.split(','))
-            domains_str = ', '.join(domains.split(','))
+        # Metadata
+        print("Please enter in Metadata for the above file:")
+        ts_name = "T"
+        description = "R"
+        domains = "S"
+        units = "u"
+        keywords = "v"
 
-            # Create a dictionary representing the row to be written to the CSV file
-            row = {'ts_name': ts_name, 'ts_desc': description, 'ts_domain': domains_str, 'ts_units': units_str,
-                   'ts_keywords': keywords_str}
+        # Format the units and keywords as a comma-separated string
+        units_str = ', '.join(units.split(','))
+        keywords_str = ', '.join(keywords.split(','))
+        domains_str = ', '.join(domains.split(','))
 
-            # # Write the row to the CSV file
-            # # TODO: Connect to mySQL database and convert data there
-            # with open('../../TestData/metadata-placeholder.csv', mode='w', newline='') as csv_file:
-            #     writer = csv.DictWriter(csv_file, fieldnames=['TS_NAME', 'DESCRIPTION', 'DOMAINS', 'UNITS', 'KEYWORDS'])
-            #     writer.writeheader()
-            #     writer.writerow(row)
-            #
-            # #TODO: CONNECT TO CNX
+        # Create a dictionary representing the row to be written to the CSV file
+        row = {'ts_name': ts_name, 'ts_desc': description, 'ts_domain': domains_str, 'ts_units': units_str,
+               'ts_keywords': keywords_str}
 
-            # Prepare the SQL statement for inserting a row into the table
-            insert_sql = "INSERT INTO ts_metadata (ts_name, ts_desc, ts_domain, ts_units, ts_keywords) VALUES (%s, %s, %s, %s, %s)"
+        # # Write the row to the CSV file
+        # # TODO: Connect to mySQL database and convert data there
+        # with open('../../TestData/metadata-placeholder.csv', mode='w', newline='') as csv_file:
+        #     writer = csv.DictWriter(csv_file, fieldnames=['TS_NAME', 'DESCRIPTION', 'DOMAINS', 'UNITS', 'KEYWORDS'])
+        #     writer.writeheader()
+        #     writer.writerow(row)
+        #
+        # #TODO: CONNECT TO CNX
 
-            # Create a cursor object to execute the SQL statement
-            cursor = cnx.cursor()
+        # Prepare the SQL statement for inserting a row into the table
+        insert_sql = "INSERT INTO ts_metadata (ts_name, ts_desc, ts_domain, ts_units, ts_keywords) VALUES (%s, %s, %s, %s, %s)"
 
-            # Execute the SQL statement with the values from the dictionary
-            cursor.execute(insert_sql,
-                           (row['ts_name'], row['ts_desc'], row['ts_domain'], row['ts_units'], row['ts_keywords']))
+        # Create a cursor object to execute the SQL statement
+        cursor = cnx.cursor()
 
-            # Commit the changes and close the database connection
-            cnx.commit()
+        # Execute the SQL statement with the values from the dictionary
+        cursor.execute(insert_sql,
+                       (row['ts_name'], row['ts_desc'], row['ts_domain'], row['ts_units'], row['ts_keywords']))
 
-            print("Metadata saved to 'metadata-placeholder.csv'.")
+        # Commit the changes and close the database connection
+        cnx.commit()
 
-            # Use metadata to clean formatting!
-            try:
-                data = cv.clean_headers(data, domains_str)
-            except ValueError:
-                print("Unable to clean data. Check formatting specifications.")
-                supported = False
-            # Catch errors by checking format. Prompt user to check their data again to remove white space/leading values, etc.
-            if cv.check_data_format(data):
-                data.to_sql('ts_data', cnx, index=False)
-                print(f"File {filename} converted to CSV and saved.\n"
-                      f"Split into \"test\" and \"train\" files in the same directory.")
+        print("Metadata saved to 'metadata-placeholder.csv'.")
 
-                # Using accepted format data and metadata, we can graphically display the contributors data using matplotlib
-                if supported:
-                    gd.graph()
-                    print("Is this an accurate graphical representation of your data?")
-                    accepted = user_input_bool()
+        # Use metadata to clean formatting!
+        try:
+            data = cv.clean_headers(data, domains_str)
+        except ValueError:
+            print("Unable to clean data. Check formatting specifications.")
+            supported = False
+        # Catch errors by checking format. Prompt user to check their data again to remove white space/leading values, etc.
+        if cv.check_data_format(data):
+            data.to_sql('ts_data', cnx, index=False)
+            print(f"File {filename} converted to CSV and saved.\n"
+                  f"Split into \"test\" and \"train\" files in the same directory.")
 
-                    if accepted:
-                        print("Thank you for contributing to our repository! Have a great day!")
-                    else:
-                        print("We're sorry, we have format specifications that may have slipped through our system. "
-                              "Please check our formatting specifications and try again")
+            # Using accepted format data and metadata, we can graphically display the contributors data using matplotlib
+            if supported:
+                gd.graph()
+                print("Is this an accurate graphical representation of your data?")
+                accepted = user_input_bool()
 
+                if accepted:
+                    print("Thank you for contributing to our repository! Have a great day!")
                 else:
-                    # if not, store data and prompt user to submit data in the future. Warn about use of algorithm comparisons.
-                    print("Supported file type, unsupported format. Please check to remove trailing 0s, white space, "
-                          "and other interference. Data should be in the following format:\n"
-                          "Header1\tHeader2\tHeader3\t\n Data1 \t Data2 \t Data3 \t\n"
-                          " Data1 \t Data2 \t Data3 \t\n  ...  \t  ...  \t  ...  ")
+                    print("We're sorry, we have format specifications that may have slipped through our system. "
+                          "Please check our formatting specifications and try again")
 
-                    # convert to csv and store in test/train/data placeholder
-                cnx.close()
+            else:
+                # if not, store data and prompt user to submit data in the future. Warn about use of algorithm comparisons.
+                print("Supported file type, unsupported format. Please check to remove trailing 0s, white space, "
+                      "and other interference. Data should be in the following format:\n"
+                      "Header1\tHeader2\tHeader3\t\n Data1 \t Data2 \t Data3 \t\n"
+                      " Data1 \t Data2 \t Data3 \t\n  ...  \t  ...  \t  ...  ")
 
-        time.sleep(1)  # wait for 1 second before checking again
+                # convert to csv and store in test/train/data placeholder
+            cnx.close()
 
 
 def user_input_bool() -> bool:
@@ -139,7 +139,25 @@ def main():
     """
     Main driver for python module
     """
-    watch_directory()
+    for line in sys.stdin:
+        """
+        This program will read from stdin for its entire lifespan. From stdin,
+        it is expecting a JSON string. If the JSON string is valid, this program
+        will do some operation. Otherwise, if the JSON string is invalid, the 
+        program will terminate.
+        """
+        print(line)
+        # Check if JSON string is valid.
+        try:
+            # Try to decode the JSON string.
+            command = json.loads(line)
+        except json.JSONDecodeError:
+            # JSON data is invalid -> end the program.
+            return print("Error: Invalid JSON string")
+
+        # Process valid JSON string. (our listeners)
+        if command["update"]:
+            watch_directory()
 
 
 if __name__ == "__main__":
