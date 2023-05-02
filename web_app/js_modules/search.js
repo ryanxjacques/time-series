@@ -77,6 +77,3 @@ function getSearchTermFromUrl() {
       tableBody.appendChild(row);
     });
   }
-  
-  searchUsers();
-  searchTimeSeries();

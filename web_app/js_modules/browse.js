@@ -91,6 +91,3 @@ function displayTsMetadata(ts_metadata) {
     tableBody.appendChild(row);
   });
 }
-
-fetchUsers();
-fetchTimeSeries();
