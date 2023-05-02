@@ -81,7 +81,7 @@ def generate_csv_schema(metadata):
     return row
 
 
-def sql_insert(ts_metadata):
+def sql_insert_metadata(ts_metadata):
     query = ("INSERT INTO ts_metadata " 
             "(ts_name, ts_desc, ts_domain, ts_units, ts_keywords) " 
             "VALUES (%(ts_name)s, %(ts_desc)s, %(ts_domain)s, "
@@ -124,7 +124,7 @@ def process_file(filename, path_to_file):
     row = generate_csv_schema(metadata)
 
     # Insert row into sql database
-    sql_insert(row)
+    sql_insert_metadata(row)
 
     # Use metadata to clean formatting!
     try:
@@ -145,8 +145,9 @@ def process_file(filename, path_to_file):
     sql_data = data.rename(columns=dict(zip(data.columns, new_column_names)))
     print(f"New sql data: {sql_data}")
 
-    #sql_data.to_sql('ts_data', cnx, index=False)
+    sql_data.to_sql(name='ts_data',con=cnx,index=False)
     log(f"{filename} was converted to SQL")
+    cnx.close()
 
     # Graphically display the contributors data using matplotlib.
     gd.graph(data, row['ts_domain'], row['ts_name'], row['ts_units'])
