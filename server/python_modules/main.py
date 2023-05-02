@@ -141,7 +141,7 @@ def process_file(filename, path_to_file):
 
     print(type(data))
     # convert first column to datetime
-    data[row['ts_domain'][0]] = pd.to_datetime(data[row['ts_domain'][0]], errors='coerce')
+    data[row['ts_domain']] = pd.to_datetime(data[row['ts_domain']], errors='coerce')
 
     # select columns with floats or  integers
     data = data.select_dtypes(include=['float64', 'int64', 'datetime64[ns]', 'timedelta64'])
