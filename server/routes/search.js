@@ -19,7 +19,7 @@ search.get('/timeseries', async (req, res) => {
         ts_units: `%${searchTerm}%`,
         ts_keywords: `%${searchTerm}%`
     };
-    const timeseries_res = await db.getRecordElement(connection, 'ts_metadata', fields, conditions);
+    const timeseries_res = await db.getRecordElement(connection, 'ts_metadata', fields, unique_id);
     db.disconnect(connection);
     res.json(timeseries_res);
 })
@@ -32,7 +32,7 @@ search.get('/users', async (req, res) => {
         id: searchTerm,
         username: `%${searchTerm}%`
     };
-    const users_res = await db.getRecordElement(connection, 'users', fields, conditions);
+    const users_res = await db.getRecordElement(connection, 'users', fields, unique_id);
     db.disconnect(connection);
     res.json(users_res);
 })
