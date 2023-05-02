@@ -11,25 +11,27 @@ search.get('/timeseries', async (req, res) => {
     const connection = db.connectToDataBase('time_series');
     const searchTerm = req.query.query;
     const fields = ['ts_id', 'ts_name', 'ts_desc', 'ts_domain', 'ts_units', 'ts_keywords'];
-    const conditions = `ts_id = ${searchTerm} OR
-                    ts_name LIKE '%${searchTerm}%' OR
-                    ts_desc LIKE '%${searchTerm}%' OR
-                    ts_domain LIKE '%${searchTerm}%' OR
-                    ts_units LIKE '%${searchTerm}%' OR
-                    ts_keywords LIKE '%${searchTerm}%'`;
-    const timeseries_res = await db.getRecordByCondition(connection, 'ts_metadata', fields, conditions);
+    const conditions = `ts_id = ? OR 
+                        ts_name LIKE ? OR 
+                        ts_desc LIKE ? OR 
+                        ts_domain LIKE ? OR 
+                        ts_units LIKE ? OR 
+                        ts_keywords LIKE ?`;
+    const searchValues = Array(6).fill(`%${searchTerm}%`);
+    const timeseries_res = await db.getRecordByCondition(connection, 'ts_metadata', fields, conditions, searchValues);
     db.disconnect(connection);
     res.json(timeseries_res);
-})
+});
 
 search.get('/users', async (req, res) => {
     const connection = db.connectToDataBase('users');
     const searchTerm = req.query.query;
     const fields = ['id', 'username'];
-    const conditions = `id = ${searchTerm} OR username LIKE '%${searchTerm}%'`;
-    const users_res = await db.getRecordByCondition(connection, 'users', fields, conditions);
+    const conditions = `id = ? OR username LIKE ?`;
+    const searchValues = [`%${searchTerm}%`, `%${searchTerm}%`];
+    const users_res = await db.getRecordByCondition(connection, 'users', fields, conditions, searchValues);
     db.disconnect(connection);
     res.json(users_res);
-})
+});
 
 module.exports = search;

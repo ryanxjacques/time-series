@@ -57,9 +57,9 @@ const getRecordElement = (connection, tableName, field, unique_id, filter) => {
   return promise;
 }
 
-const getRecordByCondition = (connection, tableName, field, condition) => {
+const getRecordByCondition = (connection, tableName, fields, condition, searchValues) => {
   const promise = new Promise((resolve, reject) => {
-    connection.query(`SELECT ?? FROM ?? WHERE ${condition}`, [field, tableName], (error, results, fields) => {
+    connection.query(`SELECT ?? FROM ?? WHERE ${condition}`, [fields, tableName, ...searchValues], (error, results, fields) => {
       if (error) {
         reject(error);
       } else {
