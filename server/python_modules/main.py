@@ -137,17 +137,15 @@ def process_file(filename, path_to_file):
     if not cv.check_data_format(data):
         return log("Failed format")
 
-    gd.graph(data, row['ts_domain'], row['ts_name'], row['ts_units'])
-
     # Convert data to SQL.
     # create a list of new column names
     new_column_names = ['ts_datetime'] + ['ts_magnitude{}'.format(i) for i in range(1, len(data.columns))]
 
     # set the new column names using the rename() method
     sql_data = data.rename(columns=dict(zip(data.columns, new_column_names)))
-    log(f"New sql data: {sql_data}")
+    print(f"New sql data: {sql_data}")
 
-    sql_data.to_sql('ts_data', cnx, index=False)
+    #sql_data.to_sql('ts_data', cnx, index=False)
     log(f"{filename} was converted to SQL")
 
     # Graphically display the contributors data using matplotlib.
