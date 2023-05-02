@@ -132,7 +132,7 @@ def process_file(filename, path_to_file):
                                 "Date,Symbol,Series,Prev Close,Open,High,Low,"
                                 "Last,Close,VWAP,Volume,Turnover,Trades,Deliverable Volume,"
                                 "%Deliverble",
-                                "Money", "stock")
+                                "Money", "stock, money")
 
     # Create a dictionary representing the row to be written to the file
     row = generate_csv_schema(metadata)
@@ -172,7 +172,7 @@ def process_file(filename, path_to_file):
 
     sql_data.insert(0, 'ts_id', session_id)
 
-    print(sql_data)
+    print(sql_data.columns.values)
 
     sql_insert_data(sql_data, sql_data.columns.values)
     log(f"{filename} was converted to SQL")
