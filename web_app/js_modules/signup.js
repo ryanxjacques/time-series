@@ -15,7 +15,7 @@ signupBtn.addEventListener("click", (event) => {
   }
 
   if(!missingData) {
-    message = {'username': username.value, 'password': password.value};
+    message = {'username': username.value, 'password': password.value, 'uuid': localStorage.getItem('uuid')};
     sendRequest("POST", "https://35.85.29.142:3000/auth/signup", message).then((data) => {
       alert(data.message);
       if (data.status) {
