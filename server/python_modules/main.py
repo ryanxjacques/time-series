@@ -126,7 +126,7 @@ def process_file(filename, path_to_file):
     try:
         data = cv.clean_headers(data, row['ts_domain'])
     except ValueError:
-        return log("Unable to clean data. Check formatting specifications.")
+        return log(f"{filename} Unable to clean headers.")
 
     # Catch errors by checking format.
     if not cv.check_data_format(data):
