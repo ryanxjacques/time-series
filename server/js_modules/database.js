@@ -106,12 +106,8 @@ module.exports = {
   connectToDataBase,
   disconnect,
   insertRecord,
-<<<<<<< HEAD
   deleteRecord,
   truncateTable,
-  getRecordElement
-=======
   getRecordElement,
   getRecordByCondition
->>>>>>> aac9ecbca6b25564432fdb7f680c9218971985d9
 };
