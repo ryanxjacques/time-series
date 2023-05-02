@@ -141,12 +141,12 @@ def process_file(filename, path_to_file):
 
     print(data)
     # convert first column to datetime
-    data.iloc[:, 0] = data.iloc[:, 0].astype('datetime64')
+    data.iloc[:, 0] = data.iloc[:, 0].astype('datetime64[ns]')
 
     print(data.dtypes)
 
     # select columns with floats or integers
-    data = data.select_dtypes(include=['float64', 'int64', 'datetime64', 'timedelta64'])
+    data = data.select_dtypes(include=['float64', 'int64', 'datetime64[ns]', 'timedelta64'])
 
     # drop columns that don't contain floats, integers, datetimes, or timedelta64s
     data = data.drop(columns=data.columns.difference(data.columns))
