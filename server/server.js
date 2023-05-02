@@ -11,8 +11,8 @@ const home = require('./routes/home');
 const auth = require('./routes/auth');
 const file = require('./routes/file');
 const sse = require('./routes/sse');
-const users = require('./routes/users');
-const timeseries = require('./routes/timeseries');
+const browse = require('./routes/browse');
+const search = require('./routes/search');
 
 /* -------------------------------------------------------------------------- */
 /*                       HTTPS Protocol for web traffic                       */
@@ -49,8 +49,8 @@ app.use('/', home);
 app.use('/auth', auth);
 app.use('/file', file);
 app.use('/sse', sse);
-app.use('/users', users);
-app.use('/timeseries', timeseries);
+app.use('/browse', browse);
+app.use('/search', search);
 
 // Listen on port 3000 (default).
 const port = process.env.APP_PORT || 3000;

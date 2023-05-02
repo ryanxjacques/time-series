@@ -20,7 +20,7 @@ function switchTab(tabName) {
 }
 
 function fetchUsers() {
-  fetch('https://35.85.29.142:3000/users')
+  fetch('https://35.85.29.142:3000/browse/users')
   .then((response) => response.json())
   .then((users_res) => {
     displayUsers(users_res);
@@ -28,7 +28,7 @@ function fetchUsers() {
 }
 
 function fetchTimeSeries() {
-  fetch('https://35.85.29.142:3000/timeseries')
+  fetch('https://35.85.29.142:3000/browse/timeseries')
   .then((response) => response.json())
   .then((timeseries_res) => {
     displayTsMetadata(timeseries_res);
@@ -62,7 +62,10 @@ function displayTsMetadata(ts_metadata) {
     const row = document.createElement('tr');
 
     const idCell = document.createElement('td');
-    idCell.textContent = ts.ts_id;
+    const idLink = document.createElement('a');
+    idLink.textContent = ts.ts_id;
+    idLink.href = `view-time-series.html?ts_id=${ts.ts_id}`;
+    idCell.appendChild(idLink);
     row.appendChild(idCell);
 
     const nameCell = document.createElement('td');
@@ -88,6 +91,3 @@ function displayTsMetadata(ts_metadata) {
     tableBody.appendChild(row);
   });
 }
-
-fetchUsers();
-fetchTimeSeries();
