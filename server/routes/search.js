@@ -17,7 +17,8 @@ search.get('/timeseries', async (req, res) => {
                         ts_domain LIKE ? OR 
                         ts_units LIKE ? OR 
                         ts_keywords LIKE ?`;
-    const searchValues = Array(6).fill(`%${searchTerm}%`);
+    const searchValues = [searchTerm, `%${searchTerm}%`, `%${searchTerm}%`,
+                         `%${searchTerm}%`, `%${searchTerm}%`, `%${searchTerm}%`];
     const timeseries_res = await db.getRecordByCondition(connection, 'ts_metadata', fields, conditions, searchValues);
     db.disconnect(connection);
     res.json(timeseries_res);
@@ -28,7 +29,7 @@ search.get('/users', async (req, res) => {
     const searchTerm = req.query.query;
     const fields = ['id', 'username'];
     const conditions = `id = ? OR username LIKE ?`;
-    const searchValues = [`%${searchTerm}%`, `%${searchTerm}%`];
+    const searchValues = [searchTerm, `%${searchTerm}%`];
     const users_res = await db.getRecordByCondition(connection, 'users', fields, conditions, searchValues);
     db.disconnect(connection);
     res.json(users_res);
