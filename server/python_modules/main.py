@@ -8,7 +8,7 @@ import os
 import json
 import sys
 import regex as re
-import mysql.connector
+from sqlalchemy import create_engine, MetaData, Table
 import pandas as pd
 from dateutil.parser import parse
 
@@ -18,14 +18,13 @@ import convert_data as cv
 import graph_display as gd
 
 # Connect to mySQL database
-cnx = mysql.connector.connect(
-    user=os.environ.get("DB_USER"),
-    password=os.environ.get("DB_PASS"),
-    host=os.environ.get("DB_HOST"),
-    database='time_series')
+user = os.environ.get("DB_USER")
+password = os.environ.get("DB_PASS")
+host = os.environ.get("DB_HOST")
+database = 'time_series'
 
-# Create cursor object.
-cursor = cnx.cursor()
+engine = create_engine(f"mysql+mysqldb://{user}:{password}@{host}/{database}")
+cnx = engine.connect()
 
 # For debugging.
 LOG_STATEMENTS = ["Watch directory ran!"]
@@ -84,13 +83,14 @@ def generate_csv_schema(metadata):
 
 
 def sql_insert_metadata(ts_metadata) -> int:
-    query = ("INSERT INTO ts_metadata " 
-            "(ts_name, ts_desc, ts_domain, ts_units, ts_keywords) " 
-            "VALUES (%(ts_name)s, %(ts_desc)s, %(ts_domain)s, "
-            "%(ts_units)s, %(ts_keywords)s)")
-    cursor.execute(query, ts_metadata)
-    cnx.commit()
-    id = cursor.lastrowid
+    metadata = MetaData()
+    ts_metadata_table = Table('ts_metadata', metadata, autoload=True, autoload_with=engine)
+
+    # insert data into table
+    insert_query = ts_metadata_table.insert().values(ts_name='name', ts_desc='description', ts_domain='domain',
+                                                     ts_units='units', ts_keywords='keywords')
+    result = cnx.execute(insert_query)
+    id = result.lastrowid
     return id
 
 
