@@ -24,6 +24,7 @@ search.get('/timeseries', async (req, res) => {
 
 search.get('/users', async (req, res) => {
     const connection = db.connectToDataBase('users');
+    const searchTerm = req.query.query;
     const fields = ['id', 'username'];
     const conditions = `username LIKE '%${searchTerm}%'`;
     const users_res = await db.getRecordElement(connection, 'users', fields, conditions);
