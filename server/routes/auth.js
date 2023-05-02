@@ -17,8 +17,7 @@ const db = require('../js_modules/database');
 encryptAPI.connectToEncrypt();
 
 // Connect to data base.
-const connection = db.connectToDataBase('users');
-
+const connection = db.connectToDataBase('users', 'auth.js ');
 
 
 /* -------------------------------------------------------------------------- */

@@ -10,9 +10,16 @@ const app = express();
 const home = require('./routes/home');
 const auth = require('./routes/auth');
 const file = require('./routes/file');
+<<<<<<< HEAD
 const sse = require('./routes/sse');
 const browse = require('./routes/browse');
 const search = require('./routes/search');
+=======
+const {sse} = require('./routes/sse');
+const browse = require('./routes/browse');
+const search = require('./routes/search');
+const cookie = require('./routes/cookie');
+>>>>>>> active_users
 
 /* -------------------------------------------------------------------------- */
 /*                       HTTPS Protocol for web traffic                       */
@@ -24,7 +31,8 @@ const https = require("https");
 const cors = require('cors');
 
 app.use(cors({
-  origin: 'https://pages.uoregon.edu'
+  origin: 'https://pages.uoregon.edu',
+  credentials: true //< allow client to send and recieve cookies.
 }));
 
 // Requiring file system to use local files
@@ -49,6 +57,10 @@ app.use('/', home);
 app.use('/auth', auth);
 app.use('/file', file);
 app.use('/sse', sse);
+<<<<<<< HEAD
+=======
+app.use('/cookie', cookie);
+>>>>>>> active_users
 app.use('/browse', browse);
 app.use('/search', search);
 

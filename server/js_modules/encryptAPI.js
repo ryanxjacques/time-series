@@ -42,6 +42,12 @@ const hash_password = (password) => {
   return encryptAPI(jsObject);  //< Promise
 };
 
+const make_session_id = (password) => {
+  /* It is the user's responsibility to specify what to do when the promise is resolved */
+  const jsObject = {op: "hash password", arg: password};
+  return encryptAPI(jsObject);  //< Promise
+};
+
 const verify_password = (password, hashed_password) => {
   /* It is the user's responsibility to specify what to do when the promise is resolved */
   const jsObject = {op: "verify password", arg: [password, hashed_password]};

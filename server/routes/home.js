@@ -8,7 +8,7 @@ home.get('/', (req, res) => {
 
 
 home.post('/', (req, res) => {
-  const msg = {message: 'You connected to the server!'};
+  const msg = {message: 'We received your message at https://35.85.29.142:3000/'};
   res.send(JSON.stringify(msg));
 });
 

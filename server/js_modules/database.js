@@ -4,9 +4,9 @@
 const mysql = require('mysql');
 
 
-const connectToDataBase = (databaseName) => {
+const connectToDataBase = (databaseName, prefixMessage="") => {
   // This connects to the mysql database.
-  const connection = mysql.createConnection({
+  let connection = mysql.createConnection({
     host: process.env.DB_HOST,
     user: process.env.DB_USER,
     password: process.env.DB_PASS,
@@ -19,7 +19,7 @@ const connectToDataBase = (databaseName) => {
     if (err) {
       console.error(err);
     } else {
-      console.log("Connected to mySQL database!");
+      console.log(prefixMessage+"connected to mySQL database!");
     }
   });
 
@@ -27,7 +27,7 @@ const connectToDataBase = (databaseName) => {
 };
 
 const insertRecord = (connection, tableName, record) => {
-  const promise = new Promise((resolve, reject) => {
+  let promise = new Promise((resolve, reject) => {
     connection.query('INSERT INTO ?? SET ?', [tableName, record], (error, results, fields) => {
       if (error) {
         reject(error);
@@ -38,15 +38,40 @@ const insertRecord = (connection, tableName, record) => {
   });
   return promise
 }
-const updateRecord = (connection, tableName, recordId, record) => {
+
+const updateRecord = (connection, tableName, id, record) => {
   //
 }
-const deleteRecord = (connection, tableName, recordId) => {
-  //
+
+const deleteRecord = (connection, tableName, id) => {
+  let promise = new Promise((resolve, reject) => {
+    connection.query('DELETE FROM ?? WHERE ?', [tableName, id], (error, results, fields) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+  return promise;
 }
-const getRecordElement = (connection, tableName, field, unique_id, filter) => {
-  const promise = new Promise((resolve, reject) => {
-    connection.query('SELECT ?? FROM ?? WHERE ?', [field, tableName, unique_id], (error, results, fields) => {
+
+const getRecordElement = (connection, tableName, field, id, filter) => {
+  let promise = new Promise((resolve, reject) => {
+    connection.query('SELECT ?? FROM ?? WHERE ?', [field, tableName, id], (error, results, fields) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+  return promise;
+}
+
+const truncateTable = (connection, tableName) => {
+  let promise = new Promise((resolve, reject) => {
+    connection.query('TRUNCATE ??', [tableName], (error, results, fields) => {
       if (error) {
         reject(error);
       } else {
@@ -68,5 +93,7 @@ module.exports = {
   connectToDataBase,
   disconnect,
   insertRecord,
+  deleteRecord,
+  truncateTable,
   getRecordElement
 };
