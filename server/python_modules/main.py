@@ -25,10 +25,11 @@ def watch_directory():
     print("Entered watch directory")
     while True:
         for filename in os.listdir(config.watch_path):
-            print("FOUND FILE IN DIRECTORY!!!!")
+            print(f"FOUND FILE IN DIRECTORY: {filename}")
             # process the file
             pattern = "(?:\.)([a-z]*)"
             file_ext = re.search(pattern, filename)
+            print(file_ext) 
             supported = True
 
             # Check if file type is supported
