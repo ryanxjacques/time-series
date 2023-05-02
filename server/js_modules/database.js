@@ -82,6 +82,19 @@ const truncateTable = (connection, tableName) => {
   return promise;
 }
 
+const getRecordByCondition = (connection, tableName, fields, condition, searchValues) => {
+  const promise = new Promise((resolve, reject) => {
+    connection.query(`SELECT ?? FROM ?? WHERE ${condition}`, [fields, tableName, ...searchValues], (error, results, fields) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+  return promise;
+};
+
 const disconnect = (connection) => {
   connection.end(() => {
     console.log('Disconnected to MySQL server.')
@@ -93,7 +106,12 @@ module.exports = {
   connectToDataBase,
   disconnect,
   insertRecord,
+<<<<<<< HEAD
   deleteRecord,
   truncateTable,
   getRecordElement
+=======
+  getRecordElement,
+  getRecordByCondition
+>>>>>>> aac9ecbca6b25564432fdb7f680c9218971985d9
 };

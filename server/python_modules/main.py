@@ -114,10 +114,15 @@ def process_file(filename, path_to_file):
     data = cv.read_functions[file_extension](path_to_file)
 
     # Extract metadata -> this will eventually extract from filename.
-    metadata = extract_metadata("T", "R", "S", "u", "v")
+    metadata = extract_metadata("ASIANPAINT", "Stock data for ASIANPAINT",
+                                "Date,Symbol,Series,Prev Close,Open,High,Low,"
+                                "Last,Close,VWAP,Volume,Turnover,Trades,Deliverable Volume,"
+                                "%Deliverble",
+                                "Money", "stock")
 
-    # Create a dictionary representing the row to be written to the CSV file
+    # Create a dictionary representing the row to be written to the file
     row = generate_csv_schema(metadata)
+    print(f"Rows: {row['ts_domain']}")
 
     # Insert row into sql database
     sql_insert(row)
@@ -128,16 +133,20 @@ def process_file(filename, path_to_file):
     except ValueError:
         return log(f"{filename} Unable to clean headers.")
 
+
     # Catch errors by checking format.
     if not cv.check_data_format(data):
         return log("Failed format")
 
+    gd.graph(data, row['ts_domain'], row['ts_name'], row['ts_units'])
+
     # Convert data to SQL.
+    log(f"Data: {data}")
     data.to_sql('ts_data', cnx, index=False)
     log(f"{filename} was converted to SQL")
 
     # Graphically display the contributors data using matplotlib.
-    gd.graph()
+    # gd.graph(data, row['ts_domain'], row['ts_name'], row['ts_units'])
     return None
 
 
