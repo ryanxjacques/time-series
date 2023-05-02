@@ -122,6 +122,7 @@ def process_file(filename, path_to_file):
 
     # Create a dictionary representing the row to be written to the file
     row = generate_csv_schema(metadata)
+    print(f"Rows: {row}")
 
     # Insert row into sql database
     sql_insert(row)
@@ -137,6 +138,7 @@ def process_file(filename, path_to_file):
         return log("Failed format")
 
     # Convert data to SQL.
+    print(f"Data: {data}")
     data.to_sql('ts_data', cnx, index=False)
     log(f"{filename} was converted to SQL")
 
