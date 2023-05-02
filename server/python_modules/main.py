@@ -139,7 +139,7 @@ def process_file(filename, path_to_file):
         return log("Failed format")
 
     print(data)
-    data.iloc[:, 0] = pd.to_datetime(data.iloc[:, 0])
+    data.iloc[:, 0] = pd.to_datetime(data.iloc[:, 0], infer_datetime_format=True)
     # convert first column to datetime
     print(data.dtypes)
 
