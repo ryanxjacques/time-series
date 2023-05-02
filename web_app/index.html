@@ -4,58 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Time Series</title>
+    <title>Login Page (work in progress)</title>
     <link rel="stylesheet" href="css_modules/theme.css">
-    <link rel="stylesheet" href="css_modules/flex-container.css">
-    <link rel="stylesheet" href="css_modules/header.css">
-    <link rel="stylesheet" href="css_modules/content.css">
-    <link rel="stylesheet" href="css_modules/footer.css">
-    <link rel="stylesheet" href="css_modules/login-popup.css">
+    <link rel="stylesheet" href="css_modules/login-signup.css">
   </head>
-  <body>
-    <div class="flex-container">
-      <header>
-        <div class="logo-container">
-          <img id="logo-image" src="images/logo.png">
+  <body class="login-signup-body-flex-container">
+    <main class="login-signup-main-flex-container login-signup-container interface font">
+        <h1>Log in</h1>
+        <div id="login-text-inputs" class="login-signup-input-container">
+          <input type="text" id="login-username" placeholder="Username">
+          <input type="password" id="login-password" placeholder="Password">
         </div>
-        <div class="button-container">
-          <a href="pages/login.html">
-            <button type="button" id="login-button" class="font"><b>login</b></button>
-          </a>
+        <div class="login-signup-button-container">
+          <button type="button" id="login-btn" class="font">Log in</button>
         </div>
-      </header>
-      <!-- I should probably consolidate the content-flex-contatiner and the flex-container -->
-      <main class="content-flex-container">        
-        <div id="interface-1" class="interface font">
-          <h1>1. Interface Title</h1>
-          <p>Interface Body</p>
-          <div>
-            <input type="file" id="file-input" name="uploaded_file">
-            <!-- Form tag messes up the submit button's default behavior -->
-            <input type="submit" id="submit-file">
-          </div>
+        <div>
+          <a href="pages/signup.html" class="font">Don't have an account yet? Sign up here.</a>
         </div>
-        <div id="interface-2" class="interface font">
-          <h1>2. Interface Title</h1>
-          <p>Interface Body</p>
-          <button type="button" id="browse-button" class="font" onclick="location.href='browse.html'"><b>Browse</b></button>
-          <div class="button-container">
-            <div class="search-container">
-              <input type="text" id="search-input" placeholder="Search...">
-              <button type="button" id="search-button" class="font"><b>Search Time Series</b></button>
-            </div>
-          </div>
-        </div>
-      </main>
-      <footer>
-        <div class="font">
-          <p>company information</p>
-        </div>
-      </footer>
-    </div>
-    <!-- <script src="https://35.85.29.142:3000/socket.io/socket.io.js"></script> -->
-    <script src="js_modules/fetch.js"></script>
-	  <script src="js_modules/index.js"></script>
+      </div>
+    </main>
   </body>
+  <script src="js_modules/fetch.js"></script>
+  <script src="js_modules/login.js"></script>
+  <script src="js_modules/index.js"></script>
 </html>
-

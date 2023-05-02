@@ -54,9 +54,3 @@ const sendRequest = async (method, url, data) => {
     console.error("Error:", error);
   }
 }
-
-const getCookie = (id) => {
-  const message = {'id': id};
-  // Wait a little bit before sending the message.
-  return sendRequest("POST", 'https://35.85.29.142:3000/cookie/set-cookie', message);
-}

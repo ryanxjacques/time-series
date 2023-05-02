@@ -14,6 +14,8 @@ const {sse} = require('./routes/sse');
 const browse = require('./routes/browse');
 const search = require('./routes/search');
 const cookie = require('./routes/cookie');
+const session = require('./routes/session');
+const uuidGen = require('./routes/uuidGen');
 
 /* -------------------------------------------------------------------------- */
 /*                       HTTPS Protocol for web traffic                       */
@@ -54,6 +56,8 @@ app.use('/sse', sse);
 app.use('/cookie', cookie);
 app.use('/browse', browse);
 app.use('/search', search);
+app.use('/session', session);
+app.use('/uuidGen', uuidGen);
 
 // Listen on port 3000 (default).
 const port = process.env.APP_PORT || 3000;
