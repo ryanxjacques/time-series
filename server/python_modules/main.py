@@ -140,12 +140,17 @@ def process_file(filename, path_to_file):
     gd.graph(data, row['ts_domain'], row['ts_name'], row['ts_units'])
 
     # Convert data to SQL.
-    log(f"Data: {data}")
-    data.to_sql('ts_data', cnx, index=False)
+    # create a list of new column names
+    new_column_names = ['ts_datetime'] + ['ts_magnitude{}'.format(i) for i in range(1, len(data.columns))]
+      
+    # set the new column names using the rename() method
+    sql_data = data.rename(columns=dict(zip(data.columns, new_column_names)))
+
+    sql_data.to_sql('ts_data', cnx, index=False)
     log(f"{filename} was converted to SQL")
 
     # Graphically display the contributors data using matplotlib.
-    # gd.graph(data, row['ts_domain'], row['ts_name'], row['ts_units'])
+    gd.graph(data, row['ts_domain'], row['ts_name'], row['ts_units'])
     return None
 
 
