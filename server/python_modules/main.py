@@ -148,7 +148,7 @@ def process_file(filename, path_to_file):
     print(data.dtypes)
 
     # select columns with floats or integers
-    data = data.select_dtypes(include=['float64', 'int64', 'datetime64', 'timedelta64'])
+    data = data.select_dtypes(include=['float64', 'int64', 'datetime64', 'timedelta64', 'numpy.datetime64'])
 
     # drop columns that don't contain floats or integers
     data = data.drop(columns=data.columns.difference(data.columns))
