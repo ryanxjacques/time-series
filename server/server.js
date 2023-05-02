@@ -12,6 +12,7 @@ const auth = require('./routes/auth');
 const file = require('./routes/file');
 const sse = require('./routes/sse');
 const browse = require('./routes/browse');
+const search = require('./routes/search');
 
 /* -------------------------------------------------------------------------- */
 /*                       HTTPS Protocol for web traffic                       */
@@ -49,6 +50,7 @@ app.use('/auth', auth);
 app.use('/file', file);
 app.use('/sse', sse);
 app.use('/browse', browse);
+app.use('/search', search);
 
 // Listen on port 3000 (default).
 const port = process.env.APP_PORT || 3000;

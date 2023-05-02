@@ -2,8 +2,8 @@ const submit = document.getElementById("submit-login-button");
 const searchButton = document.getElementById("search-button");
 
 searchButton.addEventListener("click", function() {
-  const searchValue = document.getElementById("search-input").value;
-  window.location.href = "search-results.html?query=" + encodeURIComponent(searchValue);
+  const searchTerm = document.getElementById("search-input").value;
+  window.location.href = "search.html?query=" + encodeURIComponent(searchTerm);
 });
 
 // Upload file when user clicks on submit button.
