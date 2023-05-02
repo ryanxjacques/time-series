@@ -10,11 +10,8 @@ const app = express();
 const home = require('./routes/home');
 const auth = require('./routes/auth');
 const file = require('./routes/file');
-const {sse} = require('./routes/sse');
 const browse = require('./routes/browse');
 const search = require('./routes/search');
-const cookie = require('./routes/cookie');
-const session = require('./routes/session');
 const uuidGen = require('./routes/uuidGen');
 
 /* -------------------------------------------------------------------------- */
@@ -52,11 +49,8 @@ const options = {
 app.use('/', home);
 app.use('/auth', auth);
 app.use('/file', file);
-app.use('/sse', sse);
-app.use('/cookie', cookie);
 app.use('/browse', browse);
 app.use('/search', search);
-app.use('/session', session);
 app.use('/uuidGen', uuidGen);
 
 // Listen on port 3000 (default).
