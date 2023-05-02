@@ -78,7 +78,6 @@ def generate_csv_schema(metadata):
     row['ts_domain'] = domains_str
     row['ts_units'] = units_str
     row['ts_keywords'] = keywords_str
-    log(f"Rows: {row}")
     return row
 
 
@@ -123,7 +122,6 @@ def process_file(filename, path_to_file):
 
     # Create a dictionary representing the row to be written to the file
     row = generate_csv_schema(metadata)
-    log(f"Rows: {row['ts_domain']}")
 
     # Insert row into sql database
     sql_insert(row)
