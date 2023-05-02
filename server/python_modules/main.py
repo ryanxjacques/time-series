@@ -89,7 +89,7 @@ def sql_insert_metadata(ts_metadata) -> int:
             "VALUES (%(ts_name)s, %(ts_desc)s, %(ts_domain)s, "
             "%(ts_units)s, %(ts_keywords)s)")
     cursor.execute(query, ts_metadata)
-
+    cursor.commit()
     id = cursor.lastrowid
     return id
 
