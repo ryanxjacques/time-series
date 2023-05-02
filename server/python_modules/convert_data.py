@@ -97,7 +97,7 @@ def check_data_format(df) -> bool:
     """
     # Check if DataFrame has at least two rows
     if df.shape[0] < 2:
-        print("Failed shape")
+        # print("Failed shape") # Commented out because this will go to stdout.
         return False
 
     # Check if all other rows have the same number of columns as the header row
