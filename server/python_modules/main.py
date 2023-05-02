@@ -101,6 +101,7 @@ def sql_insert_data(df: pd.DataFrame, columns):
     # Iterate through the rows of the pandas DataFrame and insert the data into the MySQL database
     for index, row in df.iterrows():
         data = tuple(row[column] for column in columns)
+        print(f"Inserting data: {data}")
         cursor.execute(query, data)
 
     cnx.commit()
