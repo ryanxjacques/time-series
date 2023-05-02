@@ -37,6 +37,7 @@ auth.post('/login', (req, res) => {
   }).then(response => {
     if (response) {
       const msg = {status: true, message: 'successfully logged in!'};
+      // Add user to the active_users db.
       db.insertRecord(connection, 'active_users', {uuid: data.uuid, username: data.username});
       res.send(JSON.stringify(msg));
     } else {
@@ -89,6 +90,8 @@ auth.post('/signup', (req, res) => {
     if (response) {  // check if the previous .then statement returned a value.
       const msg = {status: true, message: 'Made an account!'};
       res.send(JSON.stringify(msg));
+      // Add user to the active_users db.
+      db.insertRecord(connection, 'active_users', {uuid: data.uuid, username: data.username});
     }
   }).catch(err => {
     console.error(err);
