@@ -10,7 +10,6 @@ import sys
 import regex as re
 from sqlalchemy import create_engine, MetaData, Table
 import pandas as pd
-from dateutil.parser import parse
 
 # Import Local Files
 import config
@@ -23,7 +22,11 @@ password = os.environ.get("DB_PASS")
 host = os.environ.get("DB_HOST")
 database = 'time_series'
 
-engine = create_engine(f"mysql+mysqldb://{user}:{password}@{host}/{database}")
+engine = create_engine(f"mysql+mysqldb://{user}:{password}@{host}/{database}?charset=utf8mb4",
+                       pool_pre_ping=True,
+                       pool_size=5,
+                       pool_recycle=300)
+
 cnx = engine.connect()
 
 # For debugging.
