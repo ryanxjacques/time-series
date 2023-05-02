@@ -10,6 +10,7 @@ import sys
 import regex as re
 import mysql.connector
 import pandas as pd
+from dateutil.parser import parse
 
 # Import Local Files
 import config
@@ -139,7 +140,7 @@ def process_file(filename, path_to_file):
         return log("Failed format")
 
     print(data)
-    data.iloc[:, 0] = pd.to_datetime(data.iloc[:, 0], infer_datetime_format=True)
+    data.iloc[:, 0] = data.iloc[:, 0].apply(lambda x: parse(x))
     # convert first column to datetime
     print(data.dtypes)
 
