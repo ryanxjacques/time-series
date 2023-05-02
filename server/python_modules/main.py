@@ -151,11 +151,11 @@ def process_file(filename, path_to_file):
     sql_data = data.rename(columns=dict(zip(data.columns, new_column_names)))
     print(f"New sql data: {sql_data}")
 
-    sql_data.to_sql(name='ts_data',con=cnx,index=False)
+    sql_data.to_sql(name='ts_data',con=cnx,index=False, if_exists='append')
     log(f"{filename} was converted to SQL")
     cnx.close()
 
-    # Graphically display the contributors data using matplotlib.
+    # Graphically display the contributors data using matplotlib.   
     gd.graph(data, row['ts_domain'], row['ts_name'], row['ts_units'])
     return None
 
