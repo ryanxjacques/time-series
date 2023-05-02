@@ -11,6 +11,7 @@ import regex as re
 import mysql.connector
 import pandas as pd
 from dateutil.parser import parse
+from numpy import datetime64
 
 # Import Local Files
 import config
@@ -141,9 +142,8 @@ def process_file(filename, path_to_file):
 
     print(data)
     for i in range(len(data)):
-        print(data.iloc[i, 0].dtype)
-        data.iloc[i, 0] = pd.to_datetime(data.iloc[i, 0])
-        print(data.iloc[i, 0].dtype)
+        data.iloc[i, 0] = datetime64((data.iloc[i, 0]))
+        print(type(data.iloc[i, 0]))
     # convert first column to datetime
     print(data.dtypes)
 
