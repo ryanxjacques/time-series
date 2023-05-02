@@ -12,7 +12,7 @@ def graph(data:pd.DataFrame, domain, name, units):
     # this changes the default date converter for better interactive plotting of dates:
     plt.rcParams['date.converter'] = 'concise'
 
-    columns = list(domain)
+    columns = domain
     # list of column names
     print(columns)
 
