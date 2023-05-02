@@ -6,6 +6,7 @@ This file works as a listener and driver for all python files
 
 import os
 import time
+import regex as re
 import mysql.connector
 import config
 import convert_data as cv
@@ -26,7 +27,8 @@ def watch_directory():
         for filename in os.listdir(config.watch_path):
             print("FOUND FILE IN DIRECTORY!!!!")
             # process the file
-            file_ext = filename.split('.')[-1]
+            pattern = "(?:\.)([a-z]*)"
+            file_ext = re.search(pattern, filename)
             supported = True
 
             # Check if file type is supported
