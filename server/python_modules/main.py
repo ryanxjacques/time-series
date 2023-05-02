@@ -141,9 +141,9 @@ def process_file(filename, path_to_file):
 
     print(data)
     # convert first column to datetime
-    data.iloc[:, 0] = pd.to_datetime(data.iloc[:, 0], errors='coerce')
+    data[0] = pd.to_datetime(data[0], errors='coerce')
 
-    print(data.data.iloc[:, 0].dtypes)
+    print(data[0].dtypes)
 
     # select columns with floats or integers
     data = data.select_dtypes(include=['float64', 'int64', 'datetime64[ns]', 'timedelta64'])
