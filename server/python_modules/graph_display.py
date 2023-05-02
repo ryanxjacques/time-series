@@ -12,9 +12,7 @@ def graph(data:pd.DataFrame, domain, name, units):
     # this changes the default date converter for better interactive plotting of dates:
     plt.rcParams['date.converter'] = 'concise'
 
-    columns = list(domain)
-    # list of column names
-    print(columns)
+    columns = domain.split(", ")
 
     data.dropna(subset=columns, how='all', inplace=True)
     # drop NA rows iff all values are NaN

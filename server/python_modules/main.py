@@ -8,7 +8,8 @@ import os
 import json
 import sys
 import regex as re
-import mysql.connector
+from sqlalchemy import create_engine, MetaData, Table
+import pandas as pd
 
 # Import Local Files
 import config
@@ -16,14 +17,17 @@ import convert_data as cv
 import graph_display as gd
 
 # Connect to mySQL database
-cnx = mysql.connector.connect(
-    user=os.environ.get("DB_USER"),
-    password=os.environ.get("DB_PASS"),
-    host=os.environ.get("DB_HOST"),
-    database='time_series')
+user = os.environ.get("DB_USER")
+password = os.environ.get("DB_PASS")
+host = os.environ.get("DB_HOST")
+database = 'time_series'
 
-# Create cursor object.
-cursor = cnx.cursor()
+engine = create_engine(f"mysql+mysqldb://{user}:{password}@{host}/{database}?charset=utf8mb4",
+                       pool_pre_ping=True,
+                       pool_size=5,
+                       pool_recycle=300)
+
+cnx = engine.connect()
 
 # For debugging.
 LOG_STATEMENTS = ["Watch directory ran!"]
@@ -81,14 +85,16 @@ def generate_csv_schema(metadata):
     return row
 
 
-def sql_insert(ts_metadata):
-    query = ("INSERT INTO ts_metadata " 
-            "(ts_name, ts_desc, ts_domain, ts_units, ts_keywords) " 
-            "VALUES (%(ts_name)s, %(ts_desc)s, %(ts_domain)s, "
-            "%(ts_units)s, %(ts_keywords)s)")
-    cursor.execute(query, ts_metadata)
-    cnx.commit()  # Commit changes
-    return None
+def sql_insert_metadata(ts_metadata) -> int:
+    metadata = MetaData()
+    ts_metadata_table = Table('ts_metadata', metadata, autoload=True, autoload_with=engine)
+
+    # insert data into table
+    insert_query = ts_metadata_table.insert().values(ts_name='name', ts_desc='description', ts_domain='domain',
+                                                     ts_units='units', ts_keywords='keywords')
+    result = cnx.execute(insert_query)
+    id = result.lastrowid
+    return id
 
 
 # upload dir: /var/www/html/uploads
@@ -122,10 +128,9 @@ def process_file(filename, path_to_file):
 
     # Create a dictionary representing the row to be written to the file
     row = generate_csv_schema(metadata)
-    log(f"Rows: {row['ts_domain']}")
 
-    # Insert row into sql database
-    sql_insert(row)
+    # Insert row into sql database and return id session
+    session_id = sql_insert_metadata(row)
 
     # Use metadata to clean formatting!
     try:
@@ -138,15 +143,36 @@ def process_file(filename, path_to_file):
     if not cv.check_data_format(data):
         return log("Failed format")
 
-    gd.graph(data, row['ts_domain'], row['ts_name'], row['ts_units'])
+    print(data)
+    first_col = row['ts_domain'].split(", ")[0]
+    # convert first column to datetime
+    data[first_col] = pd.to_datetime(data[first_col], errors='coerce')
+
+    # select columns with floats or  integers
+    data = data.select_dtypes(include=['float64', 'int64', 'datetime64[ns]', 'timedelta64'])
+
+    # drop columns that don't contain floats, integers, datetimes, or timedelta64s
+    data = data.drop(columns=data.columns.difference(data.columns))
 
     # Convert data to SQL.
-    log(f"Data: {data}")
-    data.to_sql('ts_data', cnx, index=False)
+    # create a list of new column names
+    new_column_names = ['ts_datetime'] + ['ts_magnitude{}'.format(i) for i in range(1, len(data.columns))]
+
+    # set the new column names using the rename() method
+    sql_data = data.rename(columns=dict(zip(data.columns, new_column_names)))
+    print(sql_data)
+    print(sql_data.dtypes)
+
+    sql_data.insert(0, 'ts_id', session_id)
+
+    print(sql_data)
+
+    sql_data.to_sql(name='ts_data',con=cnx,index=False, if_exists='append')
     log(f"{filename} was converted to SQL")
+    cnx.close()
 
     # Graphically display the contributors data using matplotlib.
-    # gd.graph(data, row['ts_domain'], row['ts_name'], row['ts_units'])
+    gd.graph(data, row['ts_domain'], row['ts_name'], row['ts_units'])
     return None
 
 
