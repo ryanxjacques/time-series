@@ -141,7 +141,7 @@ def process_file(filename, path_to_file):
 
     print(data)
     # convert first column to datetime
-    data.iloc[:, 0] = pd.to_datetime(data.iloc[:, 0], errors='coerce')
+    data.iloc[:, 1] = pd.to_datetime(data.iloc[:, 1], errors='coerce')
 
     print(data.dtypes)
 
