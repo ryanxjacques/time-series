@@ -138,7 +138,7 @@ def process_file(filename, path_to_file):
         return log("Failed format")
 
     # select columns with floats or integers
-    data = data.select_dtypes(include=['float64', 'int64'])
+    data = data.select_dtypes(include=['float64', 'int64', 'datetime64', 'timedelta64'])
 
     # drop columns that don't contain floats or integers
     data = data.drop(columns=data.columns.difference(data.columns))
@@ -155,7 +155,7 @@ def process_file(filename, path_to_file):
     log(f"{filename} was converted to SQL")
     cnx.close()
 
-    # Graphically display the contributors data using matplotlib.   
+    # Graphically display the contributors data using matplotlib.
     gd.graph(data, row['ts_domain'], row['ts_name'], row['ts_units'])
     return None
 
