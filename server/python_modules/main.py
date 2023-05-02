@@ -162,6 +162,8 @@ def process_file(filename, path_to_file):
 
     sql_data.insert(0, 'ts_id', session_id)
 
+    print(sql_data)
+
     sql_data.to_sql(name='ts_data',con=cnx,index=False, if_exists='append')
     log(f"{filename} was converted to SQL")
     cnx.close()
