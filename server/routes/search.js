@@ -11,7 +11,7 @@ search.get('/timeseries', async (req, res) => {
     const connection = db.connectToDataBase('time_series');
     const searchTerm = req.query.query;
     const fields = ['ts_id', 'ts_name', 'ts_desc', 'ts_domain', 'ts_units', 'ts_keywords'];
-    const conditions = `ts_id == ${searchTerm} OR
+    const conditions = `ts_id = ${searchTerm} OR
                     ts_name LIKE '%${searchTerm}%' OR
                     ts_desc LIKE '%${searchTerm}%' OR
                     ts_domain LIKE '%${searchTerm}%' OR
@@ -26,7 +26,7 @@ search.get('/users', async (req, res) => {
     const connection = db.connectToDataBase('users');
     const searchTerm = req.query.query;
     const fields = ['id', 'username'];
-    const conditions = `username LIKE '%${searchTerm}%'`;
+    const conditions = `id = ${searchTerm} OR username LIKE '%${searchTerm}%'`;
     const users_res = await db.getRecordElement(connection, 'users', fields, conditions);
     db.disconnect(connection);
     res.json(users_res);
