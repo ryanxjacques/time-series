@@ -139,9 +139,9 @@ def process_file(filename, path_to_file):
     if not cv.check_data_format(data):
         return log("Failed format")
 
-    print(type(data))
+    first_col = row['ts_domain'].split(", ")[0]
     # convert first column to datetime
-    data[row['ts_domain']] = pd.to_datetime(data[row['ts_domain']], errors='coerce')
+    data[first_col] = pd.to_datetime(data[first_col], errors='coerce')
 
     # select columns with floats or  integers
     data = data.select_dtypes(include=['float64', 'int64', 'datetime64[ns]', 'timedelta64'])
