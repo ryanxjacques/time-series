@@ -7,7 +7,6 @@ This file works as a listener and driver for all python files
 import os
 import json
 import sys
-import time
 import regex as re
 import mysql.connector
 
@@ -103,6 +102,7 @@ def watch_directory():
 
 
 def process_file(filename, path_to_file):
+    """ Process files """
     # Extract the file extension
     file_extension = get_file_extension(filename)
 
@@ -113,7 +113,7 @@ def process_file(filename, path_to_file):
     # Read into pd.DataFrame
     data = cv.read_functions[file_extension](path_to_file)
 
-    # Metadata
+    # Extract metadata -> this will eventually extract from filename.
     metadata = extract_metadata("T", "R", "S", "u", "v")
 
     # Create a dictionary representing the row to be written to the CSV file
