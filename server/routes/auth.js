@@ -25,15 +25,6 @@ const connection = db.connectToDataBase('users', 'auth.js ');
 /* -------------------------------------------------------------------------- */
 
 
-auth.post('/', (req, res) => {
-  const data = req.body;
-  // Here you can do whatever you want with the received data
-  console.log(data);
-  const msg = {message: '\'/auth\' recieved your message!'};
-  res.send(JSON.stringify(msg));
-});
-
-
 auth.post('/login', (req, res) => {
   const data = req.body;
   db.getRecordElement(connection, 'users', 'password', {username: data.username}).then(response => {
@@ -46,6 +37,8 @@ auth.post('/login', (req, res) => {
   }).then(response => {
     if (response) {
       const msg = {status: true, message: 'successfully logged in!'};
+      // Add user to the active_users db.
+      db.insertRecord(connection, 'active_users', {uuid: data.uuid, username: data.username});
       res.send(JSON.stringify(msg));
     } else {
       const msg = {status: false, message: 'invalid password.'};
@@ -56,6 +49,28 @@ auth.post('/login', (req, res) => {
   });
 });
 
+auth.post('/is-active?', (req, res) => {
+  const { uuid } = req.body;
+  db.getRecordElement(connection, 'active_users', 'uuid', {uuid: uuid}).then(response => {
+    if (response.length == 1) {
+      const msg = {status: true};
+      res.send(JSON.stringify(msg));
+    } else {
+      const msg = {status: false};
+      res.send(JSON.stringify(msg));
+    }
+  });
+});
+
+auth.post('/logout', (req, res) => {
+  const { uuid } = req.body;
+  db.deleteRecord(connection, 'active_users', {uuid: uuid}).then(response => {
+    const msg = {status: true};
+    res.send(JSON.stringify(msg));
+  }).catch(err => {
+    console.error(err);
+  });
+});
 
 auth.post('/signup', (req, res) => {
   const data = req.body;
@@ -75,6 +90,8 @@ auth.post('/signup', (req, res) => {
     if (response) {  // check if the previous .then statement returned a value.
       const msg = {status: true, message: 'Made an account!'};
       res.send(JSON.stringify(msg));
+      // Add user to the active_users db.
+      db.insertRecord(connection, 'active_users', {uuid: data.uuid, username: data.username});
     }
   }).catch(err => {
     console.error(err);

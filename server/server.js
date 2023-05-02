@@ -10,16 +10,9 @@ const app = express();
 const home = require('./routes/home');
 const auth = require('./routes/auth');
 const file = require('./routes/file');
-<<<<<<< HEAD
-const sse = require('./routes/sse');
 const browse = require('./routes/browse');
 const search = require('./routes/search');
-=======
-const {sse} = require('./routes/sse');
-const browse = require('./routes/browse');
-const search = require('./routes/search');
-const cookie = require('./routes/cookie');
->>>>>>> active_users
+const uuidGen = require('./routes/uuidGen');
 
 /* -------------------------------------------------------------------------- */
 /*                       HTTPS Protocol for web traffic                       */
@@ -56,13 +49,9 @@ const options = {
 app.use('/', home);
 app.use('/auth', auth);
 app.use('/file', file);
-app.use('/sse', sse);
-<<<<<<< HEAD
-=======
-app.use('/cookie', cookie);
->>>>>>> active_users
 app.use('/browse', browse);
 app.use('/search', search);
+app.use('/uuidGen', uuidGen);
 
 // Listen on port 3000 (default).
 const port = process.env.APP_PORT || 3000;

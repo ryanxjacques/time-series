@@ -14,11 +14,11 @@ loginBtn.addEventListener("click", (event) => {
   }
 
   if(!missingData) {
-    message = {'username': username.value, 'password': password.value};
+    message = {'username': username.value, 'password': password.value, 'uuid': localStorage.getItem('uuid')};
     sendRequest("POST", "https://35.85.29.142:3000/auth/login", message).then((data) => {
       alert(data.message);
       if (data.status) {
-        return window.location.replace("../index.html");
+        return window.location.replace("pages/home.html");
       }
     });
   }

@@ -39,8 +39,17 @@ const insertRecord = (connection, tableName, record) => {
   return promise
 }
 
-const updateRecord = (connection, tableName, id, record) => {
-  //
+const updateRecord = (connection, tableName, record, id) => {
+  let promise = new Promise((resolve, reject) => {
+    connection.query('UPDATE ?? SET ? WHERE ?', [tableName, record, id], (error, results, fields) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+  return promise;
 }
 
 const deleteRecord = (connection, tableName, id) => {
@@ -106,12 +115,9 @@ module.exports = {
   connectToDataBase,
   disconnect,
   insertRecord,
-<<<<<<< HEAD
+  updateRecord,
   deleteRecord,
   truncateTable,
-  getRecordElement
-=======
   getRecordElement,
   getRecordByCondition
->>>>>>> aac9ecbca6b25564432fdb7f680c9218971985d9
 };
