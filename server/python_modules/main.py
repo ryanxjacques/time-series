@@ -11,7 +11,6 @@ import regex as re
 import mysql.connector
 import pandas as pd
 from dateutil.parser import parse
-from numpy import datetime64
 
 # Import Local Files
 import config
@@ -141,9 +140,9 @@ def process_file(filename, path_to_file):
         return log("Failed format")
 
     print(data)
-    data.iloc[:, 0] = pd.to_datetime(data.iloc[:, 0])
     # convert first column to datetime
-    print(data.dtypes)
+    for i in range(len(data)):
+        data.iloc[i, 0] = parse(data.iloc[i, 0])
 
     # select columns with floats or integers
     data = data.select_dtypes(include=['float64', 'int64', 'datetime64', 'timedelta64'])
