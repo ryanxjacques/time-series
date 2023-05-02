@@ -16,7 +16,7 @@ const fileInput = document.getElementById('file-input');
 const submitFileForm = document.getElementById('submit-file-form');
 const submitButton = document.getElementById('submit-file');
 
-async function uploadFile(url, fileInput) {
+const uploadFile = async (url, fileInput) => {
   // Extract name and file from fileInput document element.
   const selectedName = fileInput.getAttribute("name");
   const selectedFile = fileInput.files[0];
@@ -37,15 +37,16 @@ async function uploadFile(url, fileInput) {
   }
 }
 
-async function postData(url, data) {
+const sendRequest = async (method, url, data) => {
   try {
     // Send request and wait for a response.
     const response = await fetch(url, {
-      method: "POST", 
+      method: method, 
+      credentials: 'include',
       headers: { //< Declare that we sending JSON data.
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: data ? JSON.stringify(data): undefined,
     });
     // Return response for .then() to use.
     return response.json();
@@ -54,3 +55,8 @@ async function postData(url, data) {
   }
 }
 
+const getCookie = (id) => {
+  const message = {'id': id};
+  // Wait a little bit before sending the message.
+  return sendRequest("POST", 'https://35.85.29.142:3000/cookie/set-cookie', message);
+}

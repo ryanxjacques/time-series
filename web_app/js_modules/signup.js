@@ -16,7 +16,7 @@ signupBtn.addEventListener("click", (event) => {
 
   if(!missingData) {
     message = {'username': username.value, 'password': password.value};
-    postData("https://35.85.29.142:3000/auth/signup", message).then((data) => {
+    sendRequest("POST", "https://35.85.29.142:3000/auth/signup", message).then((data) => {
       alert(data.message);
       if (data.status) {
         return window.location.replace("../index.html");
