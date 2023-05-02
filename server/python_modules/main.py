@@ -141,16 +141,14 @@ def process_file(filename, path_to_file):
         return log("Failed format")
 
     print(data)
-    for i in range(len(data)):
-        data.iloc[i, 0] = datetime64((data.iloc[i, 0]))
-        print(type(data.iloc[i, 0]))
+    data.iloc[:, 0] = pd.to_datetime(data.iloc[:, 0])
     # convert first column to datetime
     print(data.dtypes)
 
     # select columns with floats or integers
-    data = data.select_dtypes(include=['float64', 'int64', 'datetime64', 'timedelta64', 'numpy.datetime64'])
+    data = data.select_dtypes(include=['float64', 'int64', 'datetime64', 'timedelta64'])
 
-    # drop columns that don't contain floats or integers
+    # drop columns that don't contain floats, integers, datetimes, or timedelta64s
     data = data.drop(columns=data.columns.difference(data.columns))
 
     # Convert data to SQL.
