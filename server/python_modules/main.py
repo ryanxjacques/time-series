@@ -9,6 +9,7 @@ import json
 import sys
 import regex as re
 import mysql.connector
+from sqlalchemy import create_engine
 
 # Import Local Files
 import config
@@ -21,6 +22,10 @@ cnx = mysql.connector.connect(
     password=os.environ.get("DB_PASS"),
     host=os.environ.get("DB_HOST"),
     database='time_series')
+
+
+# Create SQLAlchemy engine with MySQL dialect and connection object
+engine = create_engine('mysql+mysqlconnector://', echo=False, connect_args={'con': cnx})
 
 # Create cursor object.
 cursor = cnx.cursor()
@@ -145,7 +150,7 @@ def process_file(filename, path_to_file):
     sql_data = data.rename(columns=dict(zip(data.columns, new_column_names)))
     print(f"New sql data: {sql_data}")
 
-    sql_data.to_sql(name='ts_data',con=cnx,index=False)
+    sql_data.to_sql(name='ts_data',con=engine,index=False)
     log(f"{filename} was converted to SQL")
     cnx.close()
 
