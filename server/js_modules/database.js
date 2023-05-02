@@ -57,6 +57,19 @@ const getRecordElement = (connection, tableName, field, unique_id, filter) => {
   return promise;
 }
 
+const getRecordByCondition = (connection, tableName, field, condition) => {
+  const promise = new Promise((resolve, reject) => {
+    connection.query(`SELECT ?? FROM ?? WHERE ${condition}`, [field, tableName], (error, results, fields) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+  return promise;
+};
+
 const disconnect = (connection) => {
   connection.end(() => {
     console.log('Disconnected to MySQL server.')
@@ -68,5 +81,6 @@ module.exports = {
   connectToDataBase,
   disconnect,
   insertRecord,
-  getRecordElement
+  getRecordElement,
+  getRecordByCondition
 };
