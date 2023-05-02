@@ -138,17 +138,17 @@ def process_file(filename, path_to_file):
         return log("Failed format")
 
     # select columns with floats or integers
-    df_select = data.select_dtypes(include=['float64', 'int64'])
+    data = data.select_dtypes(include=['float64', 'int64'])
 
     # drop columns that don't contain floats or integers
-    df_select = data.drop(columns=data.columns.difference(df_select.columns))
+    data = data.drop(columns=data.columns.difference(data.columns))
 
     # Convert data to SQL.
     # create a list of new column names
     new_column_names = ['ts_datetime'] + ['ts_magnitude{}'.format(i) for i in range(1, len(data.columns))]
 
     # set the new column names using the rename() method
-    sql_data = df_select.rename(columns=dict(zip(data.columns, new_column_names)))
+    sql_data = data.rename(columns=dict(zip(data.columns, new_column_names)))
     print(f"New sql data: {sql_data}")
 
     sql_data.to_sql(name='ts_data',con=cnx,index=False)
@@ -156,7 +156,7 @@ def process_file(filename, path_to_file):
     cnx.close()
 
     # Graphically display the contributors data using matplotlib.
-    gd.graph(df_select, row['ts_domain'], row['ts_name'], row['ts_units'])
+    gd.graph(data, row['ts_domain'], row['ts_name'], row['ts_units'])
     return None
 
 
