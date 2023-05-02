@@ -3,7 +3,7 @@ const searchButton = document.getElementById("search-button");
 
 searchButton.addEventListener("click", function() {
   const searchValue = document.getElementById("search-input").value;
-  window.location.href = "search-results.php?query=" + encodeURIComponent(searchValue);
+  window.location.href = "search-results.html?query=" + encodeURIComponent(searchValue);
 });
 
 // Upload file when user clicks on submit button.
