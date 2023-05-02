@@ -63,7 +63,12 @@ auth.post('/is-active?', (req, res) => {
 
 auth.post('/logout', (req, res) => {
   const { uuid } = req.body;
-  db.deleteRecord(connection, 'active_users', {uuid: uuid});
+  db.deleteRecord(connection, 'active_users', {uuid: uuid}).then(response => {
+    const msg = {status: true};
+    res.send(JSON.stringify(msg));
+  }).catch(err => {
+    console.error(err);
+  });
 });
 
 auth.post('/signup', (req, res) => {
