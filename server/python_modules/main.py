@@ -141,7 +141,9 @@ def process_file(filename, path_to_file):
 
     print(data)
     for i in range(len(data)):
+        print(data.iloc[i, 0].dtype)
         data.iloc[i, 0] = pd.to_datetime(data.iloc[i, 0])
+        print(data.iloc[i, 0].dtype)
     # convert first column to datetime
     print(data.dtypes)
 
