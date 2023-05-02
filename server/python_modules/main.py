@@ -122,7 +122,7 @@ def process_file(filename, path_to_file):
 
     # Create a dictionary representing the row to be written to the file
     row = generate_csv_schema(metadata)
-    log(f"Rows: {row['ts_domain']}")
+    print(f"Rows: {row['ts_domain']}")
 
     # Insert row into sql database
     sql_insert(row)
