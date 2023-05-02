@@ -70,6 +70,7 @@ def generate_csv_schema(metadata):
     row = dict()
     # Format the units and keywords as a comma-separated string
     domains_str = ', '.join(metadata['domains'].split(','))
+    log(domains_str)
     units_str = ', '.join(metadata['units'].split(','))
     keywords_str = ', '.join(metadata['keywords'].split(','))
     # Create Table Schema
