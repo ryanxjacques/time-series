@@ -156,7 +156,7 @@ def process_file(filename, path_to_file):
 
     # set the new column names using the rename() method
     sql_data = data.rename(columns=dict(zip(data.columns, new_column_names)))
-    print(f"New sql data: {sql_data}")
+    print(sql_data)
     print(sql_data.dtypes)
 
     sql_data.to_sql(name='ts_data',con=cnx,index=False, if_exists='append')
