@@ -51,11 +51,11 @@ def noise(data: pd.DataFrame) -> pd.DataFrame:
     Add random noise to a pd.DataFrame for testing
     """
     print(f"pre-noise: {data}")
-    # only select columns with numerical values
-    numeric_cols = data.select_dtypes(include=np.number).columns
+    # only select columns with name "ts_magnitude{x}"
+    ts_columns = [col for col in data.columns if col.startswith('ts_magnitude')]
     # generate noise on the columns
-    np_noise = np.random.normal(0, 1, data[numeric_cols].shape)
-    # add the noise to the numeric columns
-    data[numeric_cols] = data[numeric_cols].to_numpy() + np_noise
+    np_noise = np.random.normal(0, 1, data[ts_columns].shape)
+    # add the noise to the selected columns
+    data[ts_columns] = data[ts_columns].to_numpy() + np_noise
     print(f"post-noise: {data}")
     return data
