@@ -206,6 +206,8 @@ def compare_files(filename, ts_name) -> Union[float, None]:
 
     ts_id = get_id(ts_name)
 
+    print(f"TS_ID{ts_id}")
+
     # Define the SQL query to retrieve the data with ts_id
     query = f"SELECT * FROM ts_data WHERE ts_id = {ts_id}"
 
