@@ -49,7 +49,13 @@ const sendRequest = async (method, url, data) => {
       body: data ? JSON.stringify(data): undefined,
     });
     // Return response for .then() to use.
-    return response.json();
+    try {
+      result = response.json();
+      return result;
+    } 
+    catch {
+      return result;
+    }
   } catch (error) {
     console.error("Error:", error);
   }
