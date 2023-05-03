@@ -19,15 +19,18 @@ import convert_data as cv
 import compare_data as cd
 import graph_display as gd
 
-# Connect to mySQL database
-cnx = mysql.connector.connect(
-    user=os.environ.get("DB_USER"),
-    password=os.environ.get("DB_PASS"),
-    host=os.environ.get("DB_HOST"),
-    database='time_series')
+try:
+    # Connect to mySQL database
+    cnx = mysql.connector.connect(
+        user=os.environ.get("DB_USER"),
+        password=os.environ.get("DB_PASS"),
+        host=os.environ.get("DB_HOST"),
+        database='time_series')
 
-# Create cursor object.
-cursor = cnx.cursor()
+    # Create cursor object.
+    cursor = cnx.cursor()
+except mysql.connector.Error as err:
+    print(f"Error connecting to MySQL: {err}")
 
 # For debugging.
 LOG_STATEMENTS = ["Watch directory ran!"]
@@ -160,8 +163,6 @@ def get_id(ts_name) -> Union[float, None]:
     else:
         ts_id = None
 
-    # Close the cursor
-    cursor.close()
 
     return ts_id
 
