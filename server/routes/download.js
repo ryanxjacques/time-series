@@ -40,7 +40,7 @@ const downloadFile = (type) => {
 
     return db.getRecordElement(connection, 'ts_data', query, {ts_id: 470});
   }).then(response => {
-    console.log(response);
+    console.log(query);
   });
 }
 
