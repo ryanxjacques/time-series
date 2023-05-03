@@ -18,7 +18,6 @@ function viewUsers() {
     fetch(`https://35.85.29.142:3000/search/users?user_id=${encodeURIComponent(id)}`)
     .then((response) => response.json())
     .then((users_res) => {
-        alert(users_res);
         displayUsers(users_res);
     });
 }
