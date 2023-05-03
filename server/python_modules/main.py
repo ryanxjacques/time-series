@@ -19,15 +19,18 @@ import convert_data as cv
 import compare_data as cd
 import graph_display as gd
 
-# Connect to mySQL database
-cnx = mysql.connector.connect(
-    user=os.environ.get("DB_USER"),
-    password=os.environ.get("DB_PASS"),
-    host=os.environ.get("DB_HOST"),
-    database='time_series')
+try:
+    # Connect to mySQL database
+    cnx = mysql.connector.connect(
+        user=os.environ.get("DB_USER"),
+        password=os.environ.get("DB_PASS"),
+        host=os.environ.get("DB_HOST"),
+        database='time_series')
 
-# Create cursor object.
-cursor = cnx.cursor()
+    # Create cursor object.
+    cursor = cnx.cursor()
+except mysql.connector.Error as err:
+    print(f"Error connecting to MySQL: {err}")
 
 # For debugging.
 LOG_STATEMENTS = ["Watch directory ran!"]
@@ -128,15 +131,16 @@ def sql_insert_data(df: pd.DataFrame, columns):
 def watch_directory():
     """ Process each file inside the watch directory (defined by config) """
     log("Entered watch directory")
-    user = "DS"
+    user = "C"
     # Iterate through each file in the watch directory.
     for filename in os.listdir(config.watch_path):
         if user == "C":
             process_file(filename, f"{config.watch_path}/{filename}")
+            os.remove(f"{config.watch_path}/{filename}")
         elif user == "DS":
             ts_name = "ASIANPAINT"
             #TODO: get ts_name from user input
-            accuracy = compare_files(filename,f"{config.watch_path}/{filename}",ts_name)
+            accuracy = compare_files(filename,ts_name)
             print(accuracy)
 
     return
@@ -160,8 +164,6 @@ def get_id(ts_name) -> Union[float, None]:
     else:
         ts_id = None
 
-    # Close the cursor
-    cursor.close()
 
     return ts_id
 
@@ -212,17 +214,12 @@ def compare_files(filename, ts_name) -> Union[float, None]:
 
     return cd.accuracy(forecast, test)
 
-def remove_from_db(cs, contributor_id, ts_name):
-    # remove row from database
-    query = "DELETE FROM ts_metadata WHERE ts_contributor = %s AND ts_name = %s"
-    cs.execute(query, (contributor_id, ts_name))
-    cs.commit()
-    cs.close()
-
 
 def process_file(filename, path_to_file):
     """ Process files for storage on DB"""
     # Extract the file extension
+    cursor = cnx.cursor()
+
     file_extension = get_file_extension(filename)
     contributor_id = get_contributor_id(filename)
     ts_name = get_ts_name(filename)
@@ -230,25 +227,35 @@ def process_file(filename, path_to_file):
 
     # Check if file type is supported
     if file_is_not_supported(file_extension):
+        query = "DELETE FROM ts_metadata WHERE ts_contributor = %s AND ts_name = %s"
+        cursor.execute(query, (contributor_id, ts_name))
+        cnx.commit()
+        cursor.close()
         return log("File type is not supported")
+
 
     # Read into pd.DataFrame
     data = cv.read_functions[file_extension](path_to_file)
+    print(data.columns)
+
+
+    # make all columns lowercase
+    data = data.rename(columns=str.lower)
 
     # get the ts_metadata row for the specified contributor_id and ts_name
     query = "SELECT ts_id, ts_desc, ts_domain, ts_units, ts_keywords FROM ts_metadata WHERE ts_contributor = %s AND ts_name = %s"
     cursor.execute(query, (contributor_id, ts_name))
-    result = cursor.fetchone()
-    # close cursor connection
-    cursor.close()
+    result = cursor.fetchall()
+
+    print(result)
 
     # store the metadata in individual variables
-    if result:
-        session_id = result[0]
-        description = result[1]
-        domains = result[2]
-        units = result[3]
-        keywords = result[4]
+    if result is not None:
+        session_id = result[0][0]
+        description = result[0][1]
+        domains = result[0][2]
+        units = result[0][3]
+        keywords = result[0][4]
     else:
         raise ValueError("metadata does not exist")
 
@@ -260,12 +267,19 @@ def process_file(filename, path_to_file):
     try:
         data = cv.clean_headers(data, row['ts_domain'])
     except ValueError:
-        remove_from_db(cursor, contributor_id, ts_name)
+        query = "DELETE FROM ts_metadata WHERE ts_contributor = %s AND ts_name = %s"
+        cursor.execute(query, (contributor_id, ts_name))
+        cnx.commit()
+        cursor.close()
         return log(f"{filename} Unable to clean headers.")
 
     # Catch errors by checking format.
     if not cv.check_data_format(data):
-        remove_from_db(cursor, contributor_id, ts_name)
+        query = "DELETE FROM ts_metadata WHERE ts_contributor = %s AND ts_name = %s"
+        cursor.execute(query, (contributor_id, ts_name))
+        cnx.commit()
+        cursor.close()
+
         return log("Failed format")
 
     first_col = row['ts_domain'].split(", ")[0]
@@ -294,7 +308,6 @@ def process_file(filename, path_to_file):
     log(f"{filename} was successfully converted to SQL")
     cursor.close()
     cnx.close()
-    os.remove(path_to_file)
     return None
 
 def main():
