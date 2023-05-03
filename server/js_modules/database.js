@@ -134,4 +134,5 @@ module.exports = {
   truncateTable,
   getRecordElement,
   getRecordByCondition,
+  getFirstRecord,
 };
