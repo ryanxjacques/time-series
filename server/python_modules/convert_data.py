@@ -70,9 +70,9 @@ def clean_headers(df, headers) -> pd.DataFrame:
     """
 
     main.log(f"Rows: {headers}")
-    headers = headers.split(", ")
+    headers = headers.split(",")
     headers = [string.lower() for string in headers]
-    
+
     # drop duplicate rows
     df = df.drop_duplicates()
 
