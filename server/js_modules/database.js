@@ -65,7 +65,7 @@ const deleteRecord = (connection, tableName, id) => {
   return promise;
 }
 
-const getRecordElement = (connection, tableName, field, id, filter) => {
+const getRecordElement = (connection, tableName, field, id) => {
   let promise = new Promise((resolve, reject) => {
     connection.query('SELECT ?? FROM ?? WHERE ?', [field, tableName, id], (error, results, fields) => {
       if (error) {
@@ -104,6 +104,45 @@ const getRecordByCondition = (connection, tableName, fields, condition, searchVa
   return promise;
 };
 
+const getFirstRecord = (connection, tableName, id) => {
+  let promise = new Promise((resolve, reject) => {
+    connection.query('SELECT * FROM ?? WHERE ? LIMIT 1', [tableName, id], (error, results, fields) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+  return promise;
+}
+
+const getRecordCount = (connection, tableName, id) => { 
+  let promise = new Promise((resolve, reject) => {
+    connection.query('SELECT * FROM ?? WHERE ?', [tableName, id], (error, results, fields) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results.length);
+      }
+    });
+  });
+  return promise;
+};
+
+const getDSMLEData = (connection, tableName, field, id, limit) => { 
+  let promise = new Promise((resolve, reject) => {
+    connection.query(`SELECT ?? FROM ?? WHERE ? LIMIT ?`, [field, tableName, id, limit], (error, results, fields) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+  return promise;
+};
+
 const disconnect = (connection) => {
   connection.end(() => {
     console.log('Disconnected to MySQL server.')
@@ -119,5 +158,8 @@ module.exports = {
   deleteRecord,
   truncateTable,
   getRecordElement,
-  getRecordByCondition
+  getRecordByCondition,
+  getFirstRecord,
+  getRecordCount,
+  getDSMLEData,
 };
