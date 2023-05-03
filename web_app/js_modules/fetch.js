@@ -49,13 +49,25 @@ const sendRequest = async (method, url, data) => {
       body: data ? JSON.stringify(data): undefined,
     });
     // Return response for .then() to use.
-    try {
-      result = response.json();
-      return result;
-    } 
-    catch {
-      return result;
-    }
+    return response.json();
+  } catch (error) {
+    console.error("Error:", error);
+  }
+}
+
+const downloadFile = async (method, url, data) => {
+  try {
+    // Send request and wait for a response.
+    const response = await fetch(url, {
+      method: method, 
+      credentials: 'include',
+      headers: { //< Declare that we sending JSON data.
+        "Content-Type": "application/json",
+      },
+      body: data ? JSON.stringify(data): undefined,
+    });
+    // Return response for .then() to use.
+    return response.blob();
   } catch (error) {
     console.error("Error:", error);
   }
