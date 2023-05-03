@@ -10,6 +10,7 @@ const jsonexport = require('jsonexport');
 // needs to change to a POST request.
 download.post('/', (req, res) => {
   const { id } = req.body;
+  console.log(`ID is equal to: ${id}`);
   res.setHeader('Content-Type', 'text/csv');
   res.setHeader('Content-Disposition', 'attachment; filename="data.csv"');
   downloadFile(id).then(() => {
