@@ -119,5 +119,6 @@ module.exports = {
   deleteRecord,
   truncateTable,
   getRecordElement,
-  getRecordByCondition
+  getRecordByCondition,
+  getTable
 };
