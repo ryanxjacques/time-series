@@ -35,11 +35,30 @@ except mysql.connector.Error as err:
 # For debugging.
 LOG_STATEMENTS = ["Watch directory ran!"]
 
-
 def log(message):
     """ add message to the debug log """
     LOG_STATEMENTS.append(message)
 
+
+
+
+try:
+    # Connect to mySQL database
+    cnx = mysql.connector.connect(
+        user=os.environ.get("DB_USER"),
+        password=os.environ.get("DB_PASS"),
+        host=os.environ.get("DB_HOST"),
+        database='time_series')
+
+    # Create cursor object.
+    cursor = cnx.cursor()
+
+except mysql.connector.Error as err:
+    log(f"Error connecting to MySQL: {err}")
+    exit(-1)
+
+# For debugging.
+LOG_STATEMENTS = ["Watch directory ran!"]
 
 def jsonify(name, message):
     """Transform python dict into json string"""
@@ -128,21 +147,39 @@ def sql_insert_data(df: pd.DataFrame, columns):
 
     cnx.commit()
 
-def watch_directory():
+def watch_directory(user, usertype, ts_name):
     """ Process each file inside the watch directory (defined by config) """
     log("Entered watch directory")
-    user = "C"
+
+    print("In watch")
     # Iterate through each file in the watch directory.
     for filename in os.listdir(config.watch_path):
-        if user == "C":
+        #if user == get_contributor_id(filename):
+        if usertype == "C":
             process_file(filename, f"{config.watch_path}/{filename}")
             os.remove(f"{config.watch_path}/{filename}")
-        elif user == "DS":
-            ts_name = "ASIANPAINT"
+        elif usertype == "DS":
             #TODO: get ts_name from user input
             accuracy = compare_files(filename,ts_name)
-            print(accuracy)
+            ts_id= get_id(ts_name)
+            user_id = user
 
+            # Define the MySQL query to insert values into ts_solutions table
+            query = "INSERT INTO ts_solutions (ts_id, DS/MLE_id, ts_mape) VALUES (%s, %s, %s)"
+
+            # Define the tuple of values to insert
+            values = (ts_id, user_id, accuracy)
+
+            # Execute the query with the tuple of values
+            cursor.execute(query, values)
+
+            # Commit the changes to the database
+            cnx.commit()
+
+            # close connection
+            cnx.close()
+            cursor.close()
+            os.remove(f"{config.watch_path}/{filename}")
     return
 
 def get_id(ts_name) -> Union[float, None]:
@@ -181,16 +218,10 @@ def compare_files(filename, ts_name) -> Union[float, None]:
         return
 
     # Read into pd.DataFrame
-    # forecast = cv.read_functions[file_extension](path_to_file)
-
 
     ts_id = get_id(ts_name)
 
-    print(f"TSID: {ts_id}")
-
-    ts_id = 471
-    # TODO: THE ABOVE CODE WORKS, THIS IS JUST FOR PLACEHOLDERS
-
+    print(f"TS_ID{ts_id}")
 
     # Define the SQL query to retrieve the data with ts_id
     query = f"SELECT * FROM ts_data WHERE ts_id = {ts_id}"
@@ -201,16 +232,15 @@ def compare_files(filename, ts_name) -> Union[float, None]:
     # drop all columns with all null values
     data = data.dropna(axis=1, how='all')
 
-    cursor.close()
-    cnx.close()
-
     split_index = int(len(data) * 0.8)
     # index split point for test and train files
 
     # grab the values from the test section of DF
     test = data.iloc[split_index:, :]
 
+    print(test)
     forecast = cd.noise(test)
+    print(forecast)
 
     return cd.accuracy(forecast, test)
 
@@ -242,12 +272,15 @@ def process_file(filename, path_to_file):
     # make all columns lowercase
     data = data.rename(columns=str.lower)
 
+
+    # make all column names lowercase and strings
+    data = data.rename(columns=str.lower)
+
+
     # get the ts_metadata row for the specified contributor_id and ts_name
     query = "SELECT ts_id, ts_desc, ts_domain, ts_units, ts_keywords FROM ts_metadata WHERE ts_contributor = %s AND ts_name = %s"
     cursor.execute(query, (contributor_id, ts_name))
     result = cursor.fetchall()
-
-    print(result)
 
     # store the metadata in individual variables
     if result is not None:
@@ -320,21 +353,25 @@ def main():
             command = json.loads(line)
         except json.JSONDecodeError:
             error = jsonify("error", "Invalid JSON string")
-            print(error, flush=True)
+            log(error)
             continue
 
         if "update" not in command:
             error = jsonify("error", "invalid request")
-            print(error, flush=True)
+            log(error)
 
         elif command["update"]:
-            watch_directory()
+            # check for additional input from sdin
+            user_id = "1"
+            user_type = "DS"
+            ts_name = "ASIANPAINT"
+            watch_directory(user_id, user_type, ts_name)
             result = jsonify("success", LOG_STATEMENTS)
-            print(result, flush=True)
+            log(result)
 
         else:
             error = jsonify("error", "Unknown command")
-            print(error, flush=True)
+            log(error)
 
 
 if __name__ == "__main__":

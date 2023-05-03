@@ -13,8 +13,6 @@ List of accepted file types:
 
 import re
 import pandas as pd
-import mysql.connector
-import main
 
 
 
@@ -70,11 +68,9 @@ def clean_headers(df, headers) -> pd.DataFrame:
     """
 
 
-    print(f"Rows: {headers}")
+
     headers = headers.split(", ")
     headers = [string.lower() for string in headers]
-    print(f"Headers: {headers}")
-    print(f"Headers df: {df.columns}")
 
     # drop duplicate rows
     df = df.drop_duplicates()
@@ -83,6 +79,7 @@ def clean_headers(df, headers) -> pd.DataFrame:
     for header in headers.copy():  # Use copy to avoid modifying list while iterating
         if header not in df.columns:
             headers.remove(header)
+
 
 
     if list(df.columns) == headers:

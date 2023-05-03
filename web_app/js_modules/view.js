@@ -46,6 +46,12 @@ function displayTsMetadata(ts_metadata) {
     const ts_contributor = document.getElementById('ts_contributor');
     ts_name.innerHTML = ts_vals.ts_name;
     ts_desc.innerHTML = ts_vals.ts_desc;
+    ts_domain.innerHTML = ts_vals.ts_domain.replaceAll(",", ", ");
+    ts_units.innerHTML = ts_vals.ts_units;
+    ts_keywords.innerHTML = ts_vals.ts_keywords;
+    
+    // Will change this to username.
+    // Need to change query to join with users table to retrieve username.
     ts_domain.innerHTML = ts_vals.ts_domain;
     ts_units.innerHTML = ts_vals.ts_units;
     ts_keywords.innerHTML = ts_vals.ts_keywords;

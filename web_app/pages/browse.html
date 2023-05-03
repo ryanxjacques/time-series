@@ -10,6 +10,22 @@
         <link rel="stylesheet" href="../css_modules/header.css">
         <link rel="stylesheet" href="../css_modules/content.css">
         <link rel="stylesheet" href="../css_modules/footer.css">
+        <style>
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            th,
+            td {
+                text-align: left;
+                padding: 8px;
+            }
+
+            th {
+                font-weight: bold;
+            }
+        </style>
     </head>
   <body onload="fetchUsers();fetchTimeSeries();">
         <div class="flex-container">
@@ -53,7 +69,7 @@
                                         <th>ID</th>
                                         <th>Name</th>
                                         <th>Description</th>
-                                        <th>Domain</th>
+                                        <th>Domains</th>
                                         <th>Units</th>
                                         <th>Keywords</th>
                                     </tr>

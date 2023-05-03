@@ -56,6 +56,7 @@ const sendRequest = async (method, url, data) => {
 }
 
 const downloadFile = (method, url, data) => {
+  const promise = new Promise((resolve, reject) => {
   fetch(url, {
       method: method, 
       credentials: 'include',
@@ -75,6 +76,12 @@ const downloadFile = (method, url, data) => {
     }).catch(error => {
       console.error('Error:', error);
     });
+      resolve(true);
+    }).catch(error => {
+      reject('Error: ' + error);
+    });
+  });
+  return promise;
 }
 
 
