@@ -212,11 +212,11 @@ def compare_files(filename, ts_name) -> Union[float, None]:
 
     return cd.accuracy(forecast, test)
 
-def remove_from_db(cs, contributor_id, ts_name):
+def remove_from_db(cs, cnx, contributor_id, ts_name):
     # remove row from database
     query = "DELETE FROM ts_metadata WHERE ts_contributor = %s AND ts_name = %s"
     cs.execute(query, (contributor_id, ts_name))
-    cs.commit()
+    cnx.commit()
     cs.close()
 
 
@@ -258,12 +258,12 @@ def process_file(filename, path_to_file):
     try:
         data = cv.clean_headers(data, row['ts_domain'])
     except ValueError:
-        remove_from_db(cursor, contributor_id, ts_name)
+        remove_from_db(cursor, cnx, contributor_id, ts_name)
         return log(f"{filename} Unable to clean headers.")
 
     # Catch errors by checking format.
     if not cv.check_data_format(data):
-        remove_from_db(cursor, contributor_id, ts_name)
+        remove_from_db(cursor, cnx, contributor_id, ts_name)
         return log("Failed format")
 
     first_col = row['ts_domain'].split(", ")[0]
