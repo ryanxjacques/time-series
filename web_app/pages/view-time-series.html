@@ -31,7 +31,8 @@
         width: 50%;
       }
 
-      h1, h3 {
+      h1, h3, p {
+        padding-left: 0;
         text-align: center;
       }
 
@@ -66,25 +67,25 @@
       </header>
       <main class="content-flex-container">
         <div id="interface-1" class="interface font">
-          <h1 id="ts_name">(Time Series Name)</h1>
-          <h3 id="ts_desc">(Time Series Desc)</h3>
-          <img src="(path_to_image)" alt="Time Series Image">
+          <h1 id="ts_name"></h1>
+          <h3 id="ts_desc"></h3>
+          <!-- <img src="(path_to_image)" alt="Time Series Image"> -->
           <div class="info-container">
             <div>
               <h4>Domain</h4>
-              <p>(Domain)</p>
+              <p id="ts_domain"></p>
             </div>
             <div>
               <h4>Units</h4>
-              <p>(Units)</p>
+              <p id="ts_units"></p>
             </div>
             <div>
               <h4>Keywords</h4>
-              <p>(Keywords)</p>
+              <p id="ts_keywords"></p>
             </div>
             <div>
               <h4>Contributor</h4>
-              <p>(Contributor)</p>
+              <p id="ts_condtributor"></p>
             </div>
           </div>
         </div>
@@ -103,6 +104,11 @@
           </table>
         </div>
       </main>
+      <footer>
+        <div class="font">
+            <p>company information</p>
+        </div>
+    </footer>
     </div>
     <script src="../js_modules/view.js"></script>
   </body>
