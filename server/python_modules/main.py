@@ -337,7 +337,7 @@ def main():
             command = json.loads(line)
         except json.JSONDecodeError:
             error = jsonify("error", "Invalid JSON string")
-            log(error, flush=True)
+            log(error)
             continue
 
         if "update" not in command:
