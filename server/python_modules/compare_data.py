@@ -52,12 +52,3 @@ def noise(data:pd.DataFrame) ->pd.DataFrame:
     """
     np_noise = np.random.normal(0, 1, data.shape)
     return data + np_noise
-
-
-df = pd.DataFrame({'A': [1, 2, 3], 'B': [4, 5, 6], 'C': [7, 8, 9]})
-df2 = pd.DataFrame({'A': [1, 2, 3, 4], 'B': [4, 5, 6, 7], 'C': [7, 8, 9, 10]})
-
-df_noisy = noise(df)
-
-print(accuracy(df_noisy, df))
-print(accuracy(df, df2))
