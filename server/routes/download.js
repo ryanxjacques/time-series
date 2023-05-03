@@ -46,6 +46,7 @@ const downloadFile = (type) => {
   }).then(response => {
     console.log(query);
   });
+}
 
 
 // Export file object for server.js to use.
