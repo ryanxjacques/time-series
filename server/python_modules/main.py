@@ -3,8 +3,8 @@ This file works as a listener and driver for all python files
 """
 # !/usr/bin/python3
 
-import json
 # Import Libraries
+import json
 import os
 import sys
 import datetime
@@ -103,7 +103,6 @@ def sql_insert_data(df: pd.DataFrame, columns):
     # Iterate through the rows of the pandas DataFrame and insert the data into the MySQL database
     for index, row in df.iterrows():
         data = tuple(row[column] for column in columns)
-        print(f"Inserting data: {data}")
         cursor.execute(query, data)
 
     cnx.commit()
@@ -152,7 +151,6 @@ def process_file(filename, path_to_file):
     if not cv.check_data_format(data):
         return log("Failed format")
 
-    print(data)
     first_col = row['ts_domain'].split(", ")[0]
     # convert first column to datetime
     data[first_col] = pd.to_datetime(data[first_col], errors='coerce')
@@ -172,16 +170,13 @@ def process_file(filename, path_to_file):
 
     # set the new column names using the rename() method
     sql_data = data.rename(columns=dict(zip(data.columns, new_column_names)))
-    print(sql_data)
-    print(sql_data.dtypes)
 
     sql_data.insert(0, 'ts_id', session_id)
 
-    print(sql_data.columns.values)
-
     sql_insert_data(sql_data, sql_data.columns.values)
-    log(f"{filename} was converted to SQL")
+    log(f"{filename} was successfully converted to SQL")
     cnx.close()
+    os.remove(path_to_file)
     return None
 
 
