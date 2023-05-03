@@ -177,6 +177,9 @@ def compare_files(filename, path_to_file, ts_name) -> Union[float, None]:
     # Read the data into a pandas DataFrame
     data = pd.read_sql(query, con=cnx)
 
+    cursor.close()
+    cnx.close()
+
     split_index = int(len(data) * 0.8)
     # index split point for test and train files
 
