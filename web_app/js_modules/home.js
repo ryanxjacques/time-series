@@ -9,3 +9,10 @@ signOutBtn.addEventListener("click", (event) => {
     }
   });
 });
+
+const searchButton = document.getElementById("search-button");
+
+searchButton.addEventListener("click", function() {
+  const searchTerm = document.getElementById("search-input").value;
+  window.location.href = "search.html?query=" + encodeURIComponent(searchTerm);
+});
