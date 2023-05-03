@@ -14,25 +14,26 @@ function getIdFromUrl() {
 
 const id = decodeURIComponent(getIdFromUrl());
 
-function viewUsers() {
-    fetch(`https://35.85.29.142:3000/search/users?user_id=${encodeURIComponent(id)}`)
+function viewUser() {
+    alert(`https://35.85.29.142:3000/view/users?user_id=${encodeURIComponent(id)}`);
+    fetch(`https://35.85.29.142:3000/view/users?user_id=${encodeURIComponent(id)}`)
     .then((response) => response.json())
-    .then((users_res) => {
-        displayUsers(users_res);
+    .then((user_res) => {
+        displayUser(user_res);
     });
 }
   
 function viewTimeSeries() {
-    fetch(`https://35.85.29.142:3000/search/timeseries?ts_id=${encodeURIComponent(id)}`)
+    fetch(`https://35.85.29.142:3000/view/timeseries?ts_id=${encodeURIComponent(id)}`)
     .then((response) => response.json())
     .then((timeseries_res) => {
         displayTsMetadata(timeseries_res);
     });
 }
 
-function displayUsers(users) {
+function displayUser(user) {
     const username = document.getElementById('username');
-    username.innerHTML = users.username;
+    username.innerHTML = user.username;
 }
   
 function displayTsMetadata(ts_metadata) {
