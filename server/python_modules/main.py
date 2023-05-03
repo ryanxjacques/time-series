@@ -19,6 +19,28 @@ import convert_data as cv
 import compare_data as cd
 import graph_display as gd
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+try:
+    # Connect to mySQL database
+    cnx = mysql.connector.connect(
+        user=os.environ.get("DB_USER"),
+        password=os.environ.get("DB_PASS"),
+        host=os.environ.get("DB_HOST"),
+        database='time_series')
+
+    # Create cursor object.
+    cursor = cnx.cursor()
+except mysql.connector.Error as err:
+    print(f"Error connecting to MySQL: {err}")
+
+# For debugging.
+LOG_STATEMENTS = ["Watch directory ran!"]
+
+=======
+>>>>>>> main
+>>>>>>> download
 
 def log(message):
     """ add message to the debug log """
@@ -134,16 +156,37 @@ def sql_insert_data(df: pd.DataFrame, columns):
 def watch_directory(user, usertype, ts_name):
     """ Process each file inside the watch directory (defined by config) """
     log("Entered watch directory")
+<<<<<<< HEAD
     print("In watch")
+=======
+<<<<<<< HEAD
+    user = "C"
+=======
+    print("In watch")
+>>>>>>> main
+>>>>>>> download
     # Iterate through each file in the watch directory.
     for filename in os.listdir(config.watch_path):
         #if user == get_contributor_id(filename):
         if usertype == "C":
             process_file(filename, f"{config.watch_path}/{filename}")
             os.remove(f"{config.watch_path}/{filename}")
+<<<<<<< HEAD
         elif usertype == "DS":
             #TODO: get ts_name from user input
             accuracy = compare_files(filename,ts_name)
+=======
+<<<<<<< HEAD
+        elif user == "DS":
+            ts_name = "ASIANPAINT"
+            #TODO: get ts_name from user input
+            accuracy = compare_files(filename,ts_name)
+            print(accuracy)
+=======
+        elif usertype == "DS":
+            #TODO: get ts_name from user input
+            accuracy = compare_files(filename,ts_name)
+>>>>>>> download
             ts_id= get_id(ts_name)
             user_id = user
 
@@ -152,6 +195,10 @@ def watch_directory(user, usertype, ts_name):
 
             # Define the tuple of values to insert
             values = (ts_id, user_id, accuracy)
+<<<<<<< HEAD
+=======
+>>>>>>> main
+>>>>>>> download
 
             # Execute the query with the tuple of values
             cursor.execute(query, values)
@@ -254,6 +301,16 @@ def process_file(filename, path_to_file):
 
     # Read into pd.DataFrame
     data = cv.read_functions[file_extension](path_to_file)
+    print(data.columns)
+
+
+    # make all columns lowercase
+    data = data.rename(columns=str.lower)
+
+
+    # make all column names lowercase and strings
+    data = data.rename(columns=str.lower)
+
 
 
     # make all column names lowercase and strings
@@ -264,6 +321,14 @@ def process_file(filename, path_to_file):
     query = "SELECT ts_id, ts_desc, ts_domain, ts_units, ts_keywords FROM ts_metadata WHERE ts_contributor = %s AND ts_name = %s"
     cursor.execute(query, (contributor_id, ts_name))
     result = cursor.fetchall()
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+    print(result)
+=======
+>>>>>>> main
+>>>>>>> download
 
     # store the metadata in individual variables
     if result is not None:
