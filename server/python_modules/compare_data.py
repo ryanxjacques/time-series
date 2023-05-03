@@ -31,9 +31,6 @@ def accuracy(forecast_data: pd.DataFrame, test_data: pd.DataFrame) -> float:
         forecast_data = forecast_data.drop(forecast_data.tail(overflow_rows).index + 1)
         forecast_data = forecast_data.reset_index(drop=True)
 
-
-    print(forecast_data)
-    print(test_data)
     # go over column and sum each value
     f_val = 0
     t_val = 0
@@ -51,13 +48,12 @@ def noise(data: pd.DataFrame) -> pd.DataFrame:
     """
     Add random noise to a pd.DataFrame for testing
     """
-    print(f"pre-noise: {data}")
     # only select columns with name "ts_magnitude{x}"
     ts_columns = [col for col in data.columns if col.startswith('ts_magnitude')]
     # generate noise on the columns
     noisy = data.copy()
-    np_noise = np.random.normal(0, 3, noisy[ts_columns].shape)
+    np_noise = np.random.normal(0, 10, noisy[ts_columns].shape)
     # add the noise to the selected columns
     noisy[ts_columns] = noisy[ts_columns].to_numpy() + np_noise
-    print(f"post-noise: {data}")
+
     return noisy
