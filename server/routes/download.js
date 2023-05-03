@@ -34,7 +34,7 @@ const downloadFile = (type) => {
     query = ['ts_datetime'];
 
     for(const i = 1; i < domainCount; i++) {
-      query.append(`ts_magnitude${i}`);
+      query.push(`ts_magnitude${i}`);
     }
 
     console.log(query);
