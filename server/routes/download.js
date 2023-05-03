@@ -39,13 +39,15 @@ const downloadFile = (id) => {
     return jsonexport(response);
   }).then(response => {
     // save the CSV data to a file
-    fs.writeFile('/var/www/html/downloads/data.csv', response, (err) => {
-      if (err) {
-        console.error('Error writing file:', err);
-      }
-      console.log('Data saved to /var/www/html/downloads/data.csv');
-      return true;
+    const promise = new Promise((resolve, reject) => {
+      fs.writeFile('/var/www/html/downloads/data.csv', response, (err) => {
+        if (err) {
+          reject('Error writing file:' + err);
+        }
+        resolve(true);
+      });
     });
+    return promise;
   }).catch(error => {
     console.error(error);
   });
