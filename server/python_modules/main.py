@@ -110,14 +110,57 @@ def sql_insert_data(df: pd.DataFrame, columns):
 def watch_directory():
     """ Process each file inside the watch directory (defined by config) """
     log("Entered watch directory")
+    user = "DS"
     # Iterate through each file in the watch directory.
     for filename in os.listdir(config.watch_path):
-        process_file(filename, f"{config.watch_path}/{filename}")
+        if user == "C":
+            process_file(filename, f"{config.watch_path}/{filename}")
+        elif user == "DS":
+            ts_name = "ASIANPAINT"
+            #TODO: get ts_name from user input
+            accuracy = compare_files(filename,f"{config.watch_path}/{filename}",ts_name)
+            print(accuracy)
+
     return
 
 
+def compare_files(filename, path_to_file, ts_name) -> float|None:
+    """
+    Compares the forcasting of data for the selected Time Series
+    """
+    # Extract the file extension
+    file_extension = get_file_extension(filename)
+
+    # Check if file type is supported
+    if file_is_not_supported(file_extension):
+        log("File type is not supported")
+        return
+
+    # Read into pd.DataFrame
+    data = cv.read_functions[file_extension](path_to_file)
+
+    # Define the SQL query to fetch metadata_id
+    query = f"SELECT ts_id FROM ts_metadata WHERE ts_name = '{ts_name}'"
+
+    # Execute the query
+    cursor.execute(query)
+
+    # Fetch the result and store it in a variable
+    result = cursor.fetchone()
+
+    # If there is a result, extract the ts_id value
+    if result is not None:
+        ts_id = result[0]
+    else:
+        ts_id = None
+
+    print(ts_id)
+
+
+
+
 def process_file(filename, path_to_file):
-    """ Process files """
+    """ Process files for storage on DB"""
     # Extract the file extension
     file_extension = get_file_extension(filename)
 
@@ -175,6 +218,7 @@ def process_file(filename, path_to_file):
 
     sql_insert_data(sql_data, sql_data.columns.values)
     log(f"{filename} was successfully converted to SQL")
+    cursor.close()
     cnx.close()
     os.remove(path_to_file)
     return None
