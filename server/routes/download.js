@@ -8,12 +8,11 @@ const connection = db.connectToDataBase('time_series', 'download.js->time_series
 const jsonexport = require('jsonexport');
 
 // needs to change to a POST request.
-download.get('/', (req, res) => {
-
+download.post('/', (req, res) => {
+  const { id } = req;
   res.setHeader('Content-Type', 'text/csv');
   res.setHeader('Content-Disposition', 'attachment; filename="data.csv"');
-
-  downloadFile('514').then(() => {
+  downloadFile(id).then(() => {
     const filePath = '/var/www/html/downloads/data.csv';
     readFile(filePath).then(response => {
       res.send(response);
