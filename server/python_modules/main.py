@@ -134,6 +134,7 @@ def sql_insert_data(df: pd.DataFrame, columns):
 def watch_directory(user, usertype, ts_name):
     """ Process each file inside the watch directory (defined by config) """
     log("Entered watch directory")
+    print("In watch")
     # Iterate through each file in the watch directory.
     for filename in os.listdir(config.watch_path):
         if user == get_contributor_id(filename):
@@ -346,8 +347,7 @@ def main():
 
         elif command["update"]:
             # check for additional input from sdin
-            print("got into update")
-            user_id = 1
+            user_id = "1"
             user_type = "C"
             ts_name = "ASIANPAINT"
             watch_directory(user_id, user_type, ts_name)
