@@ -136,7 +136,7 @@ def watch_directory():
         elif user == "DS":
             ts_name = "ASIANPAINT"
             #TODO: get ts_name from user input
-            accuracy = compare_files(filename,f"{config.watch_path}/{filename}",ts_name)
+            accuracy = compare_files(filename,ts_name)
             print(accuracy)
 
     return
