@@ -230,7 +230,9 @@ def compare_files(filename, ts_name) -> Union[float, None]:
     # grab the values from the test section of DF
     test = data.iloc[split_index:, :]
 
+    print(test)
     forecast = cd.noise(test)
+    print(forecast)
 
     return cd.accuracy(forecast, test)
 
