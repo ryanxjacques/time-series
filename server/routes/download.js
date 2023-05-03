@@ -8,7 +8,7 @@ const connection = db.connectToDataBase('time_series', 'download.js->time_series
 const jsonexport = require('jsonexport');
 
 // needs to change to a POST request.
-download.post('/', (req, res) => {
+download.get('/', (req, res) => {
 
   res.setHeader('Content-Type', 'text/csv');
   res.setHeader('Content-Disposition', 'attachment; filename="data.csv"');
