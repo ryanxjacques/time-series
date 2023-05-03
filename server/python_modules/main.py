@@ -240,8 +240,7 @@ def process_file(filename, path_to_file):
 
 
     # make all columns lowercase
-    print(data.dtypes)
-    data = data.rename(columns=str.lower)
+    data.columns = data.columns.astype(str).str.lower()
 
     # get the ts_metadata row for the specified contributor_id and ts_name
     query = "SELECT ts_id, ts_desc, ts_domain, ts_units, ts_keywords FROM ts_metadata WHERE ts_contributor = %s AND ts_name = %s"
