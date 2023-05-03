@@ -54,31 +54,3 @@ const sendRequest = async (method, url, data) => {
     console.error("Error:", error);
   }
 }
-
-const downloadFile = (method, url, data) => {
-  const promise = new Promise((resolve, reject) => {
-  fetch(url, {
-      method: method, 
-      credentials: 'include',
-      headers: { //< Declare that we sending JSON data.
-        "Content-Type": "application/json",
-      },
-      body: data ? JSON.stringify(data): undefined,
-    }).then(response => response.blob())
-    .then(blob => {
-      const url = window.URL.createObjectURL(new Blob([blob]));
-      const link = document.createElement('a');
-      link.href = url;
-      link.setAttribute('download', 'data.csv'); // replace 'data.csv' with the actual filename
-      document.body.appendChild(link);
-      link.click();
-      link.parentNode.removeChild(link);
-      resolve(true);
-    }).catch(error => {
-      reject('Error: ' + error);
-    });
-  });
-  return promise;
-}
-
-

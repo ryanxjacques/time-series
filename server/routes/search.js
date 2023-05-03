@@ -8,7 +8,7 @@ const search = express.Router();
 const db = require('../js_modules/database');
 
 search.get('/timeseries', async (req, res) => {
-    const connection = db.connectToDataBase('time_series', 'search.js->time_series ');
+    const connection = db.connectToDataBase('time_series');
     const searchTerm = req.query.query;
     const fields = ['ts_id', 'ts_name', 'ts_desc', 'ts_domain', 'ts_units', 'ts_keywords'];
     const conditions = `ts_id = ? OR 
@@ -25,7 +25,7 @@ search.get('/timeseries', async (req, res) => {
 });
 
 search.get('/users', async (req, res) => {
-    const connection = db.connectToDataBase('users', 'search.js->time_series ');
+    const connection = db.connectToDataBase('users');
     const searchTerm = req.query.query;
     const fields = ['id', 'username'];
     const conditions = `id = ? OR username LIKE ?`;

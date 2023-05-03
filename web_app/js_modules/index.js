@@ -11,7 +11,7 @@ const checkActive = (uuid) => {
     }
   }).then(response => {
     localStorage.setItem('username', response.username);
-    return window.location.replace("pages/home.html");
+    return window.location.replace("pages/home.html");;
   });
 }
 
