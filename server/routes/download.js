@@ -34,12 +34,14 @@ const downloadFile = (type) => {
     query = ['ts_datetime'];
 
     for(let i = 1; i <= domainCount; i++) {
+      // push is javascript's append method for lists
       query.push(`ts_magnitude${i}`);
     }
 
-    console.log(query);
+    return db.getRecordElement(connection, 'ts_data', query, {ts_id: 470});
+  }).then(response => {
+    console.log(response);
   });
-  // db.getRecordElement(connection, 'ts_data', columns, {id: id});
 }
 
 
