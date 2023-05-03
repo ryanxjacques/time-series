@@ -14,6 +14,7 @@ const view = require('./routes/view');
 const browse = require('./routes/browse');
 const search = require('./routes/search');
 const uuidGen = require('./routes/uuidGen');
+const download = require('./routes/download');
 
 /* -------------------------------------------------------------------------- */
 /*                       HTTPS Protocol for web traffic                       */
@@ -54,6 +55,7 @@ app.use('/view', view);
 app.use('/browse', browse);
 app.use('/search', search);
 app.use('/uuidGen', uuidGen);
+app.use('/download', uuidGen);
 
 // Listen on port 3000 (default).
 const port = process.env.APP_PORT || 3000;
