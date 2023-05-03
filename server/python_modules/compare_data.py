@@ -24,11 +24,11 @@ def accuracy(forecast_data: pd.DataFrame, test_data: pd.DataFrame) -> float:
 
     # remove them from the larger for even comparison and reset index
     if larger.all == test_data.all:
-        test_data = test_data.drop(df.tail(overflow_rows).index + 1)
+        test_data = test_data.drop(test_data.tail(overflow_rows).index + 1)
         test_data = test_data.reset_index(drop=True)
 
     else:
-        forecast_data = forecast_data.drop(df.tail(overflow_rows).index + 1)
+        forecast_data = forecast_data.drop(forecast_data.tail(overflow_rows).index + 1)
         forecast_data = forecast_data.reset_index(drop=True)
 
 
