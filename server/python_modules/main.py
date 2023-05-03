@@ -247,7 +247,6 @@ def process_file(filename, path_to_file):
     cursor.execute(query, (contributor_id, ts_name))
     result = cursor.fetchall()
 
-    print(result)
 
     # store the metadata in individual variables
     if result is not None:
