@@ -191,15 +191,8 @@ def compare_files(filename, path_to_file, ts_name) -> Union[float, None]:
 
     forecast = cd.noise(test)
 
+
     return cd.accuracy(forecast, test)
-
-
-
-
-
-
-
-
 
 
 
