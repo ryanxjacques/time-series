@@ -148,8 +148,10 @@ def watch_directory(user, usertype, ts_name):
             ts_id= get_id(ts_name)
             user_id = user
 
+            print(accuracy)
+
             # Define the MySQL query to insert values into ts_solutions table
-            query = "INSERT INTO ts_solutions (ts_id, 'DS/MLE_id', ts_mape) VALUES (%s, %s, %s)"
+            query = "INSERT INTO ts_solutions (ts_id, 'DS_MLE_id', ts_mape) VALUES (%s, %s, %s)"
 
             # Define the tuple of values to insert
             values = (ts_id, user_id, float(accuracy))
