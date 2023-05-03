@@ -166,7 +166,7 @@ def get_id(ts_name) -> Union[float, None]:
     return ts_id
 
 
-def compare_files(filename, path_to_file, ts_name) -> Union[float, None]:
+def compare_files(filename, ts_name) -> Union[float, None]:
     """
     Compares the forcasting of data for the selected Time Series
     """
