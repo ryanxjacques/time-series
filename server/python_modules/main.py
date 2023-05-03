@@ -19,6 +19,14 @@ import convert_data as cv
 import compare_data as cd
 import graph_display as gd
 
+
+def log(message):
+    """ add message to the debug log """
+    LOG_STATEMENTS.append(message)
+
+
+
+
 try:
     # Connect to mySQL database
     cnx = mysql.connector.connect(
@@ -30,16 +38,11 @@ try:
     # Create cursor object.
     cursor = cnx.cursor()
 except mysql.connector.Error as err:
-    print(f"Error connecting to MySQL: {err}")
+    log(f"Error connecting to MySQL: {err}")
+    exit(-1)
 
 # For debugging.
 LOG_STATEMENTS = ["Watch directory ran!"]
-
-
-def log(message):
-    """ add message to the debug log """
-    LOG_STATEMENTS.append(message)
-
 
 def jsonify(name, message):
     """Transform python dict into json string"""
@@ -128,21 +131,37 @@ def sql_insert_data(df: pd.DataFrame, columns):
 
     cnx.commit()
 
-def watch_directory():
+def watch_directory(user, usertype, ts_name):
     """ Process each file inside the watch directory (defined by config) """
     log("Entered watch directory")
-    user = "C"
     # Iterate through each file in the watch directory.
     for filename in os.listdir(config.watch_path):
-        if user == "C":
-            process_file(filename, f"{config.watch_path}/{filename}")
-            os.remove(f"{config.watch_path}/{filename}")
-        elif user == "DS":
-            ts_name = "ASIANPAINT"
-            #TODO: get ts_name from user input
-            accuracy = compare_files(filename,ts_name)
-            print(accuracy)
+        if user == get_contributor_id(filename):
+            if usertype == "C":
+                process_file(filename, f"{config.watch_path}/{filename}")
+                os.remove(f"{config.watch_path}/{filename}")
+            elif usertype == "DS":
+                #TODO: get ts_name from user input
+                accuracy = compare_files(filename,ts_name)
+                ts_id= get_id(ts_name)
+                user_id = user
 
+                # Define the MySQL query to insert values into ts_solutions table
+                query = "INSERT INTO ts_solutions (ts_id, DS/MLE_id, ts_mape) VALUES (%s, %s, %s)"
+
+                # Define the tuple of values to insert
+                values = (ts_id, user_id, accuracy)
+
+                # Execute the query with the tuple of values
+                cursor.execute(query, values)
+
+                # Commit the changes to the database
+                cnx.commit()
+
+                # close connection
+                cnx.close()
+                cursor.close()
+                os.remove(f"{config.watch_path}/{filename}")
     return
 
 def get_id(ts_name) -> Union[float, None]:
@@ -186,7 +205,7 @@ def compare_files(filename, ts_name) -> Union[float, None]:
 
     ts_id = get_id(ts_name)
 
-    print(f"TSID: {ts_id}")
+    log(f"TSID: {ts_id}")
 
     ts_id = 471
     # TODO: THE ABOVE CODE WORKS, THIS IS JUST FOR PLACEHOLDERS
@@ -236,11 +255,11 @@ def process_file(filename, path_to_file):
 
     # Read into pd.DataFrame
     data = cv.read_functions[file_extension](path_to_file)
-    print(data.columns)
 
 
-    # make all columns lowercase
-    data.columns = data.columns.astype(str).str.lower()
+    # make all column names lowercase and strings
+    data = data.rename(columns=str.lower)
+
 
     # get the ts_metadata row for the specified contributor_id and ts_name
     query = "SELECT ts_id, ts_desc, ts_domain, ts_units, ts_keywords FROM ts_metadata WHERE ts_contributor = %s AND ts_name = %s"
@@ -318,21 +337,25 @@ def main():
             command = json.loads(line)
         except json.JSONDecodeError:
             error = jsonify("error", "Invalid JSON string")
-            print(error, flush=True)
+            log(error, flush=True)
             continue
 
         if "update" not in command:
             error = jsonify("error", "invalid request")
-            print(error, flush=True)
+            log(error)
 
         elif command["update"]:
-            watch_directory()
+            # check for additional input from sdin
+            user_id = 1
+            user_type = "C"
+            ts_name = "ASIANPAINT"
+            watch_directory(user_id, user_type, ts_name)
             result = jsonify("success", LOG_STATEMENTS)
-            print(result, flush=True)
+            log(result)
 
         else:
             error = jsonify("error", "Unknown command")
-            print(error, flush=True)
+            log(error)
 
 
 if __name__ == "__main__":
