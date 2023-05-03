@@ -96,9 +96,9 @@ def sql_insert_metadata(ts_metadata) -> int:
 
 def sql_insert_data(df: pd.DataFrame, columns):
     # change datetime column to proper format for mySQL
+    df = df.fillna(value='NULL')
     df['ts_datetime'] = df['ts_datetime'].apply(lambda x: datetime.datetime.strftime(x, '%Y-%m-%d %H:%M:%S'))
-    query = f"INSERT INTO {'ts_data'} ({', '.join(columns)}) VALUES " \
-            f"({', '.join(['IFNULL(%s, NULL)'] * len(columns))})"
+    query = f"INSERT INTO {'ts_data'} ({', '.join(columns)}) VALUES ({', '.join(['%s'] * len(columns))})"
 
     # Iterate through the rows of the pandas DataFrame and insert the data into the MySQL database
     for index, row in df.iterrows():
