@@ -155,7 +155,7 @@ def compare_files(filename, path_to_file, ts_name) -> Union[float, None]:
     else:
         ts_id = None
 
-    print(ts_id)
+    print(f"TSID: {ts_id}")
 
 
 
