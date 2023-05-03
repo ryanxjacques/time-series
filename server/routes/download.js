@@ -11,11 +11,18 @@ const jsonexport = require('jsonexport');
 download.get('/', (req, res) => {
   downloadFile('470').then(response => {
     const filePath = '/var/www/html/downloads/data.csv';
-    const fileData = readFile(filePath);
-    console.log(fileData);
-    res.setHeader('Content-Type', 'text/csv');
-    res.setHeader('Content-Disposition', 'attachment; filename="data.csv"');
-    res.send(fileData);
+
+    fs.readFile(filePath, (err, data) => {
+      if (err) {
+        console.error('Error reading file: ', err);
+        res.status(500).send('Error reading file');
+        return;
+      }
+      console.log(fileData);
+      res.setHeader('Content-Type', 'text/csv');
+      res.setHeader('Content-Disposition', 'attachment; filename="data.csv"');
+      res.send(fileData);
+    });
   });
 });
 
