@@ -11,6 +11,7 @@ import datetime
 import mysql.connector
 import pandas as pd
 import regex as re
+from typing import Union
 
 # Import Local Files
 import config
@@ -124,7 +125,7 @@ def watch_directory():
     return
 
 
-def compare_files(filename, path_to_file, ts_name) -> float|None:
+def compare_files(filename, path_to_file, ts_name) -> Union[float, None]:
     """
     Compares the forcasting of data for the selected Time Series
     """
