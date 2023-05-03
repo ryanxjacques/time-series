@@ -213,13 +213,6 @@ def compare_files(filename, ts_name) -> Union[float, None]:
 
     return cd.accuracy(forecast, test)
 
-def remove_from_db(cs, cnx, contributor_id, ts_name):
-    # remove row from database
-    query = "DELETE FROM ts_metadata WHERE ts_contributor = %s AND ts_name = %s"
-    cs.execute(query, (contributor_id, ts_name))
-    cnx.commit()
-    cs.close()
-
 
 def process_file(filename, path_to_file):
     """ Process files for storage on DB"""
@@ -231,10 +224,17 @@ def process_file(filename, path_to_file):
 
     # Check if file type is supported
     if file_is_not_supported(file_extension):
+        query = "DELETE FROM ts_metadata WHERE ts_contributor = %s AND ts_name = %s"
+        cursor.execute(query, (contributor_id, ts_name))
+        cnx.commit()
+        cursor.close()
         return log("File type is not supported")
+
 
     # Read into pd.DataFrame
     data = cv.read_functions[file_extension](path_to_file)
+
+
 
     # get the ts_metadata row for the specified contributor_id and ts_name
     query = "SELECT ts_id, ts_desc, ts_domain, ts_units, ts_keywords FROM ts_metadata WHERE ts_contributor = %s AND ts_name = %s"
@@ -259,12 +259,18 @@ def process_file(filename, path_to_file):
     try:
         data = cv.clean_headers(data, row['ts_domain'])
     except ValueError:
-        remove_from_db(cursor, cnx, contributor_id, ts_name)
+        query = "DELETE FROM ts_metadata WHERE ts_contributor = %s AND ts_name = %s"
+        cursor.execute(query, (contributor_id, ts_name))
+        cnx.commit()
+        cursor.close()
         return log(f"{filename} Unable to clean headers.")
 
     # Catch errors by checking format.
     if not cv.check_data_format(data):
-        remove_from_db(cursor, cnx, contributor_id, ts_name)
+        query = "DELETE FROM ts_metadata WHERE ts_contributor = %s AND ts_name = %s"
+        cursor.execute(query, (contributor_id, ts_name))
+        cnx.commit()
+        cursor.close()
         return log("Failed format")
 
     first_col = row['ts_domain'].split(", ")[0]
