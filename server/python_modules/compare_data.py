@@ -37,10 +37,11 @@ def accuracy(forecast_data: pd.DataFrame, test_data: pd.DataFrame) -> float:
     # go over column and sum each value
     f_val = 0
     t_val = 0
-    for column in test_data.columns:
-        if np.issubdtype(test_data[column].dtype, np.number):
-            f_val += forecast_data[column].sum()
-            t_val += test_data[column].sum()
+    # only go over magnitude values
+    ts_columns = [col for col in test_data.columns if col.startswith('ts_magnitude')]
+    for column in ts_columns:
+        f_val += forecast_data[column].sum()
+        t_val += test_data[column].sum()
 
     mape = 1 - np.abs((t_val - f_val)/t_val)
 
