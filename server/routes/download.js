@@ -37,15 +37,14 @@ const downloadFile = (id) => {
 
       count -= 2; // subtract ts_id and ts_datetime columns;
 
-      const query = ['ts_datetime'];
+      query = ['ts_datetime'];
       for(let i = 1; i <= count; i++) {
         // push is javascript's append method for lists
         query.push(`ts_magnitude${i}`);
       }
-      return [query, db.getRecordCount(connection, 'ts_data', {ts_id: id})];
+      return db.getRecordCount(connection, 'ts_data', {ts_id: id});
     }).then(response => {
-      const query = response[0];
-      const limit = response[1];
+      const limit = response;
       console.log(response);
       return db.getDSMLEData(connection, 'ts_data', query, {ts_id: id}, limit);
     }).then(response => {
