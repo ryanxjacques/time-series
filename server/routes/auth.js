@@ -98,5 +98,14 @@ auth.post('/signup', (req, res) => {
   });
 });
 
+auth.post('/username', (req, res) => {
+  const { uuid } = req.body;
+  db.getRecordElement(connection, 'active_users', 'username', {uuid: uuid}).then(response => {
+    const msg = {username: response[0].username};  
+    res.send(JSON.stringify(msg)); // send username to client.
+  }).catch(err => {
+    console.error(err);
+  });
+});
 
 module.exports = auth;

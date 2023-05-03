@@ -16,14 +16,14 @@ const fileInput = document.getElementById('file-input');
 const submitFileForm = document.getElementById('submit-file-form');
 const submitButton = document.getElementById('submit-file');
 
-const uploadFile = async (url, fileInput) => {
+const uploadFile = async (url,fileInput, newFileName) => {
   // Extract name and file from fileInput document element.
   const selectedName = fileInput.getAttribute("name");
   const selectedFile = fileInput.files[0];
 
   // Add name and file to formData.
   const formData = new FormData();
-  formData.append(selectedName, selectedFile);
+  formData.append(selectedName, selectedFile, newFileName);
   try {
     // Send request and wait for a response.
     const response = await fetch(url, {
