@@ -59,7 +59,7 @@ const downloadFile = (id) => {
 
 
 const readFile = (filePath) => {
-  fs.readFile(filePath, (err, data) => {
+  return fs.readFile(filePath, (err, data) => {
     if (err) {
       console.error('Error reading file: ', err);
       res.status(500).send('Error reading file');
