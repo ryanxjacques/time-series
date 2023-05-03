@@ -343,8 +343,8 @@ def main():
 
         elif command["update"]:
             # check for additional input from sdin
-            user_id = "1"
-            user_type = "DS"
+            user_id = "1" 
+            user_type = "C"
             ts_name = "ASIANPAINT"
             watch_directory(user_id, user_type, ts_name)
             result = jsonify("success", LOG_STATEMENTS)
