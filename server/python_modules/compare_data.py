@@ -46,9 +46,14 @@ def accuracy(forecast_data: pd.DataFrame, test_data: pd.DataFrame) -> float:
 
     return mape
 
-def noise(data:pd.DataFrame) ->pd.DataFrame:
+def noise(data: pd.DataFrame) -> pd.DataFrame:
     """
     Add random noise to a pd.DataFrame for testing
     """
-    np_noise = np.random.normal(0, 1, data.shape)
-    return data + np_noise
+    # only select columns with numerical values
+    numeric_cols = data.select_dtypes(include=np.number).columns
+    # generate noise on the columns
+    np_noise = np.random.normal(0, 1, data[numeric_cols].shape)
+    # add the noise to the numeric columns
+    data[numeric_cols] = data[numeric_cols].to_numpy() + np_noise
+    return data
