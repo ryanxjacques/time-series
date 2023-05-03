@@ -123,7 +123,7 @@ const getRecordCount = (connection, tableName, id) => {
       if (error) {
         reject(error);
       } else {
-        resolve(results);
+        resolve(results.length);
       }
     });
   });
