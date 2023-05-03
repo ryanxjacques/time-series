@@ -137,32 +137,32 @@ def watch_directory(user, usertype, ts_name):
     print("In watch")
     # Iterate through each file in the watch directory.
     for filename in os.listdir(config.watch_path):
-        if user == get_contributor_id(filename):
-            if usertype == "C":
-                process_file(filename, f"{config.watch_path}/{filename}")
-                os.remove(f"{config.watch_path}/{filename}")
-            elif usertype == "DS":
-                #TODO: get ts_name from user input
-                accuracy = compare_files(filename,ts_name)
-                ts_id= get_id(ts_name)
-                user_id = user
+        #if user == get_contributor_id(filename):
+        if usertype == "C":
+            process_file(filename, f"{config.watch_path}/{filename}")
+            os.remove(f"{config.watch_path}/{filename}")
+        elif usertype == "DS":
+            #TODO: get ts_name from user input
+            accuracy = compare_files(filename,ts_name)
+            ts_id= get_id(ts_name)
+            user_id = user
 
-                # Define the MySQL query to insert values into ts_solutions table
-                query = "INSERT INTO ts_solutions (ts_id, DS/MLE_id, ts_mape) VALUES (%s, %s, %s)"
+            # Define the MySQL query to insert values into ts_solutions table
+            query = "INSERT INTO ts_solutions (ts_id, DS/MLE_id, ts_mape) VALUES (%s, %s, %s)"
 
-                # Define the tuple of values to insert
-                values = (ts_id, user_id, accuracy)
+            # Define the tuple of values to insert
+            values = (ts_id, user_id, accuracy)
 
-                # Execute the query with the tuple of values
-                cursor.execute(query, values)
+            # Execute the query with the tuple of values
+            cursor.execute(query, values)
 
-                # Commit the changes to the database
-                cnx.commit()
+            # Commit the changes to the database
+            cnx.commit()
 
-                # close connection
-                cnx.close()
-                cursor.close()
-                os.remove(f"{config.watch_path}/{filename}")
+            # close connection
+            cnx.close()
+            cursor.close()
+            os.remove(f"{config.watch_path}/{filename}")
     return
 
 def get_id(ts_name) -> Union[float, None]:

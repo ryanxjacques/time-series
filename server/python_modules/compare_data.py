@@ -61,3 +61,4 @@ def noise(data: pd.DataFrame) -> pd.DataFrame:
     noisy[ts_columns] = noisy[ts_columns].to_numpy() + np_noise
 
     return noisy
+
