@@ -8,7 +8,8 @@ const connection = db.connectToDataBase('time_series', 'download.js->time_series
 const jsonexport = require('jsonexport');
 
 // needs to change to a POST request.
-download.get('/', (req, res) => {
+download.post('/', (req, res) => {
+
   res.setHeader('Content-Type', 'text/csv');
   res.setHeader('Content-Disposition', 'attachment; filename="data.csv"');
 
@@ -41,7 +42,10 @@ const downloadFile = (id) => {
         // push is javascript's append method for lists
         query.push(`ts_magnitude${i}`);
       }
-      return db.getRecordElement(connection, 'ts_data', query, {ts_id: id});
+      return db.getRecordCount(connection, 'ts_data', {ts_id: id});
+    }).then(response => {
+      console.log(response);
+      return db.getDSMLEData(connection, 'ts_data', query, {ts_id: id});
     }).then(response => {
       // Convert mySQL data into CSV
       return jsonexport(response);

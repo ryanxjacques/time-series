@@ -117,6 +117,18 @@ const getFirstRecord = (connection, tableName, id) => {
   return promise;
 }
 
+const getRecordCount = (connection, tableName, id) => { 
+  let promise = new Promise((resolve, reject) => {
+    connection.query('SELECT COUNT(*) FROM ?? WHERE ?', [tableName, id], (error, results, fields) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+  return promise;
+};
 
 const disconnect = (connection) => {
   connection.end(() => {
@@ -135,4 +147,5 @@ module.exports = {
   getRecordElement,
   getRecordByCondition,
   getFirstRecord,
+  getRecordCount,
 };
