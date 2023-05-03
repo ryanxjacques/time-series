@@ -242,7 +242,7 @@ def process_file(filename, path_to_file):
     query = "SELECT ts_id, ts_desc, ts_domain, ts_units, ts_keywords FROM ts_metadata WHERE ts_contributor = %s AND ts_name = %s"
     cursor.execute(query, (contributor_id, ts_name))
     result = cursor.fetchall()
-    print(result)
+    print(f"fetch result{result}")
 
     # store the metadata in individual variables
     if result:
