@@ -48,8 +48,8 @@ const downloadFile = (id) => {
     }).catch(error => {
       console.error(error);
     });
-    return promise;
   });
+  return promise;
 }
 
 
