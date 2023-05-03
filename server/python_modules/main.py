@@ -152,7 +152,7 @@ def watch_directory(user, usertype, ts_name):
             query = "INSERT INTO ts_solutions (ts_id, DS/MLE_id, ts_mape) VALUES (%s, %s, %s)"
 
             # Define the tuple of values to insert
-            values = (ts_id, user_id, accuracy)
+            values = (ts_id, user_id, float(accuracy))
 
             # Execute the query with the tuple of values
             cursor.execute(query, values)
