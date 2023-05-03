@@ -26,14 +26,13 @@ download.get('/', (req, res) => {
 const downloadFile = (type) => {
   db.getFirstRecord(connection, 'ts_data', {ts_id: 470}).then(response => {
     const record = response[0];
-    console.log(record);
-    let columnCount = 0;
-    // record.foreach(element => {
-    //   if (element != null) {
-    //     columnCount ++;
-    //   }
-    // });
-    console.log(columnCount);
+    let count = 0;
+    for (let column in record) {
+      if (record[column] != null) {
+        count++
+      }
+    }
+    console.log(count);
   });
   // db.getRecordElement(connection, 'ts_metadata', 'ts_domain', {ts_id: 470}).then(response => {
   //   const { ts_domain } = response[0];
