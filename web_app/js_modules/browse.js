@@ -69,7 +69,9 @@ function displayTsMetadata(ts_metadata) {
     idLink.textContent = ts.ts_id;
     idLink.href = `view-time-series.html?ts_id=${ts.ts_id}`;
     idLink.addEventListener("click", function() {
-      sendRequest("POST", "https://35.85.29.142:3000/download", {id: ts.ts_id}); 
+      sendRequest("POST", "https://35.85.29.142:3000/download", {id: ts.ts_id}).then(response => {
+        alert("testing");
+      }); 
     });
     idCell.appendChild(idLink);
     row.appendChild(idCell);
