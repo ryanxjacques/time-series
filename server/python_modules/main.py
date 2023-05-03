@@ -157,6 +157,9 @@ def process_file(filename, path_to_file):
     # convert first column to datetime
     data[first_col] = pd.to_datetime(data[first_col], errors='coerce')
 
+    # Graphically display the contributors data using matplotlib.
+    gd.graph(data, row['ts_domain'], row['ts_name'], row['ts_units'])
+
     # select columns with floats, integers, datetimes, or timedelta64s
     data = data.select_dtypes(include=['float64', 'int64', 'datetime64[ns]', 'timedelta64'])
 
@@ -179,9 +182,6 @@ def process_file(filename, path_to_file):
     sql_insert_data(sql_data, sql_data.columns.values)
     log(f"{filename} was converted to SQL")
     cnx.close()
-
-    # Graphically display the contributors data using matplotlib.
-    gd.graph(data, row['ts_domain'], row['ts_name'], row['ts_units'])
     return None
 
 
