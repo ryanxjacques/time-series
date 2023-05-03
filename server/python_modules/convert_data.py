@@ -84,7 +84,8 @@ def clean_headers(df, headers) -> pd.DataFrame:
         if header not in df.columns:
             headers.remove(header)
 
-
+    print(f"Headers: {headers}")
+    print(f"Columns: {df.columns}")
     if list(df.columns) == headers:
         # no need to modify if headers already correct
         return df
