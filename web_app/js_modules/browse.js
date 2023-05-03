@@ -80,7 +80,7 @@ function displayTsMetadata(ts_metadata) {
     row.appendChild(descCell);
 
     const domainCell = document.createElement('td');
-    domainCell.textContent = ts.ts_domain;
+    domainCell.textContent = ts.ts_domain.replaceAll(",", ", ");
     row.appendChild(domainCell);
 
     const unitCell = document.createElement('td');
