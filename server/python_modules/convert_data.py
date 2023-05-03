@@ -74,7 +74,7 @@ def clean_headers(df, headers) -> pd.DataFrame:
     headers = headers.split(", ")
     headers = [string.lower() for string in headers]
     print(f"Headers: {headers}")
-    print(f"Headers df: {df.column}")
+    print(f"Headers df: {df.columns}")
     # drop duplicate rows
     df = df.drop_duplicates()
 
