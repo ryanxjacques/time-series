@@ -135,15 +135,16 @@ def get_id(ts_name) -> Union[float, None]:
     # Execute the query
     cursor.execute(query)
 
-    # Fetch the result and store it in a variable
-    result = cursor.fetchone()
+    # Fetch all the rows in the result set
+    results = cursor.fetchall()
 
-    # If there is a result, extract the ts_id value
-    if result is not None:
-        ts_id = result[0]
+    # If there is at least one row, extract the ts_id value
+    if results:
+        ts_id = results[0][0]
     else:
         ts_id = None
 
+    # Close the cursor
     cursor.close()
 
     return ts_id
