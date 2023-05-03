@@ -236,6 +236,8 @@ def process_file(filename, path_to_file):
 
     # Read into pd.DataFrame
     data = cv.read_functions[file_extension](path_to_file)
+    print(data.columns)
+
 
     # make all columns lowercase
     data = data.rename(columns=str.lower)
