@@ -43,12 +43,12 @@ function displayTsMetadata(ts_metadata) {
     const ts_domain = document.getElementById('ts_domain');
     const ts_units = document.getElementById('ts_units');
     const ts_keywords = document.getElementById('ts_keywords');
-    //const ts_contributor = document.getElementById('ts_contributor');
+    const ts_contributor = document.getElementById('ts_contributor');
     ts_name.innerHTML = ts_vals.ts_name;
     ts_desc.innerHTML = ts_vals.ts_desc;
     ts_domain.innerHTML = ts_vals.ts_domain;
     ts_units.innerHTML = ts_vals.ts_units;
     ts_keywords.innerHTML = ts_vals.ts_keywords;
-    //ts_contributor.innerHTML = ts_vals.ts_contributor;
+    ts_contributor.innerHTML = ts_vals.ts_contributor;
 
 }
