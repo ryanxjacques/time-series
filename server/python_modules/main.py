@@ -346,6 +346,7 @@ def main():
 
         elif command["update"]:
             # check for additional input from sdin
+            print("got into update")
             user_id = 1
             user_type = "C"
             ts_name = "ASIANPAINT"
