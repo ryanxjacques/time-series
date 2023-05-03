@@ -18,10 +18,9 @@ download.get('/', (req, res) => {
         res.status(500).send('Error reading file');
         return;
       }
-      console.log(fileData);
       res.setHeader('Content-Type', 'text/csv');
       res.setHeader('Content-Disposition', 'attachment; filename="data.csv"');
-      res.send(fileData);
+      res.send(data);
     });
   });
 });
