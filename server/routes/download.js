@@ -27,11 +27,21 @@ const downloadFile = (type) => {
   db.getRecordElement(connection, 'ts_metadata', 'ts_domain', {ts_id: 470}).then(response => {
     const { ts_domain } = response[0];
 
+    // Create an list by spliting the string on commas, then check the length of the array.
     const domainCount = ts_domain.split(",").length;
     console.log(domainCount);
+
+    query = ['ts_datetime'];
+
+    for(const i = 1; i < domainCount; i++) {
+      query.append(`ts_magnitude${i}`);
+    }
+
+    console.log(query);
   });
   // db.getRecordElement(connection, 'ts_data', columns, {id: id});
 }
+
 
 // Export file object for server.js to use.
 module.exports = download;
