@@ -86,6 +86,9 @@ def clean_headers(df, headers) -> pd.DataFrame:
     # Keep only header row and rows below it
     df = df.iloc[header_index + 1:]
 
+    # drop duplicate rows
+    df = df.drop_duplicates()
+
     # Reset index
     df = df.reset_index(drop=True)
 
