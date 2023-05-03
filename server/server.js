@@ -55,7 +55,7 @@ app.use('/view', view);
 app.use('/browse', browse);
 app.use('/search', search);
 app.use('/uuidGen', uuidGen);
-app.use('/download', uuidGen);
+app.use('/download', download);
 
 // Listen on port 3000 (default).
 const port = process.env.APP_PORT || 3000;
