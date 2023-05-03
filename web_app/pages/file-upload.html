@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>File upload form</title>
+    <link rel="stylesheet" href="../css_modules/theme.css">
+    <link rel="stylesheet" href="../css_modules/file-upload.css">
+  </head>
+  <body>
+    <div class="file-upload-body-flex-container">
+      <main class="file-upload-main-flex-container interface font">   
+        <h1>Upload File Form</h1>
+        <div>
+          <input type="text" id="ts_name" placeholder="Enter title">
+          <input type="text" id="ts_description" placeholder="Enter description"> 
+          <input type="text" id="ts_domains" placeholder="Enter domains [delimiters are commas or spaces]">
+          <input type="text" id="ts_units" placeholder="Enter units [delimiters are commas or spaces] ">
+          <input type="text" id="ts_keywords" placeholder="Enter keywords [delimiters are commas or spaces]">
+          <input type="file" id="ts_file_input" name="uploaded_file">
+        </div>
+        <div>
+          <button class="font" id="upload_file_form_submit_btn">Submit</button>
+          <a href="./home.html" class="font">Mistake? Go back home</a>
+        </div>
+      </main>
+      <footer>
+      </footer>
+    </div>
+    <script src="../js_modules/fetch.js"></script>
+    <script src="../js_modules/file-upload.js"></script>
+  </body>
+</html>
+

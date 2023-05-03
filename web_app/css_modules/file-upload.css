@@ -1,0 +1,76 @@
+/* The flex container that surronds the interface. */
+.file-upload-body-flex-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  margin: 0;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: var(--black_0);
+}
+
+/* The file upload interface */
+.file-upload-main-flex-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-top: 10vh;
+  margin-bottom: 10vh;
+  margin-left: 30vw;
+  margin-right: 30vw;
+  height: 100vh;
+}
+
+/* Center Title */
+.file-upload-main-flex-container > h1 {
+  padding-left: 0;
+  text-align: center;
+}
+
+/* Modifies all div containers */
+.file-upload-main-flex-container > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center;
+  margin-top: 3vh;
+}
+
+/* Modifies each input tag */
+.file-upload-main-flex-container > div > input {
+  width: 80%;
+  height: 5vh;
+  margin-bottom: 3vh;
+}
+
+/* Modifies each button tag */
+.file-upload-main-flex-container > div > button {
+  width: 40%;
+  height: 5vh;
+  margin-bottom: 3.5vh;
+}
+
+/* If input is marked as invalid (i.g no data entered) */
+input:invalid {
+  border-color: var(--error-color, red);
+}
+
+:invalid::placeholder {
+  color: var(--error-color, red);
+}
+
+/* File inputs are weird */
+#ts_file_input {
+  margin-top: 2vh;
+  margin-left: 50%;
+  margin-bottom: -1vh;
+}
+
+#ts_file_input:invalid {
+  font-weight: bold;
+  border-color: var(--error-color, red);
+  color: var(--error-color, red);
+}
+

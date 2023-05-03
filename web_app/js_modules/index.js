@@ -7,8 +7,11 @@ const getUuid = () => {
 const checkActive = (uuid) => {
   sendRequest('POST', 'https://35.85.29.142:3000/auth/is-active?', {uuid: uuid}).then(response => {
     if (response.status) {
-      return window.location.replace("pages/home.html");;
+      return sendRequest('POST', 'https://35.85.29.142:3000/auth/username', {uuid: uuid});
     }
+  }).then(response => {
+    localStorage.setItem('username', response.username);
+    return window.location.replace("pages/home.html");;
   });
 }
 
