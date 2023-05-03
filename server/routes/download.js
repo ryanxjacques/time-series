@@ -12,10 +12,11 @@ download.get('/', (req, res) => {
       return;
     }
 
-    res.setHeader('Content-Type', 'text/plaintxt');
+    res.setHeader('Content-Type', 'text/plain');
     res.setHeader('Content-Disposition', 'attachment; filename="data.txt"');
     res.send(data);
   });
+  console.log(filePath);
 });
 
 // Export file object for server.js to use.
