@@ -5,7 +5,12 @@ const mainAPI = require('../js_modules/mainAPI');
 
 // Connect to data base.
 const db = require('../js_modules/database');
+<<<<<<< HEAD
 const connection = db.connectToDataBase('users', 'file.js ');
+=======
+const usersConnection = db.connectToDataBase('users', 'file.js->users ');
+const tsConnection = db.connectToDataBase('time_series', 'file.js->time_series ');
+>>>>>>> filename
 
 // Open a connection with main.py!
 mainAPI.connectToMain();
@@ -27,14 +32,36 @@ const upload = multer({storage})
 file.post('/upload', upload.single('uploaded_file'), function (req, res) {
   const message = {message: "Succesfully uploaded file!"};
   res.send(JSON.stringify(message));
+<<<<<<< HEAD
+=======
+  
+>>>>>>> filename
   mainAPI.run().then(response => {
     response.forEach((element) => {
       console.log(element);
     });
   });
+});
 
+<<<<<<< HEAD
   const msg = {message: '\'/file\' received your file!'};
   res.send(JSON.stringify(msg));
+=======
+file.post('/metadata', (req, res) => {
+  const { username } = req.body;
+  delete req.body['username'];
+
+  // send user id.
+  db.getRecordElement(usersConnection, 'users', 'id', {username: username}).then(response => {
+    const { id } =  response[0];
+    const message = {id: id};
+    res.send(JSON.stringify(message));
+
+    req.body['ts_contributor'] = id;
+    console.log(req.body);
+    return db.insertRecord(tsConnection, 'ts_metadata', req.body);
+  });
+>>>>>>> filename
 });
 
 file.post('/metadata', (req, res) => {
