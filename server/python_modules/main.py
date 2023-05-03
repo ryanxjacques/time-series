@@ -144,6 +144,8 @@ def get_id(ts_name) -> Union[float, None]:
     else:
         ts_id = None
 
+    cursor.close()
+
     return ts_id
 
 
