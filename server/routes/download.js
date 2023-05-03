@@ -42,9 +42,15 @@ const downloadFile = (type) => {
     }
 
     return db.getRecordElement(connection, 'ts_data', query, {ts_id: 470});
-
   }).then(response => {
-    console.log(response);
+    const record = response[0]
+    for (let column in record) {
+      console.log(record[column]);
+    }
+
+    response.map((record) => {
+      
+    });
   });
 }
 
