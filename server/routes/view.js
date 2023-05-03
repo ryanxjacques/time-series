@@ -6,7 +6,7 @@ const db = require('../js_modules/database');
 view.get('/timeseries', async (req, res) => {
     const connection = db.connectToDataBase('time_series');
     const ts_id = req.query.ts_id;
-    const fields = ['ts_id', 'ts_name', 'ts_desc', 'ts_domain', 'ts_units', 'ts_keywords'];
+    const fields = ['ts_id', 'ts_name', 'ts_desc', 'ts_domain', 'ts_units', 'ts_keywords', 'ts_contributor'];
     const condition = 'ts_id = ?';
     const id = [ts_id];
     const timeseries_res = await db.getRecordByCondition(connection, 'ts_metadata', fields, condition, id);
