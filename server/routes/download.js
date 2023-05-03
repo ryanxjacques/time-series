@@ -35,7 +35,7 @@ const downloadFile = (type) => {
 
     count -= 2; // subtract ts_id and ts_datetime columns;
 
-    let query = ['ts_datetime'];
+    const query = ['ts_datetime'];
     for(let i = 1; i <= count; i++) {
       // push is javascript's append method for lists
       query.push(`ts_magnitude${i}`);
