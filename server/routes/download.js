@@ -9,10 +9,11 @@ const jsonexport = require('jsonexport');
 
 // needs to change to a POST request.
 download.get('/', (req, res) => {
-  downloadFile('470').then(response => {
-    const filePath = '/var/www/html/downloads/data.csv';
-    sendFile(filePath);
-  });
+  downloadFile('470')
+  // .then(response => {
+  //   const filePath = '/var/www/html/downloads/data.csv';
+  //   sendFile(filePath);
+  // });
 });
 
 
