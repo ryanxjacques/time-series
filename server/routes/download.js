@@ -7,23 +7,12 @@ const connection = db.connectToDataBase('time_series', 'download.js->time_series
 // To easily convert JSON data to something else.
 const jsonexport = require('jsonexport');
 
-
+// needs to change to a POST request.
 download.get('/', (req, res) => {
-  const filePath = '/var/www/html/downloads/helloWorld.txt';
-
-  // fs.readFile(filePath, (err, data) => {
-  //   if (err) {
-  //     console.error('Error reading file: ', err);
-  //     res.status(500).send('Error reading file');
-  //     return;
-  //   }
-
-  //   // res.setHeader('Content-Type', 'text/plain');
-  //   // res.setHeader('Content-Disposition', 'attachment; filename="data.txt"');
-  //   // res.send(data);
-  // });
-  // console.log(filePath);
-  downloadFile('470');
+  downloadFile('470').then(response => {
+    const filePath = '/var/www/html/downloads/data.csv';
+    sendFile(filePath);
+  });
 });
 
 
@@ -53,15 +42,28 @@ const downloadFile = (id) => {
     fs.writeFile('/var/www/html/downloads/data.csv', response, (err) => {
       if (err) {
         console.error('Error writing file:', err);
-        return;
       }
       console.log('Data saved to /var/www/html/downloads/data.csv');
+      return true;
     });
   }).catch(error => {
     console.error(error);
   });
 }
 
+const sendFile = (filePath) => {
+  fs.readFile(filePath, (err, data) => {
+    if (err) {
+      console.error('Error reading file: ', err);
+      res.status(500).send('Error reading file');
+      return;
+    }
+
+    res.setHeader('Content-Type', 'application/csv');
+    res.setHeader('Content-Disposition', 'attachment; filename="data.csv"');
+    res.send(data);
+  });
+};
 
 // Export file object for server.js to use.
 module.exports = download;
