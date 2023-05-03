@@ -26,8 +26,9 @@ download.get('/', (req, res) => {
 const downloadFile = (type) => {
   db.getRecordElement(connection, 'ts_metadata', 'ts_domain', {ts_id: 470}).then(response => {
     const { domain } = response[0];
-    const domainCount = domain.split(",").length;
-    console.log(domainCount);
+
+    // const domainCount = domain.split(",").length;
+    console.log(domain);
   });
   // db.getRecordElement(connection, 'ts_data', columns, {id: id});
 }
