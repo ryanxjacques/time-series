@@ -11,7 +11,10 @@ const jsonexport = require('jsonexport');
 download.get('/', (req, res) => {
   downloadFile('470').then(response => {
     const filePath = '/var/www/html/downloads/data.csv';
-    sendFile(filePath);
+    const fileData = readFile(filePath);
+    res.setHeader('Content-Type', 'application/csv');
+    res.setHeader('Content-Disposition', 'attachment; filename="data.csv"');
+    res.send(fileData);
   });
 });
 
@@ -54,17 +57,14 @@ const downloadFile = (id) => {
 }
 
 
-const sendFile = (filePath) => {
+const readFile = (filePath) => {
   fs.readFile(filePath, (err, data) => {
     if (err) {
       console.error('Error reading file: ', err);
       res.status(500).send('Error reading file');
       return;
     }
-
-    res.setHeader('Content-Type', 'application/csv');
-    res.setHeader('Content-Disposition', 'attachment; filename="data.csv"');
-    res.send(data);
+    return data;
   });
 }
 
