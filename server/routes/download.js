@@ -42,10 +42,12 @@ const downloadFile = (id) => {
         // push is javascript's append method for lists
         query.push(`ts_magnitude${i}`);
       }
-      return db.getRecordCount(connection, 'ts_data', {ts_id: id});
+      return (query, db.getRecordCount(connection, 'ts_data', {ts_id: id}));
     }).then(response => {
+      const query = response[0];
+      const limit = response[1];
       console.log(response);
-      return db.getDSMLEData(connection, 'ts_data', query, {ts_id: id});
+      return db.getDSMLEData(connection, 'ts_data', query, {ts_id: id}, limit);
     }).then(response => {
       // Convert mySQL data into CSV
       return jsonexport(response);

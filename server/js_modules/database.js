@@ -130,6 +130,19 @@ const getRecordCount = (connection, tableName, id) => {
   return promise;
 };
 
+const getDSMLEData = (connection, tableName, id, limit) => { 
+  let promise = new Promise((resolve, reject) => {
+    connection.query('SELECT * FROM ?? WHERE ? LIMIT ?', [tableName, id, limit], (error, results, fields) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+  return promise;
+};
+
 const disconnect = (connection) => {
   connection.end(() => {
     console.log('Disconnected to MySQL server.')
@@ -148,4 +161,5 @@ module.exports = {
   getRecordByCondition,
   getFirstRecord,
   getRecordCount,
+  getDSMLEData,
 };
