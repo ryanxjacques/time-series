@@ -69,7 +69,8 @@ def clean_headers(df, headers) -> pd.DataFrame:
     Using metadata, attempts to remove useless columns in DF
     """
 
-    main.log(f"Rows: {headers}")
+
+    print(f"Rows: {headers}")
     headers = headers.split(",")
     headers = [string.lower() for string in headers]
 

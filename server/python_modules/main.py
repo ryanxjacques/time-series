@@ -237,7 +237,8 @@ def process_file(filename, path_to_file):
     # Read into pd.DataFrame
     data = cv.read_functions[file_extension](path_to_file)
 
-
+    # make all columns lowercase
+    data = data.rename(columns=str.lower)
 
     # get the ts_metadata row for the specified contributor_id and ts_name
     query = "SELECT ts_id, ts_desc, ts_domain, ts_units, ts_keywords FROM ts_metadata WHERE ts_contributor = %s AND ts_name = %s"
