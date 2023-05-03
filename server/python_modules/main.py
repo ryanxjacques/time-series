@@ -56,6 +56,7 @@ try:
 
     # Create cursor object.
     cursor = cnx.cursor()
+
 except mysql.connector.Error as err:
     log(f"Error connecting to MySQL: {err}")
     exit(-1)
@@ -232,8 +233,8 @@ def compare_files(filename, ts_name) -> Union[float, None]:
         return
 
     # Read into pd.DataFrame
-    # forecast = cv.read_functions[file_extension](path_to_file)
 
+    cursor = cnx.cursor()
 
     ts_id = get_id(ts_name)
 

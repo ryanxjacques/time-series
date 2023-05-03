@@ -45,7 +45,10 @@ function displayUsersSearch(users) {
             const row = document.createElement('tr');
     
             const idCell = document.createElement('td');
-            idCell.textContent = user.id;
+            const idLink = document.createElement('a');
+            idLink.textContent = user.id;
+            idLink.href = `view-user.html?user_id=${user.id}`;
+            idCell.appendChild(idLink);
             row.appendChild(idCell);
         
             const usernameCell = document.createElement('td');
