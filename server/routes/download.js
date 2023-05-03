@@ -4,6 +4,10 @@ const download = express.Router();
 const db = require('../js_modules/database');
 const connection = db.connectToDataBase('time_series', 'download.js->time_series ');
 
+// To easily convert JSON data to something else.
+const jsonexport = require('jsonexport');
+
+
 download.get('/', (req, res) => {
   const filePath = '/var/www/html/downloads/helloWorld.txt';
 
@@ -43,13 +47,14 @@ const downloadFile = (type) => {
 
     return db.getRecordElement(connection, 'ts_data', query, {ts_id: 470});
   }).then(response => {
-    const record = response[0]
-    for (let column in record) {
-      console.log(column);
-    }
+    // const record = response[0]
+    // for (let column in record) {
+    //   console.log(column);
+    // }
 
-    response.map((record) => {
-      
+    jsonexport(response, function(err, csv){
+        if (err) return console.error(err);
+        console.log(csv);
     });
   });
 }
