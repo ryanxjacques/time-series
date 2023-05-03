@@ -55,8 +55,9 @@ def noise(data: pd.DataFrame) -> pd.DataFrame:
     # only select columns with name "ts_magnitude{x}"
     ts_columns = [col for col in data.columns if col.startswith('ts_magnitude')]
     # generate noise on the columns
-    np_noise = np.random.normal(0, 1, data[ts_columns].shape)
+    noisy = data.copy()
+    np_noise = np.random.normal(0, 1, noisy[ts_columns].shape)
     # add the noise to the selected columns
-    data[ts_columns] = data[ts_columns].to_numpy() + np_noise
+    noisy[ts_columns] = noisy[ts_columns].to_numpy() + np_noise
     print(f"post-noise: {data}")
-    return data
+    return noisy
