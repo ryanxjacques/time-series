@@ -1,6 +1,7 @@
 const express = require('express'); 
 const fs = require('fs');
 const download = express.Router();
+const db = require('../js_modules/database');
 const connection = db.connectToDataBase('time_series', 'download.js->time_series ');
 
 download.get('/', (req, res) => {
