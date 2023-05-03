@@ -16,6 +16,7 @@ from typing import Union
 # Import Local Files
 import config
 import convert_data as cv
+import compare_data as cd
 import graph_display as gd
 
 # Connect to mySQL database
@@ -124,22 +125,10 @@ def watch_directory():
 
     return
 
-
-def compare_files(filename, path_to_file, ts_name) -> Union[float, None]:
+def get_id(ts_name) -> Union[float, None]:
     """
-    Compares the forcasting of data for the selected Time Series
+    Get the id of a time series
     """
-    # Extract the file extension
-    file_extension = get_file_extension(filename)
-
-    # Check if file type is supported
-    if file_is_not_supported(file_extension):
-        log("File type is not supported")
-        return
-
-    # Read into pd.DataFrame
-    data = cv.read_functions[file_extension](path_to_file)
-
     # Define the SQL query to fetch metadata_id
     query = f"SELECT ts_id FROM ts_metadata WHERE ts_name = '{ts_name}'"
 
@@ -155,7 +144,57 @@ def compare_files(filename, path_to_file, ts_name) -> Union[float, None]:
     else:
         ts_id = None
 
+    return ts_id
+
+
+def compare_files(filename, path_to_file, ts_name) -> Union[float, None]:
+    """
+    Compares the forcasting of data for the selected Time Series
+    """
+    # Extract the file extension
+    file_extension = get_file_extension(filename)
+
+    # Check if file type is supported
+    if file_is_not_supported(file_extension):
+        log("File type is not supported")
+        return
+
+    # Read into pd.DataFrame
+    # forecast = cv.read_functions[file_extension](path_to_file)
+
+
+    ts_id = get_id(ts_name)
+
     print(f"TSID: {ts_id}")
+
+    ts_id = 471
+    # TODO: THE ABOVE CODE WORKS, THIS IS JUST FOR PLACEHOLDERS
+
+
+    # Define the SQL query to retrieve the data with ts_id
+    query = f"SELECT * FROM ts_data WHERE ts_id = {ts_id}"
+
+    # Read the data into a pandas DataFrame
+    data = pd.read_sql(query, con=cnx)
+
+    split_index = int(len(data) * 0.8)
+    # index split point for test and train files
+
+    # grab the values from the test section of DF
+    test = data.iloc[split_index:, :]
+
+    forecast = cd.noise(test)
+
+    return cd.accuracy(forecast, test)
+
+
+
+
+
+
+
+
+
 
 
 
