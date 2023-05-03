@@ -42,7 +42,7 @@ const downloadFile = (id) => {
         // push is javascript's append method for lists
         query.push(`ts_magnitude${i}`);
       }
-      return (query, db.getRecordCount(connection, 'ts_data', {ts_id: id}));
+      return [query, db.getRecordCount(connection, 'ts_data', {ts_id: id})];
     }).then(response => {
       const query = response[0];
       const limit = response[1];
