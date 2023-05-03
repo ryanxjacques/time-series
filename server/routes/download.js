@@ -12,10 +12,9 @@ download.get('/', (req, res) => {
       return;
     }
 
-    res.setHeader('Content-Type', 'text/csv');
-    res.setHeader('Content-Disposition', 'attachment; filename="data.csv"');
+    res.setHeader('Content-Type', 'text/plaintxt');
+    res.setHeader('Content-Disposition', 'attachment; filename="data.txt"');
     res.send(data);
-    console.log(data);
   });
 });
 
