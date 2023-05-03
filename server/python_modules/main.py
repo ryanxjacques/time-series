@@ -217,6 +217,8 @@ def compare_files(filename, ts_name) -> Union[float, None]:
 def process_file(filename, path_to_file):
     """ Process files for storage on DB"""
     # Extract the file extension
+    cursor = cnx.cursor()
+    
     file_extension = get_file_extension(filename)
     contributor_id = get_contributor_id(filename)
     ts_name = get_ts_name(filename)
