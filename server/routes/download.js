@@ -9,18 +9,15 @@ const jsonexport = require('jsonexport');
 
 // needs to change to a POST request.
 download.get('/', (req, res) => {
-  downloadFile('470').then(response => {
-    const filePath = '/var/www/html/downloads/data.csv';
+  res.setHeader('Content-Type', 'text/csv');
+  res.setHeader('Content-Disposition', 'attachment; filename="data.csv"');
 
-    fs.readFile(filePath, (err, data) => {
-      if (err) {
-        console.error('Error reading file: ', err);
-        res.status(500).send('Error reading file');
-        return;
-      }
-      res.setHeader('Content-Type', 'text/csv');
-      res.setHeader('Content-Disposition', 'attachment; filename="data.csv"');
-      res.send(data);
+  downloadFile('470').then(() => {
+    const filePath = '/var/www/html/downloads/data.csv';
+    readFile(filePath).then(response => {
+      res.send(response);
+    }).catch(error => {
+      console.log(error)
     });
   });
 });
@@ -63,18 +60,18 @@ const downloadFile = (id) => {
   return promise;
 }
 
-
 const readFile = (filePath) => {
-  return fs.readFile(filePath, (err, data) => {
-    if (err) {
-      console.error('Error reading file: ', err);
-      res.status(500).send('Error reading file');
-      return;
-    }
-    return data;
+  const promise = new Promise((resolve, reject) => {
+    fs.readFile(filePath, (err, data) => {
+      if (err) {
+        reject('Error reading file: ', err);
+        // reject.status(500).send('Error reading file');
+      }
+      resolve(data);
+    });
   });
-}
-
+  return promise;
+};
 
 // Export file object for server.js to use.
 module.exports = download;
