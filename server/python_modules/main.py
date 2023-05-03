@@ -240,6 +240,7 @@ def process_file(filename, path_to_file):
 
 
     # make all columns lowercase
+    print(data.columns.dtypes)
     data = data.rename(columns=str.lower)
 
     # get the ts_metadata row for the specified contributor_id and ts_name
