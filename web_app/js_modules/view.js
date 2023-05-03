@@ -49,6 +49,9 @@ function displayTsMetadata(ts_metadata) {
     ts_domain.innerHTML = ts_vals.ts_domain;
     ts_units.innerHTML = ts_vals.ts_units;
     ts_keywords.innerHTML = ts_vals.ts_keywords;
+    
+    // Will change this to username.
+    // Need to change query to join with users table to retrieve username.
     ts_contributor.innerHTML = ts_vals.ts_contributor;
 
 }
