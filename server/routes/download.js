@@ -28,7 +28,7 @@ const downloadFile = (type) => {
     const { ts_domain } = response[0];
 
     // const domainCount = domain.split(",").length;
-    console.log(domain);
+    console.log(ts_domain);
   });
   // db.getRecordElement(connection, 'ts_data', columns, {id: id});
 }
