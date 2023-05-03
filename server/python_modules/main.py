@@ -128,7 +128,7 @@ def sql_insert_data(df: pd.DataFrame, columns):
 def watch_directory():
     """ Process each file inside the watch directory (defined by config) """
     log("Entered watch directory")
-    user = "DS"
+    user = "C"
     # Iterate through each file in the watch directory.
     for filename in os.listdir(config.watch_path):
         if user == "C":
