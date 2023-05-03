@@ -15,6 +15,7 @@ download.get('/', (req, res) => {
     res.setHeader('Content-Type', 'text/csv');
     res.setHeader('Content-Disposition', 'attachment; filename="data.csv"');
     res.send(data);
+    console.log(data);
   });
 });
 
