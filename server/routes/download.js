@@ -50,7 +50,14 @@ const downloadFile = (type) => {
     // Convert mySQL data into CSV
     return jsonexport(response);
   }).then(response => {
-    console.log(response);
+    // save the CSV data to a file
+    fs.writeFile('/var/www/html/downloads/data.csv', response, (err) => {
+      if (err) {
+        console.error('Error writing file:', err);
+        return;
+      }
+      console.log('Data saved to /var/www/html/downloads/data.csv');
+    });
   }).catch(error => {
     console.error(error);
   });
