@@ -45,7 +45,7 @@ const downloadFile = (type) => {
   }).then(response => {
     const record = response[0]
     for (let column in record) {
-      console.log(record[column]);
+      console.log(column);
     }
 
     response.map((record) => {
