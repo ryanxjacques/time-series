@@ -45,8 +45,7 @@ const downloadFile = (id) => {
       return db.getRecordCount(connection, 'ts_data', {ts_id: id});
     }).then(response => {
       let limit = response;
-      limit *= 0.80;
-      Math.round(limit);
+      limit = Math.floor(0.80 * limit);
       return db.getDSMLEData(connection, 'ts_data', query, {ts_id: id}, limit);
     }).then(response => {
       // Convert mySQL data into CSV
