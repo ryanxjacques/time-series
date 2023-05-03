@@ -180,6 +180,9 @@ def compare_files(filename, path_to_file, ts_name) -> Union[float, None]:
     # Read the data into a pandas DataFrame
     data = pd.read_sql(query, con=cnx)
 
+    # drop all columns with all null values
+    data = data.dropna(axis=1, how='all')
+
     cursor.close()
     cnx.close()
 
