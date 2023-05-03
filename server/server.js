@@ -10,6 +10,7 @@ const app = express();
 const home = require('./routes/home');
 const auth = require('./routes/auth');
 const file = require('./routes/file');
+const view = require('./routes/view');
 const browse = require('./routes/browse');
 const search = require('./routes/search');
 const uuidGen = require('./routes/uuidGen');
@@ -49,6 +50,7 @@ const options = {
 app.use('/', home);
 app.use('/auth', auth);
 app.use('/file', file);
+app.use('/view', view);
 app.use('/browse', browse);
 app.use('/search', search);
 app.use('/uuidGen', uuidGen);
