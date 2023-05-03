@@ -55,20 +55,26 @@ const sendRequest = async (method, url, data) => {
   }
 }
 
-const downloadFile = async (method, url, data) => {
-  try {
-    // Send request and wait for a response.
-    const response = await fetch(url, {
+const downloadFile = (method, url, data) => {
+  fetch(url, {
       method: method, 
       credentials: 'include',
       headers: { //< Declare that we sending JSON data.
         "Content-Type": "application/json",
       },
       body: data ? JSON.stringify(data): undefined,
+    }).then(response => response.blob())
+    .then(blob => {
+      const url = window.URL.createObjectURL(new Blob([blob]));
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', 'data.csv'); // replace 'data.csv' with the actual filename
+      document.body.appendChild(link);
+      link.click();
+      link.parentNode.removeChild(link);
+    }).catch(error => {
+      console.error('Error:', error);
     });
-    // Return response for .then() to use.
-    return response.blob();
-  } catch (error) {
-    console.error("Error:", error);
-  }
 }
+
+

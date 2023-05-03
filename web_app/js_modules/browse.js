@@ -69,7 +69,7 @@ function displayTsMetadata(ts_metadata) {
     idLink.textContent = ts.ts_id;
     // idLink.href = `view-time-series.html?ts_id=${ts.ts_id}`;
     idLink.addEventListener("click", function() {
-      sendRequest("POST", "https://35.85.29.142:3000/download", {id: ts.ts_id}).then(response => {
+      downloadFile("POST", "https://35.85.29.142:3000/download", {id: ts.ts_id}).then(response => {
         return  window.location.replace(`view-time-series.html?ts_id=${ts.ts_id}`);
       }); 
     });
