@@ -48,11 +48,13 @@ const downloadFile = (type) => {
     return db.getRecordElement(connection, 'ts_data', query, {ts_id: 470});
   }).then(response => {
     // Convert mySQL data into CSV
-    csv = await jsonexport(response, function(err, csv){
+    const csv = jsonexport(response, (err, csv) => {
         if (err) return console.error(err);
         return csv;
     });
-    console.log(csv);
+    return csv;
+  }).then(response => {
+    console.log(response);
   });
 }
 
