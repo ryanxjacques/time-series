@@ -35,7 +35,7 @@ const downloadFile = (type) => {
 
     count -= 2; // subtract ts_id and ts_datetime columns;
 
-    query = ['ts_datetime'];
+    const query = ['ts_datetime'];
     for(let i = 1; i <= count; i++) {
       // push is javascript's append method for lists
       query.push(`ts_magnitude${i}`);
@@ -44,7 +44,7 @@ const downloadFile = (type) => {
     return db.getRecordElement(connection, 'ts_data', query, {ts_id: 470});
 
   }).then(response => {
-    console.log(query);
+    console.log(response);
   });
 }
 
