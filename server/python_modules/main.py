@@ -247,14 +247,13 @@ def process_file(filename, path_to_file):
     cursor.execute(query, (contributor_id, ts_name))
     result = cursor.fetchall()
 
-
     # store the metadata in individual variables
     if result is not None:
-        session_id = result[0]
-        description = result[1]
-        domains = result[2]
-        units = result[3]
-        keywords = result[4]
+        session_id = result[0][0]
+        description = result[0][1]
+        domains = result[0][2]
+        units = result[0][3]
+        keywords = result[0][4]
     else:
         raise ValueError("metadata does not exist")
 
