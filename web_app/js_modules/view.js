@@ -15,7 +15,6 @@ function getIdFromUrl() {
 const id = decodeURIComponent(getIdFromUrl());
 
 function viewUser() {
-    alert(`https://35.85.29.142:3000/view/users?user_id=${encodeURIComponent(id)}`);
     fetch(`https://35.85.29.142:3000/view/users?user_id=${encodeURIComponent(id)}`)
     .then((response) => response.json())
     .then((user_res) => {
@@ -37,6 +36,6 @@ function displayUser(user) {
 }
   
 function displayTsMetadata(ts_metadata) {
-    const name = document.getElementById('ts_name');
-    name.innerHTML = ts_metadata.ts_name;
+    const ts_name = document.getElementById('ts_name');
+    ts_name.innerHTML = ts_metadata.ts_name;
 }
