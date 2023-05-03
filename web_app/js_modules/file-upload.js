@@ -31,13 +31,8 @@ submitBtn.addEventListener('click', (e) => {
   const message = new Object();
   message['username'] = localStorage.getItem('username');
   message['ts_name'] = ts_name.value;
-<<<<<<< HEAD
-  message['ts_description'] = ts_description.value;
-  message['ts_domains'] = ts_domains.value;
-=======
   message['ts_desc'] = ts_description.value;
   message['ts_domain'] = ts_domains.value;
->>>>>>> filename
   message['ts_units'] = ts_units.value;
   message['ts_keywords'] = ts_keywords.value;
 
