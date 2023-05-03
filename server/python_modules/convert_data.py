@@ -75,8 +75,15 @@ def clean_headers(df, headers) -> pd.DataFrame:
     headers = [string.lower() for string in headers]
     print(f"Headers: {headers}")
     print(f"Headers df: {df.columns}")
+
     # drop duplicate rows
     df = df.drop_duplicates()
+
+    # Remove headers that are not in df_columns
+    for header in headers.copy():  # Use copy to avoid modifying list while iterating
+        if header not in df.columns:
+            headers.remove(header)
+
 
     if list(df.columns) == headers:
         # no need to modify if headers already correct
