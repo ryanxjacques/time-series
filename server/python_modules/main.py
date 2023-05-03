@@ -54,6 +54,22 @@ def get_file_extension(filename):
     extension = regex_matches.group(1)
     return extension
 
+def get_contributor_id(filename):
+    """ Use Regex to get contributor id """
+    pattern = r"^([^~]+)~"
+    regex_matches = re.search(pattern, filename)
+    contributor_id = regex_matches.group(1)
+    return contributor_id
+
+
+def get_ts_name(filename):
+    """ Use Regex to get ts_name"""
+    pattern = r"~([^~]+)~"
+    regex_matches = re.search(pattern, filename)
+    ts_name = regex_matches.group(1)
+    return ts_name
+
+
 
 def file_is_not_supported(extension):
     """ Return True if supported and False otherwise """
@@ -196,14 +212,21 @@ def compare_files(filename, path_to_file, ts_name) -> Union[float, None]:
 
     return cd.accuracy(forecast, test)
 
-
-
+def remove_from_db(cs, contributor_id, ts_name):
+    # remove row from database
+    query = "DELETE FROM ts_metadata WHERE ts_contributor = %s AND ts_name = %s"
+    cs.execute(query, (contributor_id, ts_name))
+    cs.commit()
+    cs.close()
 
 
 def process_file(filename, path_to_file):
     """ Process files for storage on DB"""
     # Extract the file extension
     file_extension = get_file_extension(filename)
+    contributor_id = get_contributor_id(filename)
+    ts_name = get_ts_name(filename)
+
 
     # Check if file type is supported
     if file_is_not_supported(file_extension):
@@ -212,27 +235,37 @@ def process_file(filename, path_to_file):
     # Read into pd.DataFrame
     data = cv.read_functions[file_extension](path_to_file)
 
-    # Extract metadata -> this will eventually extract from filename.
-    metadata = extract_metadata("ASIANPAINT", "Stock data for ASIANPAINT",
-                                "Date,Symbol,Series,Prev Close,Open,High,Low,"
-                                "Last,Close,VWAP,Volume,Turnover,Trades,Deliverable Volume,"
-                                "%Deliverble",
-                                "Money", "stock, money")
+    # get the ts_metadata row for the specified contributor_id and ts_name
+    query = "SELECT ts_id, ts_desc, ts_domain, ts_units, ts_keywords FROM ts_metadata WHERE ts_contributor = %s AND ts_name = %s"
+    cursor.execute(query, (contributor_id, ts_name))
+    result = cursor.fetchone()
+    # close cursor connection
+    cursor.close()
+
+    # store the metadata in individual variables
+    if result:
+        session_id = result[0]
+        description = result[1]
+        domains = result[2]
+        units = result[3]
+        keywords = result[4]
+    else:
+        raise ValueError("metadata does not exist")
+
+    metadata = extract_metadata(ts_name, description, domains, units, keywords)
 
     # Create a dictionary representing the row to be written to the file
     row = generate_csv_schema(metadata)
-
-    # Insert row into sql database and return id session
-    session_id = sql_insert_metadata(row)
-
     # Use metadata to clean formatting!
     try:
         data = cv.clean_headers(data, row['ts_domain'])
     except ValueError:
+        remove_from_db(cursor, contributor_id, ts_name)
         return log(f"{filename} Unable to clean headers.")
 
     # Catch errors by checking format.
     if not cv.check_data_format(data):
+        remove_from_db(cursor, contributor_id, ts_name)
         return log("Failed format")
 
     first_col = row['ts_domain'].split(", ")[0]
@@ -263,23 +296,6 @@ def process_file(filename, path_to_file):
     cnx.close()
     os.remove(path_to_file)
     return None
-
-
-def user_input_bool() -> bool:
-    """
-    Prompt to get user input for Y/N questions (This is legacy now?)
-    """
-    while True:
-        user_input = input("Enter 'Y' or 'N': ")
-        if user_input.upper() == 'Y':
-            accepted = True
-            return accepted
-        elif user_input.upper() == 'N':
-            accepted = False
-            return accepted
-        else:
-            log("Invalid input. Please enter 'Y' or 'N'.")
-
 
 def main():
     """
