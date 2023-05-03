@@ -130,9 +130,9 @@ const getRecordCount = (connection, tableName, id) => {
   return promise;
 };
 
-const getDSMLEData = (connection, tableName, id, limit) => { 
+const getDSMLEData = (connection, tableName, field, id, limit) => { 
   let promise = new Promise((resolve, reject) => {
-    connection.query(`SELECT * FROM ?? WHERE ? LIMIT ${limit}`, [tableName, id], (error, results, fields) => {
+    connection.query(`SELECT ?? FROM ?? WHERE ? LIMIT ?`, [field, tableName, id, limit], (error, results, fields) => {
       if (error) {
         reject(error);
       } else {
