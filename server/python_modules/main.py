@@ -136,6 +136,7 @@ def watch_directory():
     for filename in os.listdir(config.watch_path):
         if user == "C":
             process_file(filename, f"{config.watch_path}/{filename}")
+            os.remove(f"{config.watch_path}/{filename}")
         elif user == "DS":
             ts_name = "ASIANPAINT"
             #TODO: get ts_name from user input
@@ -273,6 +274,7 @@ def process_file(filename, path_to_file):
         cursor.execute(query, (contributor_id, ts_name))
         cnx.commit()
         cursor.close()
+
         return log("Failed format")
 
     first_col = row['ts_domain'].split(", ")[0]
@@ -301,7 +303,6 @@ def process_file(filename, path_to_file):
     log(f"{filename} was successfully converted to SQL")
     cursor.close()
     cnx.close()
-    os.remove(path_to_file)
     return None
 
 def main():
