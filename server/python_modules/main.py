@@ -241,16 +241,16 @@ def process_file(filename, path_to_file):
     # get the ts_metadata row for the specified contributor_id and ts_name
     query = "SELECT ts_id, ts_desc, ts_domain, ts_units, ts_keywords FROM ts_metadata WHERE ts_contributor = %s AND ts_name = %s"
     cursor.execute(query, (contributor_id, ts_name))
-    result = cursor.fetchall()
-    print(f"fetch result{result}")
+    result = cursor.fetchone()
+    print(f"fetch result: {result}")
 
     # store the metadata in individual variables
-    if result:
-        session_id = result[0][0]
-        description = result[0][1]
-        domains = result[0][2]
-        units = result[0][3]
-        keywords = result[0][4]
+    if result is not None:
+        session_id = result[0]
+        description = result[1]
+        domains = result[2]
+        units = result[3]
+        keywords = result[4]
     else:
         raise ValueError("metadata does not exist")
 
