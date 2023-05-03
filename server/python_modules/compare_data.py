@@ -38,9 +38,9 @@ def accuracy(forecast_data: pd.DataFrame, test_data: pd.DataFrame) -> float:
     f_val = 0
     t_val = 0
     for column in test_data.columns:
-        f_val += forecast_data[column].sum()
-        t_val += test_data[column].sum()
-
+        if np.issubdtype(test_data[column].dtype, np.number):
+            f_val += forecast_data[column].sum()
+            t_val += test_data[column].sum()
 
     mape = 1 - np.abs((t_val - f_val)/t_val)
 
