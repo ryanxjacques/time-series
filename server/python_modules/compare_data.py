@@ -36,13 +36,17 @@ def accuracy(forecast_data: pd.DataFrame, test_data: pd.DataFrame) -> float:
     t_val = 0
     # only go over magnitude values
     ts_columns = [col for col in test_data.columns if col.startswith('ts_magnitude')]
+
+    mapes = []
     for column in ts_columns:
-        f_val += forecast_data[column].sum()
-        t_val += test_data[column].sum()
+        f_val = forecast_data[column].sum()
+        t_val = test_data[column].sum()
+        mape = 1 - np.abs((t_val - f_val)/t_val)
+        mapes.append(mape)
 
-    mape = 1 - np.abs((t_val - f_val)/t_val)
+    avg_mape = sum(mapes) / len(mapes)
 
-    return mape
+    return avg_mape
 
 def noise(data: pd.DataFrame) -> pd.DataFrame:
     """
