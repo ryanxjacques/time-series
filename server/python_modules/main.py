@@ -242,7 +242,7 @@ def process_file(filename, path_to_file):
     # get the ts_metadata row for the specified contributor_id and ts_name
     query = "SELECT ts_id, ts_desc, ts_domain, ts_units, ts_keywords FROM ts_metadata WHERE ts_contributor = %s AND ts_name = %s"
     cursor.execute(query, (contributor_id, ts_name))
-    result = cursor.fetchone()
+    result = cursor.fetchall()
 
     # store the metadata in individual variables
     if result is not None:
