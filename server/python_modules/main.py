@@ -218,7 +218,7 @@ def process_file(filename, path_to_file):
     """ Process files for storage on DB"""
     # Extract the file extension
     cursor = cnx.cursor()
-    
+
     file_extension = get_file_extension(filename)
     contributor_id = get_contributor_id(filename)
     ts_name = get_ts_name(filename)
@@ -241,15 +241,16 @@ def process_file(filename, path_to_file):
     # get the ts_metadata row for the specified contributor_id and ts_name
     query = "SELECT ts_id, ts_desc, ts_domain, ts_units, ts_keywords FROM ts_metadata WHERE ts_contributor = %s AND ts_name = %s"
     cursor.execute(query, (contributor_id, ts_name))
-    result = cursor.fetchone()
+    result = cursor.fetchall()
+    print(result)
 
     # store the metadata in individual variables
     if result:
-        session_id = result[0]
-        description = result[1]
-        domains = result[2]
-        units = result[3]
-        keywords = result[4]
+        session_id = result[0][0]
+        description = result[0][1]
+        domains = result[0][2]
+        units = result[0][3]
+        keywords = result[0][4]
     else:
         raise ValueError("metadata does not exist")
 
