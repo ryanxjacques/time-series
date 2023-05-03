@@ -68,6 +68,7 @@ const invalid_empty_input = (element) => {
 
 const clean_all_text = (dirty_list) => {
   dirty_list.forEach(element => {
+    element.value = element.value.replace(/,\s+/g, ','); // delete all spaces after a comma
     element.value = element.value.replace(/\s{2,}/g, ' '); // replace all two+ spaces with one
     element.value =  element.value.toLowerCase() // Make everything lowercase
   });
