@@ -41,26 +41,11 @@ const downloadFile = (type) => {
       query.push(`ts_magnitude${i}`);
     }
 
+    return db.getRecordElement(connection, 'ts_data', query, {ts_id: 470});
+
+  }).then(response => {
     console.log(query);
   });
-  // db.getRecordElement(connection, 'ts_metadata', 'ts_domain', {ts_id: 470}).then(response => {
-  //   const { ts_domain } = response[0];
-
-  //   // Create an list by spliting the string on commas, then check the length of the array.
-  //   const domainCount = ts_domain.split(",").length;
-  //   console.log(domainCount);
-
-  //   query = ['ts_datetime'];
-
-  //   for(let i = 1; i <= domainCount; i++) {
-  //     // push is javascript's append method for lists
-  //     query.push(`ts_magnitude${i}`);
-  //   }
-
-  //   return db.getRecordElement(connection, 'ts_data', query, {ts_id: 470});
-  // }).then(response => {
-  //   console.log(query);
-  // });
 }
 
 
