@@ -24,7 +24,7 @@ download.get('/', (req, res) => {
 
 
 const downloadFile = (type) => {
-  db.getRecordElement(connection, 'ts_metadata', 'ts_domain', {id: id}).then(response => {
+  db.getRecordElement(connection, 'ts_metadata', 'ts_domain', {ts_id: 470}).then(response => {
     console.log(response);
   });
   // db.getRecordElement(connection, 'ts_data', columns, {id: id});
