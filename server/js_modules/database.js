@@ -119,7 +119,7 @@ const getFirstRecord = (connection, tableName, id) => {
 
 const getRecordCount = (connection, tableName, id) => { 
   let promise = new Promise((resolve, reject) => {
-    connection.query('SELECT `COUNT(*)` FROM ?? WHERE ?', [tableName, id], (error, results, fields) => {
+    connection.query('SELECT * FROM ?? WHERE ?', [tableName, id], (error, results, fields) => {
       if (error) {
         reject(error);
       } else {
