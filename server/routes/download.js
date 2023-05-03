@@ -23,12 +23,12 @@ download.get('/', (req, res) => {
   //   // res.send(data);
   // });
   // console.log(filePath);
-  downloadFile('placeholder');
+  downloadFile('470');
 });
 
 
-const downloadFile = (type) => {
-  db.getFirstRecord(connection, 'ts_data', {ts_id: 470}).then(response => {
+const downloadFile = (id) => {
+  db.getFirstRecord(connection, 'ts_data', {ts_id: id}).then(response => {
     const record = response[0];
     let count = 0;
     for (let column in record) {
@@ -44,8 +44,7 @@ const downloadFile = (type) => {
       // push is javascript's append method for lists
       query.push(`ts_magnitude${i}`);
     }
-
-    return db.getRecordElement(connection, 'ts_data', query, {ts_id: 470});
+    return db.getRecordElement(connection, 'ts_data', query, {ts_id: id});
   }).then(response => {
     // Convert mySQL data into CSV
     return jsonexport(response);
