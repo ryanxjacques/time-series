@@ -74,6 +74,7 @@ loginBtn.addEventListener("click", (event) => {
     message = {'username': username, 'password': password, 'uuid': localStorage.getItem('uuid')};
     sendRequest("POST", "https://35.85.29.142:3000/auth/login", message).then((data) => {
       if (data.status) {
+        localStorage.setItem('username', username); // remember your username.
         successfulLogin();
       } else {
         failedLogin();
