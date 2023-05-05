@@ -1,29 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Sign Up Page (work in progress)</title>
-    <link rel="stylesheet" href="../css_modules/theme.css">
-    <link rel="stylesheet" href="../css_modules/login-signup.css">
+    <link rel="stylesheet" href="../css_modules/signup.css">
   </head>
-  <body class="login-signup-body-flex-container">
-    <main class="login-signup-main-flex-container login-signup-container interface font">
-        <h1>Sign Up</h1>
-        <div class="login-signup-input-container">
-          <input type="text" id="signup-username" placeholder="Username">
-          <input type="password" id="signup-password" placeholder="Password">
-          <input type="text" id="signup-email" placeholder="Email (optional)">
-        </div>
-        <div class="login-signup-button-container">
-          <button type="button" id="signup-btn" class="font">Sign Up</button>
-        </div>
-        <div>
-          <a href="../index.html" class="font">Mistake? Click here to go back to home.</a>
-        </div>
+  <body>
+    <div class="login-container slide-from-left">
+      <div>
+        <input tabindex="1" class="text-input" id="username" type="text">
+        <span class="text-input-label" id="username-label">username</span>
       </div>
-    </main>
+      <div>
+        <input tabindex="2" class="text-input" id="password" type="password">
+        <span class="text-input-label" id="password-label">password</span>
+      </div>
+      <div>
+        <button tabindex="3" class="button-input">Register</button>
+      </div>
+      <div>
+        <span class="signup-redirect">Already have an account? <a id="register-link" tabindex="4">LOGIN</a></span>
+      </div>
+    </div>
   </body>
   <script src="../js_modules/fetch.js"></script>
   <script src="../js_modules/signup.js"></script>

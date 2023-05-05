@@ -17,7 +17,7 @@ body {
   margin: 0;
 }
 
-/* Login container */
+/* Register container */
 .login-container {
   display: flex;
   flex-direction: column;
@@ -82,7 +82,7 @@ body {
   color: #f44336;
 }
 
-/* Login Button */
+/* Register Button */
 .button-input {
   cursor: pointer;
   position: relative;

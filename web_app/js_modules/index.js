@@ -243,6 +243,9 @@ loginContainer.addEventListener("animationend", (event) => {
   else if (event.animationName === "slide-right") {
     window.location.replace("pages/signup.html");
   } 
+  else if (event.animationName === "slide-from-left") {
+    loginContainer.classList.remove('slide-from-left');
+  } 
   // Error animation sequence
   else if (event.animationName === "slide-error-left") {
     loginContainer.classList.remove('slide-error-left');
