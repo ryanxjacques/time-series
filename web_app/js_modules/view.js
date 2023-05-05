@@ -32,44 +32,56 @@ function viewTimeSeries() {
 
 function displayUser(result) {
     const user_vals = result[0][0];
-    const ts_metadata = result[0][1];
+    const ts_metadata = result[1];
     const username = document.getElementById('username');
     username.innerHTML = user_vals.username;
 
     const tableBody = document.getElementById('ts-metadata-table-body');
     tableBody.innerHTML = '';
-    ts_metadata.forEach((ts) => {
+
+    if (ts_metadata < 1) {
         const row = document.createElement('tr');
-
-        const idCell = document.createElement('td');
-        const idLink = document.createElement('a');
-        idLink.textContent = ts.ts_id;
-        idLink.href = `view-time-series.html?ts_id=${ts.ts_id}`;
-        idCell.appendChild(idLink);
-        row.appendChild(idCell);
-
-        const nameCell = document.createElement('td');
-        nameCell.textContent = ts.ts_name;
-        row.appendChild(nameCell);
-
-        const descCell = document.createElement('td');
-        descCell.textContent = ts.ts_desc;
-        row.appendChild(descCell);
-
-        const domainCell = document.createElement('td');
-        domainCell.textContent = ts.ts_domain.replaceAll(",", ", ");
-        row.appendChild(domainCell);
-
-        const unitCell = document.createElement('td');
-        unitCell.textContent = ts.ts_units;
-        row.appendChild(unitCell);
-
-        const keywordCell = document.createElement('td');
-        keywordCell.textContent = ts.ts_keywords;
-        row.appendChild(keywordCell);
-
+        const NoResCell = document.createElement('td');
+        NoResCell.className = "noRes";
+        NoResCell.textContent = 'No Results';
+        row.appendChild(NoResCell);
         tableBody.appendChild(row);
-    })
+    }
+
+    else {
+        ts_metadata.forEach((ts) => {
+            const row = document.createElement('tr');
+
+            const idCell = document.createElement('td');
+            const idLink = document.createElement('a');
+            idLink.textContent = ts.ts_id;
+            idLink.href = `view-time-series.html?ts_id=${ts.ts_id}`;
+            idCell.appendChild(idLink);
+            row.appendChild(idCell);
+
+            const nameCell = document.createElement('td');
+            nameCell.textContent = ts.ts_name;
+            row.appendChild(nameCell);
+
+            const descCell = document.createElement('td');
+            descCell.textContent = ts.ts_desc;
+            row.appendChild(descCell);
+
+            const domainCell = document.createElement('td');
+            domainCell.textContent = ts.ts_domain.replaceAll(",", ", ");
+            row.appendChild(domainCell);
+
+            const unitCell = document.createElement('td');
+            unitCell.textContent = ts.ts_units;
+            row.appendChild(unitCell);
+
+            const keywordCell = document.createElement('td');
+            keywordCell.textContent = ts.ts_keywords;
+            row.appendChild(keywordCell);
+
+            tableBody.appendChild(row);
+        });
+    }
 }
   
 function displayTsMetadata(ts_metadata) {

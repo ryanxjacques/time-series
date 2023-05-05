@@ -35,6 +35,7 @@ function displayUsersSearch(users) {
     if (users == -1) {
         const row = document.createElement('tr');
         const NoResCell = document.createElement('td');
+        NoResCell.className = "noRes";
         NoResCell.textContent = 'No Results';
         row.appendChild(NoResCell);
         tableBody.appendChild(row);
@@ -67,6 +68,7 @@ function displayTsMetadataSearch(ts_metadata) {
     if (ts_metadata == -1) {
         const row = document.createElement('tr');
         const NoResCell = document.createElement('td');
+        NoResCell.className = "noRes";
         NoResCell.textContent = 'No Results';
         row.appendChild(NoResCell);
         tableBody.appendChild(row);
