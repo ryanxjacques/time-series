@@ -238,7 +238,7 @@ registerLink.addEventListener("keydown", (event) => {
 
 loginContainer.addEventListener("animationend", (event) => {
   if (event.animationName === "slide-left") {
-    window.location.replace("pages/home.html");
+    window.location.replace("pages/test.html");
   }
   else if (event.animationName === "slide-right") {
     window.location.replace("pages/signup.html");

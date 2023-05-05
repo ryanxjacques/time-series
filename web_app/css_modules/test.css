@@ -1,0 +1,267 @@
+/* ------------------------------------------------------------------------- */
+/* ---------------------------- Document Styles ---------------------------- */
+
+/* Entire Document */
+@font-face {
+  font-family: 'Open Sans';
+  src: url('https://fonts.googleapis.com/css2?family=Open+Sans');
+}
+
+body {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Open Sans', sans-serif;
+  background: linear-gradient(to bottom, #e3f2fd 10%, #f3e5f5, #ce93d8 95%);
+  height: 100vh;
+  margin: 0;
+}
+
+/* Register container */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 2px solid #bfbfbf;
+  height: 100%;
+  margin-top: 10%;
+  margin-bottom: 10%;
+  margin-right: 30%;
+  margin-left: 30%;
+  border-radius: calc(max(5vw, 8vh));
+  padding: 3%;
+}
+
+.login-container > div {
+  position: relative;
+  flex-grow: 1;
+}
+
+
+/* Username and password text inputs */
+.text-input {
+  outline-color: none;
+  position: relative;
+  top: 20%;
+  height: 60%;
+  left: 5%;
+  width: 90%;
+  padding: 0;
+  border-radius: 1vw;
+  background-color: #ffffff;
+  border: 2px solid #bfbfbf;
+}
+
+.checked {
+  background-color: #ce93d8;
+  border-color: #ab47bc;
+  color: #ffffff;
+}
+
+/* Register Button */
+.button-input {
+  cursor: pointer;
+  position: relative;
+  background-color: #ffffff;
+  outline-color: #ab47bc;
+  border-radius: 100vw;
+  border: 2px solid #bfbfbf;
+  top: 20%;
+  height: 60%;
+  left: 5%;
+  width: 90%;
+  padding: 0;
+}
+
+/* Registration Link */
+.signup-redirect {
+  position: absolute;
+  display: inline-block;
+  text-align: center;
+  width: 100%;
+  bottom: 0;
+}
+
+.signup-redirect > a {
+  outline-color: #ab47bc;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.signup-redirect > a:focus {
+  color: #ab47bc;
+}
+
+.signup-redirect > a:hover {
+  color: #ab47bc;
+}
+
+/* ------------------------------------------------------------------------- */
+/* --------------------------- Animation Control --------------------------- */
+
+/* Username and Password Animations */
+@keyframes move-forwards {
+  from {
+    transform: translateX(0) scale(1);
+    opacity: 40%;
+  }
+  to {
+    transform: translateX(-30px) translateY(-100%) scale(0.8);
+    opacity: 10%;
+  }
+}
+
+@keyframes move-backwards {
+  from {
+    transform: translateX(-30px) translateY(-100%) scale(0.8);
+    opacity: 10%;
+  }
+  to {
+    transform: translateX(0) scale(1);
+    opacity: 40%;
+  }
+}
+
+.forward-label-animation {
+  animation-name: move-forwards;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.backward-label-animation  {
+  animation-name: move-backwards;
+  animation-duration: 0.3s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+/* Login Button Animations */
+@keyframes hover-forwards {
+  from {
+    background-color: #ffffff;
+    border-color: #bfbfbf;
+    color:#000000;
+  }
+  to {
+    background-color: #ce93d8;
+    border-color: #ab47bc;
+    color:#ffffff;
+  }
+}
+@keyframes hover-backwards {
+  from {
+    background-color: #ce93d8;
+    border-color: #ab47bc;
+    color:#ffffff;
+  }
+  to {
+    background-color: #ffffff;
+    border-color: #bfbfbf;
+    color:#000000;
+  }
+}
+
+.forward-button-animation {
+  animation-name: hover-forwards;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+.backward-button-animation {
+  animation-name: hover-backwards;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+/* Login Container Animations */
+@keyframes slide-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-180%);
+  }
+}
+@keyframes slide-right {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(180%);
+  }
+}
+@keyframes slide-from-right {
+  from {
+    transform: translateX(180%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes slide-error-left {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-2%);
+  }
+}
+@keyframes slide-error-right {
+  from {
+    transform: translateX(-2%);
+  }
+  to {
+    transform: translateX(2%);
+  }
+}
+@keyframes slide-error-center {
+  from {
+    transform: translateX(2%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+
+.slide-left {
+  animation-name: slide-left;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.slide-right {
+  animation-name: slide-right;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.slide-error-left {
+  animation-name: slide-error-left;
+  animation-duration: 0.1s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.slide-error-right {
+  animation-name: slide-error-right;
+  animation-duration: 0.1s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+.slide-error-center {
+  animation-name: slide-error-center;
+  animation-duration: 0.1s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+.slide-from-right {
+  animation-name: slide-from-right;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
