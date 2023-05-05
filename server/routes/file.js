@@ -1,6 +1,15 @@
-const express = require('express'); 
+/*
+Team: Time Lords
+Author(s): Joseph Erlinger
+Description: Backend JavaScript code for uploading TS data.
+             Uses Node.js & Express.js to route & insert 
+             submitted data.
+Last Modified: 5/2/2023
+*/
+
+const express = require('express');
 const file = express.Router();
-const multer = require('multer') 
+const multer = require('multer')
 const mainAPI = require('../js_modules/mainAPI');
 
 // Connect to data base.
@@ -22,13 +31,13 @@ const storage = multer.diskStorage({
 })
 
 // Create instance of multer with the specific configuration defined above. 
-const upload = multer({storage})
+const upload = multer({ storage })
 
 
 file.post('/upload', upload.single('uploaded_file'), function (req, res) {
-  const message = {message: "Succesfully uploaded file!"};
+  const message = { message: "Succesfully uploaded file!" };
   res.send(JSON.stringify(message));
-  
+
   mainAPI.run().then(response => {
     response.forEach((element) => {
       console.log(element);
@@ -41,9 +50,9 @@ file.post('/metadata', (req, res) => {
   delete req.body['username'];
 
   // send user id.
-  db.getRecordElement(usersConnection, 'users', 'id', {username: username}).then(response => {
-    const { id } =  response[0];
-    const message = {id: id};
+  db.getRecordElement(usersConnection, 'users', 'id', { username: username }).then(response => {
+    const { id } = response[0];
+    const message = { id: id };
     res.send(JSON.stringify(message));
 
     req.body['ts_contributor'] = id;
@@ -59,8 +68,8 @@ file.post('/metadata', (req, res) => {
 
   console.log(username);
   // send user id.
-  db.getRecordElement(connection, 'users', 'id', {username: username}).then(response => {
-    const message = {id: response[0].id};
+  db.getRecordElement(connection, 'users', 'id', { username: username }).then(response => {
+    const message = { id: response[0].id };
     res.send(JSON.stringify(message));
   });
 });

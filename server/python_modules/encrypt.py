@@ -1,8 +1,9 @@
 """
-Author: Joseph
+Team: Time Lords
+Author(s): Joseph Erlinger
 Bcrypt docs: https://pypi.org/project/bcrypt/
-
-Brief:
+Brief: Password decryption
+Last Modified: 4/27/2023
 """
 import sys
 import bcrypt

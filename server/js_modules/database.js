@@ -1,6 +1,11 @@
 /*
- 
+Team: Time Lords
+Author: Joseph Erlinger
+Description: Backend JavaScript module for connecting to & modifying databases.
+Python-shell docs: https://www.npmjs.com/package/python-shell
+Last Modified: 5/3/2023
 */
+
 const mysql = require('mysql');
 
 

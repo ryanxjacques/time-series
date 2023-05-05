@@ -1,5 +1,8 @@
-/* 
-   NodeJS Web Server!
+/*
+Team: Time Lords
+Author(s): Joseph Erlinger
+Description: Handles routing & HTTPS protocol.
+Last Modified: 5/3/2023
 */
 
 // Express Dependency

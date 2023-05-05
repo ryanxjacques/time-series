@@ -1,5 +1,9 @@
 """
-Visually representing Time Series (TS) data given by the user using matplotlib.
+Team: Time Lords
+Author(s): Ryan Jacques
+Description: Visually representing Time Series (TS) data
+             given by the user using matplotlib.
+Last Modified: 5/2/2023
 """
 import matplotlib.pyplot as plt
 import numpy as np

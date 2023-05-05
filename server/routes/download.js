@@ -1,11 +1,32 @@
-const express = require('express'); 
+/*
+Team: Time Lords
+Author(s): Joseph Erlinger
+Description: Backend JavaScript code for downloading TS train data.
+             Provides functionality for downloading submitted data.
+Last Modified: 5/3/2023
+*/
+
+/* -------------------------------------------------------------------------- */
+/*                                  Preamble                                  */
+/* -------------------------------------------------------------------------- */
+
+// Import express, filesystem, and database modules.
+const express = require('express');
 const fs = require('fs');
-const download = express.Router();
 const db = require('../js_modules/database');
+
+// Create router object.
+const download = express.Router();
+
+// Connect to database.
 const connection = db.connectToDataBase('time_series', 'download.js->time_series ');
 
 // To easily convert JSON data to something else.
 const jsonexport = require('jsonexport');
+
+/* -------------------------------------------------------------------------- */
+/*                                  Main Body                                 */
+/* -------------------------------------------------------------------------- */
 
 // needs to change to a POST request.
 download.post('/', (req, res) => {
@@ -23,10 +44,9 @@ download.post('/', (req, res) => {
   });
 });
 
-
 const downloadFile = (id) => {
   const promise = new Promise((resolve, reject) => {
-    db.getFirstRecord(connection, 'ts_data', {ts_id: id}).then(response => {
+    db.getFirstRecord(connection, 'ts_data', { ts_id: id }).then(response => {
       const record = response[0];
       let count = 0;
       for (let column in record) {
@@ -38,15 +58,15 @@ const downloadFile = (id) => {
       count -= 2; // subtract ts_id and ts_datetime columns;
 
       query = ['ts_datetime'];
-      for(let i = 1; i <= count; i++) {
+      for (let i = 1; i <= count; i++) {
         // push is javascript's append method for lists
         query.push(`ts_magnitude${i}`);
       }
-      return db.getRecordCount(connection, 'ts_data', {ts_id: id});
+      return db.getRecordCount(connection, 'ts_data', { ts_id: id });
     }).then(response => {
       let limit = response;
       limit = Math.floor(0.80 * limit);
-      return db.getDSMLEData(connection, 'ts_data', query, {ts_id: id}, limit);
+      return db.getDSMLEData(connection, 'ts_data', query, { ts_id: id }, limit);
     }).then(response => {
       // Convert mySQL data into CSV
       return jsonexport(response);

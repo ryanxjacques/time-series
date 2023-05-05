@@ -1,5 +1,8 @@
 """
-This file works as a listener and driver for all python files
+Team: Time Lords
+Author(s): Ryan Jacques
+Description: Listener and driver for all python files.
+Last Modified: 5/3/2023
 """
 # !/usr/bin/python3
 
@@ -23,8 +26,6 @@ import graph_display as gd
 def log(message):
     """ add message to the debug log """
     LOG_STATEMENTS.append(message)
-
-
 
 
 try:

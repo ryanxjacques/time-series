@@ -1,8 +1,13 @@
 """
-Compare the DS/MLE forcasting model with training set of data
+Team: Time Lords
+Author(s): Ryan Jacques
+Description: Compare the DS/MLE forcasting model with training set of data
+Last Modified: 5/3/2023
 """
+
 import pandas as pd
 import numpy as np
+
 def accuracy(forecast_data: pd.DataFrame, test_data: pd.DataFrame) -> float:
     """
     Calculates and returns the accuracy of forecasted data using test data

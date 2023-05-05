@@ -1,8 +1,9 @@
 """
-Author: Joseph
-Date: 24 April 2023
-Brief: A short example that shows how to communicate
-       with the Node.js server from a python file.
+Team: Time Lords
+Author(s): Joseph Erlinger
+Description: A short example that shows how to communicate
+             with the Node.js server from a python file.
+Last Modified: 4/25/2023
 """
 import sys  # Provides argv, and arg
 import json  # Reads JSON format

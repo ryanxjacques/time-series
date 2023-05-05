@@ -1,5 +1,12 @@
-const jspyAPI = require('./jspyAPI');
+/*
+Team: Time Lords
+Author: Joseph Erlinger
+Description: Backend JavaScript module for encryting passwords.
+Python-shell docs: https://www.npmjs.com/package/python-shell
+Last Modified: 5/2/2023
+*/
 
+const jspyAPI = require('./jspyAPI');
 
 const connectToEncrypt = () => {
   // path to encrypt.py

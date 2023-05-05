@@ -1,6 +1,9 @@
-/* 
-Author: Joseph
+/*
+Team: Time Lords
+Author: Joseph Erlinger
+Description: Backend JavaScript module for connecting JS & Python.
 Python-shell docs: https://www.npmjs.com/package/python-shell
+Last Modified: 5/1/2023
 */
 
 /* -------------------------------------------------------------------------- */

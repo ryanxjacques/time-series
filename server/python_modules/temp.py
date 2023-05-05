@@ -1,3 +1,9 @@
+"""
+Team: Time Lords
+Author(s): Joseph Erlinger
+Last Modified: 4/27/2023
+"""
+
 import sys
 import json
 

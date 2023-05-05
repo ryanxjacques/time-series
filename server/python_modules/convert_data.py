@@ -1,14 +1,17 @@
 """
-Converts user-given data into consistent file architecture
-used by graph_display.py.
-List of accepted file types:
--CSV
--JSON
--SQL databases
--HTML tables
--Xl
--ARFF
--txt
+Team: Time Lords
+Author(s): Ryan Jacques
+Description: Converts user-given data into consistent file architecture
+             used by graph_display.py.
+             List of accepted file types:
+              -CSV
+              -JSON
+              -SQL databases
+              -HTML tables
+              -Xl
+              -ARFF
+              -txt
+Last Modified: 5/3/2023
 """
 
 import re
