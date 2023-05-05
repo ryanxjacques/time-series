@@ -1,19 +1,27 @@
+/*
+Team: Time Lords
+Author(s): Sterling Stewart
+Description: CSS code for styling tables & their elements.
+Last Modified: 5/4/2023
+*/
+
 table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+  width: 100%;
+  border-collapse: collapse;
+}
 
-  table th, table td {
-    border: 1px solid #171d26;
-    padding: 8px;
-    text-align: center;
-  }
+table th,
+table td {
+  border: 1px solid #171d26;
+  padding: 8px;
+  text-align: center;
+}
 
-  table th {
-    background-color: #0f131a;
-    font-weight: bold;
-  }
+table th {
+  background-color: #0f131a;
+  font-weight: bold;
+}
 
-  .noRes {
-    border-width: 0;
-  }
+.noRes {
+  border-width: 0;
+}

@@ -1,3 +1,12 @@
+/*
+Team: Time Lords
+Author(s): Sterling Stewart
+Description: Frontend JavaScript code for time series & user browsing.
+             Provides functions for switching between TS & user tabs, and
+             fetching & displaying TS & user data.
+Last Modified: 5/5/2023
+*/
+
 function switchTab(tabName) {
   const tabs = document.querySelectorAll('.tab');
   const contentContainers = document.querySelectorAll('.content-container');
@@ -21,18 +30,18 @@ function switchTab(tabName) {
 
 function fetchUsers() {
   fetch('https://35.85.29.142:3000/browse/users')
-  .then((response) => response.json())
-  .then((users_res) => {
-    displayUsers(users_res);
-  });
+    .then((response) => response.json())
+    .then((users_res) => {
+      displayUsers(users_res);
+    });
 }
 
 function fetchTimeSeries() {
   fetch('https://35.85.29.142:3000/browse/timeseries')
-  .then((response) => response.json())
-  .then((timeseries_res) => {
-    displayTsMetadata(timeseries_res);
-  });
+    .then((response) => response.json())
+    .then((timeseries_res) => {
+      displayTsMetadata(timeseries_res);
+    });
 }
 
 function displayUsers(users) {
@@ -68,10 +77,10 @@ function displayTsMetadata(ts_metadata) {
     const idLink = document.createElement('a');
     idLink.textContent = ts.ts_id;
     // idLink.href = `view-time-series.html?ts_id=${ts.ts_id}`;
-    idLink.addEventListener("click", function() {
-      downloadFile("POST", "https://35.85.29.142:3000/download", {id: ts.ts_id}).then(response => {
-        return  window.location.replace(`view-time-series.html?ts_id=${ts.ts_id}`);
-      }); 
+    idLink.addEventListener("click", function () {
+      downloadFile("POST", "https://35.85.29.142:3000/download", { id: ts.ts_id }).then(response => {
+        return window.location.replace(`view-time-series.html?ts_id=${ts.ts_id}`);
+      });
     });
     idCell.appendChild(idLink);
     row.appendChild(idCell);

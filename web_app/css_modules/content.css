@@ -1,10 +1,17 @@
+/*
+Team: Time Lords
+Author(s): Joseph Erlinger, Sterling Stewart
+Description: CSS code for content containers.
+Last Modified: 5/5/2023
+*/
+
 .content-flex-container {
   display: flex;
   flex-direction: column;
-  position: fixed;
+  position: sticky;
 }
 
-.content-flex-container  > div {
+.content-flex-container>div {
   position: relative;
   margin-bottom: var(--margin_between_interfaces);
   width: 100%;

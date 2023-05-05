@@ -1,4 +1,11 @@
-header > div {
+/*
+Team: Time Lords
+Author(s): Joseph Erlinger
+Description: CSS code for header bar on each page.
+Last Modified: 4/13/2023
+*/
+
+header>div {
   position: absolute;
   top: 0;
   height: 100%;

@@ -1,12 +1,20 @@
+/*
+Team: Time Lords
+Author(s): Joseph Erlinger, Sterling Stewart
+Description: CSS code for consistent theme of webapp.
+Last Modified: 4/27/2023
+*/
+
 :root {
+
   /* Colors */
   --black_0: #080a0d;
   --black_1: #0f131a;
   --black_2: #171d26;
 
-  --primary_0:#993000;
+  --primary_0: #993000;
   --primary_1: #b33900;
-  --primary_2:#ff5100;
+  --primary_2: #ff5100;
   --primary_3: #ff7433;
   --primary_4: #ffb999;
 
@@ -15,7 +23,7 @@
   /* Font Settings */
   --font_color: var(--primary_2);
   --font_color_hover: var(--primary_3);
-  
+
   /* Animation Settings */
   --animation_duration: 0.2s;
 
@@ -58,7 +66,7 @@
   --popup_text_input_hint_left: -70%;
   --popup_text_input_hint_top_bottom_padding: 10px;
   --popup_text_input_hint_color_0: var(--primary_2);
-  --popup_text_input_hint_color_1:  var(--primary_4);
+  --popup_text_input_hint_color_1: var(--primary_4);
 
 }
 
@@ -71,7 +79,7 @@ button {
   border-radius: var(--border_radius);
   border-width: var(--border_width);
   border-color: var(--border_color);
-  background-color: var(--button_background_color); 
+  background-color: var(--button_background_color);
 }
 
 button.font {
@@ -88,13 +96,18 @@ button:hover {
 }
 
 @keyframes hover-button-animation {
-  from {background-color: var(--button_background_color);
-        color: var(--font_color);
-        border-color: var(--border_color)}
-  to {background-color: var(--button_background_color_hover);
-      color: var(--font_color_hover);
-      border-color: var(--border_color_hover);}
-} 
+  from {
+    background-color: var(--button_background_color);
+    color: var(--font_color);
+    border-color: var(--border_color)
+  }
+
+  to {
+    background-color: var(--button_background_color_hover);
+    color: var(--font_color_hover);
+    border-color: var(--border_color_hover);
+  }
+}
 
 .interface {
   border-width: var(--border_width);
@@ -153,17 +166,17 @@ a:hover {
   flex-direction: column;
 }
 
-.popup-flex-container > .interface {
+.popup-flex-container>.interface {
   background-color: var(--popup_background_color);
   border-color: var(--popup_border_color);
 }
 
-.popup-flex-container > .interface.font > h1 {
+.popup-flex-container>.interface.font>h1 {
   text-align: center;
   padding-left: 0;
 }
 
-.popup-flex-container > .interface h1::after {
+.popup-flex-container>.interface h1::after {
   border-color: var(--popup_border_color);
 }
 
@@ -177,7 +190,7 @@ a:hover {
   margin-bottom: var(--popup_margin_between_inputs);
 }
 
-.submit-input > button {
+.submit-input>button {
   position: relative;
   left: var(--popup_submit_input_left);
   width: var(--popup_submit_input_width);
@@ -186,7 +199,7 @@ a:hover {
   box-sizing: border-box;
 }
 
-.text-input > span {
+.text-input>span {
   color: var(--popup_text_input_hint_color_0);
   position: absolute;
   z-index: 1;
@@ -194,13 +207,13 @@ a:hover {
   margin-left: var(--popup_text_input_hint_left);
   padding-top: var(--popup_text_input_hint_top_bottom_padding);
   padding-left: var(--popup_text_input_hint_top_bottom_padding);
-  
+
   /* Prevent selection */
   pointer-events: none;
 }
 
-.text-input > input {
-  position:relative;
+.text-input>input {
+  position: relative;
   left: var(--popup_text_input_left);
   width: var(--popup_text_input_width);
   padding-top: var(--popup_text_input_top_bottom_padding);
@@ -208,15 +221,16 @@ a:hover {
   box-sizing: border-box;
 }
 
-.text-input > input:hover + span {
+.text-input>input:hover+span {
   color: var(--popup_text_input_hint_color_1);
 }
 
-.text-input > input:valid + span {
+.text-input>input:valid+span {
   display: none;
 }
 
-.button-container, .search-container {
+.button-container,
+.search-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -238,7 +252,7 @@ a:hover {
   transition: background-color 0.3s;
   border-style: var(--border_style);
   border-color: var(--border_color);
-  background-color: var(--button_background_color); 
+  background-color: var(--button_background_color);
 }
 
 .tab:hover {

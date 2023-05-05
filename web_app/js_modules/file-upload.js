@@ -1,3 +1,11 @@
+/*
+Team: Time Lords
+Author(s): Joseph Erlinger
+Description: Frontend JavaScript code for TS uploading page.
+             Provides functions for submitting TS data to the repository.
+Last Modified: 5/2/2023
+*/
+
 const submitBtn = document.querySelector("#upload_file_form_submit_btn");
 const ts_name = document.querySelector("#ts_name");
 const ts_description = document.querySelector("#ts_description");

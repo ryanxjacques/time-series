@@ -1,3 +1,10 @@
+/*
+Team: Time Lords
+Author(s): Joseph Erlinger
+Description: CSS code for flex containers.
+Last Modified: 4/13/2023
+*/
+
 .flex-container {
   display: flex;
   flex-direction: column;
@@ -8,7 +15,7 @@
   background-color: var(--black_0);
 }
 
-.flex-container > header {
+.flex-container>header {
   position: relative;
   margin-left: 0;
   margin-right: 0;
@@ -16,7 +23,7 @@
   background-color: var(--black_2);
 }
 
-.flex-container > main {
+.flex-container>main {
   position: relative;
   margin-top: 10vh;
   margin-bottom: 10vh;
@@ -26,7 +33,7 @@
   background-color: var(--black_0);
 }
 
-.flex-container > footer {
+.flex-container>footer {
   position: relative;
   margin-left: 0;
   margin-right: 0;

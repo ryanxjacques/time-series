@@ -1,3 +1,11 @@
+/*
+Team: Time Lords
+Author(s): Joseph Erlinger
+Description: Frontend JavaScript code for user-type choice page.
+             Provides functions for animating elements & modifying font size.
+Last Modified: 5/4/2023
+*/
+
 /* --------------------------------------------------------------------------- */
 /* ---------------------------- Document Elements ---------------------------- */
 
@@ -14,8 +22,8 @@ const buttons = document.querySelectorAll('.text-input .button-input');
 loginBtn.addEventListener("click", (event) => {
   // There will only be at most one element with class= "checked".
   const checked = document.querySelector('.checked')
- 
- 
+
+
   // Do a litle jiggle if the user forgot to check an option.
   if (!checked) {
     failedLogin();
@@ -30,7 +38,7 @@ loginBtn.addEventListener("click", (event) => {
 const caclulateFontSize = () => {
   const height = window.getComputedStyle(loginContainer).getPropertyValue('height');
   const fontSize = parseFloat(height) * 0.05;
-  for(let i = 0; i < textInputs.length; i++) {
+  for (let i = 0; i < textInputs.length; i++) {
     textInputs[i].style.fontSize = `${fontSize}px`;
   }
   loginBtn.style.fontSize = `${fontSize}px`;
@@ -67,7 +75,7 @@ textInputs[0].addEventListener("mouseover", () => {
 });
 
 textInputs[0].addEventListener("mouseout", () => {
-  if (textInputs[0] !== document.activeElement 
+  if (textInputs[0] !== document.activeElement
     && !textInputs[0].classList.contains('checked')) {
     textInputs[0].classList.add('backward-button-animation');
     textInputs[0].classList.remove('forward-button-animation');
@@ -116,7 +124,7 @@ textInputs[1].addEventListener("mouseover", () => {
 });
 
 textInputs[1].addEventListener("mouseout", () => {
-  if (textInputs[1] !== document.activeElement 
+  if (textInputs[1] !== document.activeElement
     && !textInputs[1].classList.contains('checked')) {
     textInputs[1].classList.add('backward-button-animation');
     textInputs[1].classList.remove('forward-button-animation');
@@ -198,7 +206,7 @@ loginContainer.addEventListener("animationend", (event) => {
   }
   else if (event.animationName === "slide-from-right") {
     loginContainer.classList.remove('slide-from-right');
-  } 
+  }
   // Error animation sequence
   else if (event.animationName === "slide-error-left") {
     loginContainer.classList.remove('slide-error-left');

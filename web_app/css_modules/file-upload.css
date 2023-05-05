@@ -1,3 +1,10 @@
+/*
+Team: Time Lords
+Author(s): Joseph Erlinger
+Description: CSS code for file upload page.
+Last Modified: 5/2/2023
+*/
+
 /* The flex container that surronds the interface. */
 .file-upload-body-flex-container {
   display: flex;

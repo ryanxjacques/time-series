@@ -1,3 +1,10 @@
+/*
+Team: Time Lords
+Author(s): Joseph Erlinger
+Description: CSS code for log-in page.
+Last Modified: 5/4/2023
+*/
+
 /* ------------------------------------------------------------------------- */
 /* ---------------------------- Document Styles ---------------------------- */
 
@@ -32,7 +39,7 @@ body {
   padding: 3%;
 }
 
-.login-container > div {
+.login-container>div {
   position: relative;
   flex-grow: 1;
 }
@@ -49,20 +56,26 @@ body {
   padding: 0;
   border-radius: 1vw;
   border: 2px solid #bfbfbf;
-  padding-left: 40px; /* add padding to the left to make room for the icon */
-  background-repeat: no-repeat; /* The result is pretty fun when this is not set. */
-  background-position: center; /* Move icon to center */
-  background-position-x: 10px; /* THEN move it to x = 15px relative to input. */
+  padding-left: 40px;
+  /* add padding to the left to make room for the icon */
+  background-repeat: no-repeat;
+  /* The result is pretty fun when this is not set. */
+  background-position: center;
+  /* Move icon to center */
+  background-position-x: 10px;
+  /* THEN move it to x = 15px relative to input. */
   background-size: 20px 20px;
 }
 
 /* icons */
 .text-input#username {
-  background-image: url('../images/user-icon.png'); /* add the icon as a background image */
+  background-image: url('../images/user-icon.png');
+  /* add the icon as a background image */
 }
 
 .text-input#password {
-  background-image: url('../images/lock-icon.png'); /* add the icon as a background image */
+  background-image: url('../images/lock-icon.png');
+  /* add the icon as a background image */
 }
 
 .invalid-input-container {
@@ -71,7 +84,8 @@ body {
 
 /* Username and password "placeholders" */
 .text-input-label {
-  pointer-events: none; /* make the label unclickable */
+  pointer-events: none;
+  /* make the label unclickable */
   opacity: 40%;
   position: absolute;
   top: 42%;
@@ -106,17 +120,17 @@ body {
   bottom: 0;
 }
 
-.signup-redirect > a {
+.signup-redirect>a {
   outline-color: #ab47bc;
   cursor: pointer;
   text-decoration: underline;
 }
 
-.signup-redirect > a:focus {
+.signup-redirect>a:focus {
   color: #ab47bc;
 }
 
-.signup-redirect > a:hover {
+.signup-redirect>a:hover {
   color: #ab47bc;
 }
 
@@ -129,6 +143,7 @@ body {
     transform: translateX(0) scale(1);
     opacity: 40%;
   }
+
   to {
     transform: translateX(-30px) translateY(-100%) scale(0.8);
     opacity: 10%;
@@ -140,6 +155,7 @@ body {
     transform: translateX(-30px) translateY(-100%) scale(0.8);
     opacity: 10%;
   }
+
   to {
     transform: translateX(0) scale(1);
     opacity: 40%;
@@ -153,7 +169,7 @@ body {
   animation-fill-mode: forwards;
 }
 
-.backward-label-animation  {
+.backward-label-animation {
   animation-name: move-backwards;
   animation-duration: 0.3s;
   animation-timing-function: ease-in-out;
@@ -165,24 +181,27 @@ body {
   from {
     background-color: #ffffff;
     border-color: #bfbfbf;
-    color:#000000;
+    color: #000000;
   }
+
   to {
     background-color: #ce93d8;
     border-color: #ab47bc;
-    color:#ffffff;
+    color: #ffffff;
   }
 }
+
 @keyframes hover-backwards {
   from {
     background-color: #ce93d8;
     border-color: #ab47bc;
-    color:#ffffff;
+    color: #ffffff;
   }
+
   to {
     background-color: #ffffff;
     border-color: #bfbfbf;
-    color:#000000;
+    color: #000000;
   }
 }
 
@@ -192,6 +211,7 @@ body {
   animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
 }
+
 .backward-button-animation {
   animation-name: hover-backwards;
   animation-duration: 0.2s;
@@ -204,46 +224,57 @@ body {
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(-180%);
   }
 }
+
 @keyframes slide-right {
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(180%);
   }
 }
+
 @keyframes slide-from-left {
   from {
     transform: translateX(-180%);
   }
+
   to {
     transform: translateX(0);
   }
 }
+
 @keyframes slide-error-left {
   from {
     transform: translateX(0);
   }
+
   to {
     transform: translateX(-2%);
   }
 }
+
 @keyframes slide-error-right {
   from {
     transform: translateX(-2%);
   }
+
   to {
     transform: translateX(2%);
   }
 }
+
 @keyframes slide-error-center {
   from {
     transform: translateX(2%);
   }
+
   to {
     transform: translateX(0);
   }
@@ -277,12 +308,14 @@ body {
   animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
 }
+
 .slide-error-center {
   animation-name: slide-error-center;
   animation-duration: 0.1s;
   animation-timing-function: ease-in-out;
   animation-fill-mode: forwards;
 }
+
 .slide-from-left {
   animation-name: slide-from-left;
   animation-duration: 1s;

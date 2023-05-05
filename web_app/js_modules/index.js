@@ -1,3 +1,12 @@
+/*
+Team: Time Lords
+Author(s): Joseph Erlinger
+Description: Frontend JavaScript code for Log-in page.
+             Provides functions for logging in,
+             element animation & modifying font size.
+Last Modified: 5/4/2023
+*/
+
 /* --------------------------------------------------------------------------- */
 /* ---------------------------- Document Elements ---------------------------- */
 
@@ -19,10 +28,10 @@ const getUuid = () => {
 
 const checkActive = (uuid) => {
   // check if active
-  sendRequest('POST', 'https://35.85.29.142:3000/auth/is-active?', {uuid: uuid}).then(response => {
+  sendRequest('POST', 'https://35.85.29.142:3000/auth/is-active?', { uuid: uuid }).then(response => {
     if (response.status) {
       // If active, get username.
-      return sendRequest('POST', 'https://35.85.29.142:3000/auth/username', {uuid: uuid});
+      return sendRequest('POST', 'https://35.85.29.142:3000/auth/username', { uuid: uuid });
     }
   }).then(response => {
     console.log(response);
@@ -70,8 +79,8 @@ loginBtn.addEventListener("click", (event) => {
     valid_input(passwordPassword, passwordLabel);
   }
 
-  if(!missingData) {
-    message = {'username': username, 'password': password, 'uuid': localStorage.getItem('uuid')};
+  if (!missingData) {
+    message = { 'username': username, 'password': password, 'uuid': localStorage.getItem('uuid') };
     sendRequest("POST", "https://35.85.29.142:3000/auth/login", message).then((data) => {
       if (data.status) {
         localStorage.setItem('username', username); // remember your username.
@@ -101,7 +110,7 @@ const valid_input = (container, text) => {
 const caclulateFontSize = () => {
   const height = window.getComputedStyle(textInputs[0]).getPropertyValue('height');
   const fontSize = parseFloat(height) * 0.30;
-  for(let i = 0; i < textInputs.length; i++) {
+  for (let i = 0; i < textInputs.length; i++) {
     textLabels[i].style.fontSize = `${fontSize}px`;
     textInputs[i].style.fontSize = `${fontSize}px`;
   }
@@ -110,7 +119,7 @@ const caclulateFontSize = () => {
 
 const calculateLabelOffset = () => {
   const xPos = textInputs[0].offsetLeft;
-  for(let i = 0; i < textLabels.length; i++) {
+  for (let i = 0; i < textLabels.length; i++) {
     // equation is: text-input.left + text-input.padding-left.
     textLabels[i].style.left = `${xPos + 40}px`
   }
@@ -242,10 +251,10 @@ loginContainer.addEventListener("animationend", (event) => {
   }
   else if (event.animationName === "slide-right") {
     window.location.replace("pages/signup.html");
-  } 
+  }
   else if (event.animationName === "slide-from-left") {
     loginContainer.classList.remove('slide-from-left');
-  } 
+  }
   // Error animation sequence
   else if (event.animationName === "slide-error-left") {
     loginContainer.classList.remove('slide-error-left');
