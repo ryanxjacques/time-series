@@ -120,3 +120,12 @@ const partyOver = () => {
     container.classList.add(`${container.className.split(' ')[0]}-slide-to-left`);
   });
 }
+
+
+const searchInput = document.querySelector("#search-input")
+searchInput.addEventListener("keydown", (event) => {
+  if (event.keyCode === 13) {  // 13 is the code for the "Enter" key
+    const searchTerm = searchInput.value;
+    window.location.href = "search.html?query=" + encodeURIComponent(searchTerm);
+  }
+});
