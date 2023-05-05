@@ -61,6 +61,7 @@ textInputs[0].addEventListener("click", () => {
   if (textInputs[1].classList.contains('checked')) {
     textInputs[1].classList.add('backward-button-animation');
   }
+  localStorage.setItem('user-type', 'Contributor');
   textInputs[0].classList.add('checked');
   textInputs[1].classList.remove('checked');
   textInputs[0].classList.remove('forward-button-animation');
@@ -109,6 +110,7 @@ textInputs[1].addEventListener("click", () => {
   if (textInputs[0].classList.contains('checked')) {
     textInputs[0].classList.add('backward-button-animation');
   }
+  localStorage.setItem('user-type', 'DS/MLE');
   textInputs[1].classList.add('checked');
   textInputs[0].classList.remove('checked');
   textInputs[1].classList.remove('forward-button-animation');

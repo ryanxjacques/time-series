@@ -53,6 +53,7 @@ loginBtn.addEventListener("click", (event) => {
     message = { 'username': username, 'password': password, 'uuid': localStorage.getItem('uuid') };
     sendRequest("POST", "https://35.85.29.142:3000/auth/signup", message).then((data) => {
       if (data.status) {
+        localStorage.setItem('username', username);
         successfulLogin();
       } else {
         failedLogin();
@@ -217,7 +218,7 @@ registerLink.addEventListener("keydown", (event) => {
 
 loginContainer.addEventListener("animationend", (event) => {
   if (event.animationName === "slide-left") {
-    window.location.replace("./home.html");
+    window.location.replace("./user-type.html");
   }
   else if (event.animationName === "slide-right") {
     window.location.replace("../index.html");

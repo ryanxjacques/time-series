@@ -19,10 +19,15 @@ const bigText = document.querySelectorAll('.upload-container, .browse-container'
 const buttons = document.querySelectorAll('.user, .signout-button, .redirect-to-upload, .redirect-to-browse');
 const redirectButtons = document.querySelectorAll('.signout-button, .redirect-to-upload, .redirect-to-browse');
 const userBtn = document.querySelector('.user');
+const userType = document.querySelector('.user-type');
 const signoutBtn = document.querySelector('.signout-button');
 const uploadRedirectBtn = document.querySelector('.redirect-to-upload');
 const browseRedirectBtn = document.querySelector('.redirect-to-browse');
 let checked;
+
+
+userBtn.textContent = localStorage.getItem('username');
+userType.textContent = localStorage.getItem('user-type');
 
 
 // Button Animations
