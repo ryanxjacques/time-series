@@ -21,58 +21,65 @@ Last Modified: 5/5/2023
   <link rel="stylesheet" href="../css_modules/footer.css">
   <link rel="stylesheet" href="../css_modules/table.css">
 </head>
-
-<body onload="fetchUsers();fetchTimeSeries();">
-  <div class="flex-container">
-    <header>
-      <div class="logo-container">
-        <img id="logo-image" src="../images/logo.png">
-      </div>
-      <div class="button-container">
-        <a>
-          <button type="button" id="signout-btn" class="font"><b>sign out</b></button>
-        </a>
-      </div>
-    </header>
-    <main class="content-flex-container">
-      <div class="tab-container">
-        <div id="time-series-tab" class="tab active" onclick="switchTab('time-series')">Time Series</div>
-        <div id="users-tab" class="tab" onclick="switchTab('users')">Users</div>
-      </div>
-      <div id="users-content" class="content-container">
-        <div class="interface font">
-          <div id="users-container">
-            <table id="users-table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Username</th>
-                </tr>
-              </thead>
-              <tbody id="users-table-body">
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-      <div id="time-series-content" class="content-container active">
-        <div class="interface font">
-          <div id="ts-metadata-container">
-            <table id="ts-metadata-table">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Name</th>
-                  <th>Description</th>
-                  <th>Domains</th>
-                  <th>Units</th>
-                  <th>Keywords</th>
-                </tr>
-              </thead>
-              <tbody id="ts-metadata-table-body">
-              </tbody>
-            </table>
-          </div>
+  <body onload="fetchUsers();fetchTimeSeries();">
+        <div class="flex-container">
+            <header>
+                <div class="logo-container">
+                    <img id="logo-image" src="../images/logo.png">
+                </div>
+                <div class="button-container">
+                    <a>
+                      <button type="button" id="signout-btn" class="font" onclick="window.location.replace('./home.html');"><b>home</b></button>
+                    </a>
+                </div>
+            </header>
+            <main class="content-flex-container">
+                <div class="tab-container">
+                    <div id="time-series-tab" class="tab active" onclick="switchTab('time-series')">Time Series</div>  
+                    <div id="users-tab" class="tab" onclick="switchTab('users')">Users</div>
+                </div>
+                <div id="users-content" class="content-container">
+                    <div class="interface font">
+                        <div id="users-container">
+                            <table id="users-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Username</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="users-table-body">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div id="time-series-content" class="content-container active">
+                    <div class="interface font">
+                        <div id="ts-metadata-container">
+                            <table id="ts-metadata-table">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Domains</th>
+                                        <th>Units</th>
+                                        <th>Keywords</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ts-metadata-table-body">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <footer>
+                <div class="font">
+                    <p>company information</p>
+                </div>
+            </footer>
         </div>
       </div>
     </main>
@@ -85,5 +92,4 @@ Last Modified: 5/5/2023
   <script src="../js_modules/fetch.js"></script>
   <script src="../js_modules/browse.js"></script>
 </body>
-
 </html>

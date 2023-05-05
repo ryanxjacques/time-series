@@ -1,0 +1,260 @@
+/* ------------------------------------------------------------------------- */
+/* ---------------------------- Document Styles ---------------------------- */
+
+/* Entire Document */
+@font-face {
+  font-family: 'Open Sans';
+  src: url('https://fonts.googleapis.com/css2?family=Open+Sans');
+}
+
+/* CSS GRID */
+body {
+
+  display: grid;
+  grid: 1fr 3fr / 2fr 2fr;
+  row-gap: 4vh;
+  column-gap: 4vw;
+  overflow: hidden;
+  font-family: 'Open Sans', sans-serif;
+  background: linear-gradient(to bottom, #e3f2fd 10%, #f3e5f5, #ce93d8 95%);
+  height: 80vh;
+  margin-top: 10vh;
+  margin-bottom: 10vh;
+  margin-left: 10vw;
+  margin-right: 10vw;
+
+}
+
+/* Team Name Container */
+.team-name-container{
+  position: relative;
+  background-color: #ffffff;
+  border: 2px solid #bfbfbf;
+  grid-row: 1 / 2;
+  grid-column: 1 / 2;
+  height: 50%;
+  margin-right: 20%;
+  margin-left: 20%;
+  border-radius: 1vw; 
+}
+
+/* Team Name */
+.team-name-container > span {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Account Container */
+.account-container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background-color: #ffffff;
+  border: 2px solid #bfbfbf;
+  grid-row: 1 / 2;
+  grid-column: 2 / 3;
+  height: 50%;
+  margin-right: 20%;
+  margin-left: 20%;
+  border-radius: 1vw;
+}
+.account-container > div {
+  position: relative;
+  flex-grow: 1;
+}
+
+/* Username */
+.user {
+  position: absolute;
+  background-color: #ffffff;
+  border: 2px solid #bfbfbf;
+  top: 10%;
+  border-radius: calc(max(5vw, 8vh));
+  left: 25%;
+  width: 50%;
+  height: 100%;
+}
+/* Sign out Button (hidden) */
+.signout-button {
+  visibility: hidden;
+  position: absolute;
+  z-index: 2;
+  height: 100%;
+  top: 120%;
+  width: 50%;
+  left: 25%;
+  background-color: #ffffff;
+  border: 2px solid #bfbfbf;
+  border-radius: calc(max(5vw, 8vh));
+
+}
+
+/* User Type (contributor, DS/MLE) */
+.user-type {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 25%;
+  text-align: center;
+}
+
+/* Upload Container */
+.upload-container {
+  position: relative;
+  background-color: none;
+  /* background-color: #ffffff; */
+  /* border: 2px solid #bfbfbf; */
+  border-radius: calc(max(5vw, 8vh));
+  grid-row: 2 / 3;
+  grid-column: 1 / 2;
+}
+
+/* Upload Redirect Button */
+.redirect-to-upload {
+  font-size: inherit;
+  position: absolute;
+  background-color: #ffffff;
+  border: 2px solid #bfbfbf;
+  width: 80%;
+  height: 30%;
+  left: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 3vw;
+}
+
+/* Browse Container */
+.browse-container {
+  position: relative;
+  background-color: none;
+  /* background-color: #ffffff; */
+  /* border: 2px solid #bfbfbf; */
+  border-radius: calc(max(5vw, 8vh));
+  grid-row: 2 / 3;
+  grid-column: 2 / 3;
+}
+
+/* Browse Redirect Button */
+.redirect-to-browse {
+  font-size: inherit;
+  position: absolute;
+  background-color: #ffffff;
+  border: 2px solid #bfbfbf;
+  width: 80%;
+  height: 30%;
+  left: 10%;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 3vw;
+}
+
+
+/* Container Animations */
+@keyframes slide-from-right {
+  from {
+    transform: translate(100vw);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+@keyframes slide-to-left {
+  from {
+    transform: translate(0);
+  }
+  to {
+    transform: translateX(-100vw);
+  }
+}
+/* Team Name Animations */
+.team-name-container-slide-from-right {
+  animation-name: slide-from-right;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+.team-name-container-slide-to-left {
+  animation-name: slide-to-left;
+  animation-duration: 1s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+.account-container-slide-from-right {
+  animation-name: slide-from-right;
+  animation-duration: 1.4s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+.account-container-slide-to-left {
+  animation-name: slide-to-left;
+  animation-duration: 1.4s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+/* Upload Container Animation */
+.upload-container-slide-from-right {
+  animation-name: slide-from-right;
+  animation-duration: 1.6s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+.upload-container-slide-to-left {
+  animation-name: slide-to-left;
+  animation-duration: 1.6s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+.browse-container-slide-from-right {
+  animation-name: slide-from-right;
+  animation-duration: 1.8s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+.browse-container-slide-to-left {
+  animation-name: slide-to-left;
+  animation-duration: 1.8s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+/* Button Animations */
+@keyframes hover-forwards {
+  from {
+    background-color: #ffffff;
+    border-color: #bfbfbf;
+    color:#000000;
+  }
+  to {
+    background-color: #ce93d8;
+    border-color: #ab47bc;
+    color:#ffffff;
+  }
+}
+@keyframes hover-backwards {
+  from {
+    background-color: #ce93d8;
+    border-color: #ab47bc;
+    color:#ffffff;
+  }
+  to {
+    background-color: #ffffff;
+    border-color: #bfbfbf;
+    color:#000000;
+  }
+}
+
+.forward-button-animation {
+  animation-name: hover-forwards;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
+.backward-button-animation {
+  animation-name: hover-backwards;
+  animation-duration: 0.2s;
+  animation-timing-function: ease-in-out;
+  animation-fill-mode: forwards;
+}
