@@ -25,7 +25,7 @@ view.get('/users', async (req, res) => {
     const id = [user_id];
     const user_res = await db.getRecordByCondition(user_connection, 'users', user_fields, user_condition, id);
     db.disconnect(user_connection);
-    const ts_res = await db.getRecordByCondition(ts_connection, 'time_series', ts_fields, ts_condition, id);
+    const ts_res = await db.getRecordByCondition(ts_connection, 'ts_metadata', ts_fields, ts_condition, id);
     db.disconnect(ts_connection);
     result = [user_res, ts_res];
     res.json(result);
