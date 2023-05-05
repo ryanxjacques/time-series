@@ -11,7 +11,28 @@
     <link rel="stylesheet" href="../css_modules/footer.css">
     <link rel="stylesheet" href="../css_modules/login-popup.css">
     <style>
-      #interface-1 h1 {
+      #interface-1 .info-container {
+        display: flex;
+        justify-content: space-around;
+      }
+
+      #interface-1 .info-container div {
+        flex: 1;
+        margin: 0 10px;
+        border: 2px solid #171d26; /* added border style */
+        padding: 10px; /* added padding for spacing */
+        border-radius: 4px; /* added border-radius for rounded corners */
+      }
+
+      #interface-2 img {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+      }
+
+      h1, h3, p {
+        padding-left: 0;
         text-align: center;
       }
 
@@ -49,6 +70,30 @@
           <h1 id="username"></h1>
         </div>
         <div id="interface-2" class="interface font">
+          <h1>Submitted Time Series</h1>
+          <div id="time-series-content" class="content-container active">
+            <div class="interface font">
+                <div id="ts-metadata-container">
+                    <table id="ts-metadata-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Domains</th>
+                                <th>Units</th>
+                                <th>Keywords</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ts-metadata-table-body">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div id="interface-2" class="interface font">
+          <h1>Submitted Forecast Solutions</h1>
           <table>
             <thead>
               <tr>
@@ -56,8 +101,8 @@
                 <th>Mean Average Percentage Error</th>
               </tr>
             </thead>
-            <tbody>
-              <!-- Rows for each time series with their forecast statistics -->
+            <tbody id="solutions">
+              <!-- Rows for each time series they've submitted solutions for -->
             </tbody>
           </table>
         </div>
