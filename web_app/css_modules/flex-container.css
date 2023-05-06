@@ -25,11 +25,13 @@ Last Modified: 4/13/2023
 
 .flex-container>main {
   position: relative;
+  padding-top: 6.5vh; /* Add padding equal to header height */
+  padding-bottom: 6.5vh; /* Add padding equal to footer height */
   margin-top: 10vh;
   margin-bottom: 10vh;
   margin-left: 10vw;
   margin-right: 10vw;
-  height: 67vh;
+  min-height: 67vh;
   background-color: var(--black_0);
 }
 

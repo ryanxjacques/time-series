@@ -38,10 +38,11 @@ function viewTimeSeries() {
     });
 }
 
+// Populates view-user with user data, contributed data, and solution data.
 function displayUser(result) {
   const user_vals = result[0][0];
   const ts_metadata = result[1];
-  const ts_sol = result[2];
+  const sol_vals = result[2];
   const username = document.getElementById('username');
   username.innerHTML = user_vals.username;
 
@@ -91,8 +92,42 @@ function displayUser(result) {
       tableBody.appendChild(row);
     });
   }
+
+  const solTableBody = document.getElementById('solutions');
+  solTableBody.innerHTML = '';
+
+  
+
+  if (sol_vals < 1) {
+    const row = document.createElement('tr');
+    const NoResCell = document.createElement('td');
+    NoResCell.className = "noRes";
+    NoResCell.textContent = 'No Solutions';
+    row.appendChild(NoResCell);
+    solTableBody.appendChild(row);
+  }
+
+  else {
+    sol_vals.forEach((sol) => {
+      const row = document.createElement('tr');
+
+      const idCell = document.createElement('td');
+      const idLink = document.createElement('a');
+      idLink.textContent = sol.ts_id;
+      idLink.href = `view-time-series.html?ts_id=${sol.ts_id}`;
+      idCell.appendChild(idLink);
+      row.appendChild(idCell);
+
+      const mapeCell = document.createElement('td');
+      mapeCell.textContent = sol.ts_mape;
+      row.appendChild(mapeCell);
+
+      solTableBody.appendChild(row);
+    });
+  }
 }
 
+// Populates view-time-series with ts_metadata and solution data
 function displayTsMetadata(ts_metadata) {
   const ts_vals = ts_metadata[0][0];
   const sol_vals = ts_metadata[1];
@@ -107,6 +142,10 @@ function displayTsMetadata(ts_metadata) {
   ts_desc.innerHTML = ts_vals.ts_desc;
   ts_units.innerHTML = ts_vals.ts_units;
   ts_keywords.innerHTML = ts_vals.ts_keywords;
+  const contributorLink = document.createElement('a');
+  contributorLink.textContent = ts_vals.ts_contributor;
+  contributorLink.href = `view-user.html?user_id=${ts_vals.ts_contributor}`;
+  ts_contributor.appendChild(contributorLink);
 
   for (var i = 0; i < domains.length; i++) {
     var opt = domains[i];
@@ -146,7 +185,4 @@ function displayTsMetadata(ts_metadata) {
       tableBody.appendChild(row);
     });
   }
-
-  ts_contributor.innerHTML = ts_vals.ts_contributor;
-
 }

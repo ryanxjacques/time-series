@@ -9,8 +9,6 @@ Last Modified: 5/3/2023
 const express = require('express');
 const app = express();
 
-const path = require('path');
-
 // Require the route modules
 const home = require('./routes/home');
 const auth = require('./routes/auth');
@@ -61,7 +59,6 @@ app.use('/browse', browse);
 app.use('/search', search);
 app.use('/uuidGen', uuidGen);
 app.use('/download', download);
-app.use('/static', express.static('/var/www/html/graphs'));
 
 // Listen on port 3000 (default).
 const port = process.env.APP_PORT || 3000;
