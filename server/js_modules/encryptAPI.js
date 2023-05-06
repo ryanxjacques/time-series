@@ -5,9 +5,9 @@ Description: Backend JavaScript module for encryting passwords.
 Python-shell docs: https://www.npmjs.com/package/python-shell
 Last Modified: 5/2/2023
 */
-
 const jspyAPI = require('./jspyAPI');
 
+// Connect to encrypt.py
 const connectToEncrypt = () => {
   // path to encrypt.py
   const scriptPath = '/var/www/html/server/python_modules/encrypt.py';
@@ -22,7 +22,6 @@ const connectToEncrypt = () => {
   // connect to encrypt.py
   return pyshellEncrypt = jspyAPI.connectToPython(scriptPath, pyShellOptions);
 }
-
 
 const encryptAPI = (jsObject) => {
   const jsonObject = JSON.stringify(jsObject);
@@ -49,6 +48,7 @@ const hash_password = (password) => {
   return encryptAPI(jsObject);  //< Promise
 };
 
+// Ended up not using because I couldn't get cookies to work.
 const make_session_id = (password) => {
   /* It is the user's responsibility to specify what to do when the promise is resolved */
   const jsObject = {op: "hash password", arg: password};

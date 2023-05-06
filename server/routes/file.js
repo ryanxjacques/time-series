@@ -34,45 +34,45 @@ const storage = multer.diskStorage({
 const upload = multer({ storage })
 
 
+// Use multer to download the file that the client has sent.
 file.post('/upload', upload.single('uploaded_file'), function (req, res) {
   const message = { message: "Succesfully uploaded file!" };
   res.send(JSON.stringify(message));
-
+  // Run the main.py script!
   mainAPI.run().then(response => {
+    // output server logs used for debugging.
     response.forEach((element) => {
       console.log(element);
     });
   });
 });
 
+
+// Upload metadata
 file.post('/metadata', (req, res) => {
+  // Grab the username from the req.body, then promptly delete it from the req.body.
   const { username } = req.body;
   delete req.body['username'];
-
-  // send user id.
+  // send the user its user id to be used in the file upload (which user sends next).
   db.getRecordElement(usersConnection, 'users', 'id', { username: username }).then(response => {
     const { id } = response[0];
     const message = { id: id };
     res.send(JSON.stringify(message));
-
     req.body['ts_contributor'] = id;
-    console.log(req.body);
+    // Insert the uploaded metadata into the database.
     return db.insertRecord(tsConnection, 'ts_metadata', req.body);
   });
 });
 
-file.post('/metadata', (req, res) => {
-  console.log(req.body);
-
-  const { username } = req.body;
-
-  console.log(username);
-  // send user id.
-  db.getRecordElement(connection, 'users', 'id', { username: username }).then(response => {
-    const message = { id: response[0].id };
-    res.send(JSON.stringify(message));
-  });
-});
+// file.post('/metadata', (req, res) => {
+//   const { username } = req.body;
+//   console.log(username);
+//   // send user id.
+//   db.getRecordElement(connection, 'users', 'id', { username: username }).then(response => {
+//     const message = { id: response[0].id };
+//     res.send(JSON.stringify(message));
+//   });
+// });
 
 // Export file object for server.js to use.
 module.exports = file;

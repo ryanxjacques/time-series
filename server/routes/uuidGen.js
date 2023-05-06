@@ -10,10 +10,9 @@ const express = require('express');
 const uuidGen = express.Router();
 const uuid = require('uuid');
 
-// Generate and return a UUID
+// Generate and send a UUID to the client.
 uuidGen.get('/', (req, res) => {
   const client_id = uuid.v4();;
-
   const message = { id: client_id };
   res.send(JSON.stringify(message));
 });

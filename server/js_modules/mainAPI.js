@@ -1,10 +1,9 @@
 /*
 Team: Time Lords
-Author(s): Ryan Jacques
+Author(s): Joseph Erlinger, Ryan Jacques
 Description: Backend JavaScript module for connecting to and running main.py.
 Last Modified: 5/1/2023
 */
-
 const jspyAPI = require('./jspyAPI');
 
 const connectToMain = () => {

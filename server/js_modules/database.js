@@ -122,6 +122,7 @@ const getFirstRecord = (connection, tableName, id) => {
   return promise;
 }
 
+// Record count is the amount of total number records that are in the specified table.
 const getRecordCount = (connection, tableName, id) => { 
   let promise = new Promise((resolve, reject) => {
     connection.query('SELECT * FROM ?? WHERE ?', [tableName, id], (error, results, fields) => {
@@ -135,6 +136,7 @@ const getRecordCount = (connection, tableName, id) => {
   return promise;
 };
 
+// This selects all first x records from the specified table.
 const getDSMLEData = (connection, tableName, field, id, limit) => { 
   let promise = new Promise((resolve, reject) => {
     connection.query(`SELECT ?? FROM ?? WHERE ? LIMIT ?`, [field, tableName, id, limit], (error, results, fields) => {

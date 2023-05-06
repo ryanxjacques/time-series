@@ -2,7 +2,7 @@
 Team: Time Lords
 Author(s): Joseph Erlinger
 Bcrypt docs: https://pypi.org/project/bcrypt/
-Brief: Password decryption
+Brief: Password encryption and decryption
 Last Modified: 4/27/2023
 """
 import sys

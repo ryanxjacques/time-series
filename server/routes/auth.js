@@ -31,11 +31,13 @@ const connection = db.connectToDataBase('users', 'auth.js->users ');
 
 auth.post('/login', (req, res) => {
   const data = req.body;
+  // Check if username exists
   db.getRecordElement(connection, 'users', 'password', { username: data.username }).then(response => {
     if (response.length != 1) {
       const msg = { message: 'account doesn\'t exist.' };
       res.send(JSON.stringify(msg));
     } else {
+      // If username exists, Verify if passwords match.
       return encryptAPI.verify_password(data.password, response[0].password);
     }
   }).then(response => {
@@ -55,6 +57,7 @@ auth.post('/login', (req, res) => {
 
 auth.post('/is-active?', (req, res) => {
   const { uuid } = req.body;
+  // Check if user is logged on in this browser.
   db.getRecordElement(connection, 'active_users', 'uuid', { uuid: uuid }).then(response => {
     if (response.length == 1) {
       const msg = { status: true };
@@ -68,6 +71,7 @@ auth.post('/is-active?', (req, res) => {
 
 auth.post('/logout', (req, res) => {
   const { uuid } = req.body;
+  // Remove user from active users
   db.deleteRecord(connection, 'active_users', { uuid: uuid }).then(response => {
     const msg = { status: true };
     res.send(JSON.stringify(msg));
@@ -78,23 +82,27 @@ auth.post('/logout', (req, res) => {
 
 auth.post('/signup', (req, res) => {
   const data = req.body;
+  // Check if username already exists in users database.
   db.getRecordElement(connection, 'users', 'username', { username: data.username }).then(response => {
-    if (response.length != 0) {
+    if (response.length != 0) {  // username is taken
       const msg = { status: false, message: 'username already taken.' };
       res.send(JSON.stringify(msg));
     } else {
+      // Encrypt password
       return encryptAPI.hash_password(data.password);
     }
   }).then(response => {
     if (response) {  // check if the previous .then statement returned a value.
       const record = { username: data.username, password: response }
+      // Insert the encrypted password and username into the user's database
       return db.insertRecord(connection, 'users', record);
     }
   }).then((response) => {
     if (response) {  // check if the previous .then statement returned a value.
       const msg = { status: true, message: 'Made an account!' };
+      // Send a successful sign-up message to the user.
       res.send(JSON.stringify(msg));
-      // Add user to the active_users db.
+      // Add user to the active_users.
       db.insertRecord(connection, 'active_users', { uuid: data.uuid, username: data.username });
     }
   }).catch(err => {
@@ -102,8 +110,10 @@ auth.post('/signup', (req, res) => {
   });
 });
 
+// this method is used for retrieving the username associated with a uuid.
 auth.post('/username', (req, res) => {
   const { uuid } = req.body;
+  // Query the active users where uuid = the user's uuid.
   db.getRecordElement(connection, 'active_users', 'username', { uuid: uuid }).then(response => {
     const msg = { username: response[0].username };
     res.send(JSON.stringify(msg)); // send username to client.
