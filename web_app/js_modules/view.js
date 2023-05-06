@@ -41,6 +41,7 @@ function viewTimeSeries() {
 function displayUser(result) {
   const user_vals = result[0][0];
   const ts_metadata = result[1];
+  const ts_sol = result[2];
   const username = document.getElementById('username');
   username.innerHTML = user_vals.username;
 
@@ -134,7 +135,7 @@ function displayTsMetadata(ts_metadata) {
       const idCell = document.createElement('td');
       const idLink = document.createElement('a');
       idLink.textContent = sol.DS_MLE_id;
-      idLink.href = `view-time-series.html?ts_id=${sol.DS_MLE_id}`;
+      idLink.href = `view-user.html?user_id=${sol.DS_MLE_id}`;
       idCell.appendChild(idLink);
       row.appendChild(idCell);
 

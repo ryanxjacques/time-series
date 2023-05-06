@@ -55,7 +55,7 @@ view.get('/users', async (req, res) => {
   // Get User's Solution info
   const sol_fields = ['ts_id', 'ts_mape'];
   const sol_condition = 'DS_MLE_id = ?';
-  const sol_res = await db.getRecordByCondition(ts_connection, 'ts_metadata', sol_fields, sol_condition, id);
+  const sol_res = await db.getRecordByCondition(ts_connection, 'ts_solutions', sol_fields, sol_condition, id);
   db.disconnect(ts_connection);
 
   result = [user_res, ts_res, sol_res];
