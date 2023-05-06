@@ -93,21 +93,59 @@ function displayUser(result) {
 }
 
 function displayTsMetadata(ts_metadata) {
-  const ts_vals = ts_metadata[0];
+  const ts_vals = ts_metadata[0][0];
+  const sol_vals = ts_metadata[1];
   const ts_name = document.getElementById('ts_name');
   const ts_desc = document.getElementById('ts_desc');
-  const ts_domain = document.getElementById('ts_domain');
+  const select_domain = document.getElementById('ts_domain');
   const ts_units = document.getElementById('ts_units');
   const ts_keywords = document.getElementById('ts_keywords');
   const ts_contributor = document.getElementById('ts_contributor');
+  const domains = ts_vals.ts_domain.split(",")
   ts_name.innerHTML = ts_vals.ts_name;
   ts_desc.innerHTML = ts_vals.ts_desc;
-  ts_domain.innerHTML = ts_vals.ts_domain.replaceAll(",", ", ");
   ts_units.innerHTML = ts_vals.ts_units;
   ts_keywords.innerHTML = ts_vals.ts_keywords;
 
-  // Will change this to username.
-  // Need to change query to join with users table to retrieve username.
+  for (var i = 0; i < domains.length; i++) {
+    var opt = domains[i];
+    var elem = document.createElement('option');
+    elem.textContent = opt;
+    elem.value = opt;
+    select_domain.appendChild(elem);
+  }
+
+  const tableBody = document.getElementById('solutions');
+  tableBody.innerHTML = '';
+
+  if (sol_vals < 1) {
+    const row = document.createElement('tr');
+    const NoResCell = document.createElement('td');
+    NoResCell.className = "noRes";
+    NoResCell.textContent = 'No Solutions';
+    row.appendChild(NoResCell);
+    tableBody.appendChild(row);
+  }
+
+  else {
+    sol_vals.forEach((sol) => {
+      const row = document.createElement('tr');
+
+      const idCell = document.createElement('td');
+      const idLink = document.createElement('a');
+      idLink.textContent = sol.DS_MLE_id;
+      idLink.href = `view-time-series.html?ts_id=${sol.DS_MLE_id}`;
+      idCell.appendChild(idLink);
+      row.appendChild(idCell);
+
+      const mapeCell = document.createElement('td');
+      mapeCell.textContent = sol.ts_mape;
+      row.appendChild(mapeCell);
+
+      tableBody.appendChild(row);
+    });
+  }
+
   ts_contributor.innerHTML = ts_vals.ts_contributor;
 
 }

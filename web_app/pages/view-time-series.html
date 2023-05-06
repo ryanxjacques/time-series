@@ -19,6 +19,7 @@ Last Modified: 5/5/2023
   <link rel="stylesheet" href="../css_modules/content.css">
   <link rel="stylesheet" href="../css_modules/footer.css">
   <link rel="stylesheet" href="../css_modules/login-popup.css">
+  <link rel="stylesheet" href="../css_modules/table.css">
   <style>
     #interface-1 .info-container {
       display: flex;
@@ -88,8 +89,12 @@ Last Modified: 5/5/2023
         <!-- <img src="(path_to_image)" alt="Time Series Image"> -->
         <div class="info-container">
           <div>
-            <h4>Domains</h4>
-            <p id="ts_domain"></p>
+            <h4>
+              <label for="domains">Domains:</label>
+            </h4>
+            <select id="ts_domain">
+                <!-- Options for each domain -->
+            </select>
           </div>
           <div>
             <h4>Units</h4>
@@ -114,7 +119,7 @@ Last Modified: 5/5/2023
               <th>Mean Average Percentage Error</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="solutions">
             <!-- Rows for each contributor with their forecast statistics -->
           </tbody>
         </table>
