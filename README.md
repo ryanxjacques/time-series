@@ -2,7 +2,7 @@
 
 ## Web App URL:
 
-https://pages.uoregon.edu/jerling2/time-series/
+https://pages.uoregon.edu/jerling2/time-series/ (offline)
 
 ## How to Open the Web App in Offline Mode:
 
